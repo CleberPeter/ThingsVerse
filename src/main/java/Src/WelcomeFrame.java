@@ -582,7 +582,10 @@ public class WelcomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_open_simulation_btn1ActionPerformed
 
     private void new_simulation_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_simulation_btnActionPerformed
-        // TODO add your handling code here:
+        this_frame.setVisible(false);
+        
+        CreateUniserveFrame createUniserveFrame = new CreateUniserveFrame();
+        createUniserveFrame.setVisible(true);
     }//GEN-LAST:event_new_simulation_btnActionPerformed
 
     private void main_rigth_panel_gallery_cardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_main_rigth_panel_gallery_cardMouseEntered
