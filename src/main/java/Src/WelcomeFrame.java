@@ -4,6 +4,7 @@
  */
 package Src;
 
+import Src.CustomWidgets.FrameDragListener;
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.geom.RoundRectangle2D;
@@ -22,7 +23,9 @@ public class WelcomeFrame extends javax.swing.JFrame {
         
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
         
-        this_frame = this;
+        FrameDragListener frameDragListener = new FrameDragListener(this);
+        header_title.addMouseListener(frameDragListener);
+        header_title.addMouseMotionListener(frameDragListener);
     }
 
     /**
@@ -84,6 +87,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.BorderLayout(0, 1));
 
         header_panel.setBackground(new java.awt.Color(42, 42, 42));
+        header_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 42, 42), 5));
         header_panel.setPreferredSize(new java.awt.Dimension(800, 70));
         header_panel.setLayout(new java.awt.BorderLayout(10, 0));
 
@@ -523,10 +527,11 @@ public class WelcomeFrame extends javax.swing.JFrame {
         getContentPane().add(main_panel, java.awt.BorderLayout.CENTER);
 
         footer_panel.setBackground(new java.awt.Color(255, 255, 255));
+        footer_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         footer_panel.setPreferredSize(new java.awt.Dimension(800, 40));
         footer_panel.setLayout(new java.awt.BorderLayout(10, 0));
 
-        footer_title.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        footer_title.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N
         footer_title.setForeground(new java.awt.Color(42, 42, 42));
         footer_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         footer_title.setText("V0.0.1 @ CleberPeter");
@@ -535,12 +540,12 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         getContentPane().add(footer_panel, java.awt.BorderLayout.PAGE_END);
 
-        setSize(new java.awt.Dimension(1104, 769));
+        setSize(new java.awt.Dimension(1024, 668));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void minimize_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize_btnActionPerformed
-        this_frame.setState(Frame.ICONIFIED);
+        setState(Frame.ICONIFIED);
     }//GEN-LAST:event_minimize_btnActionPerformed
 
     private void minimize_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_btnMouseExited
@@ -582,9 +587,9 @@ public class WelcomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_open_simulation_btn1ActionPerformed
 
     private void new_simulation_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_simulation_btnActionPerformed
-        this_frame.setVisible(false);
+        setVisible(false);
         
-        CreateUniserveFrame createUniserveFrame = new CreateUniserveFrame();
+        MainFrame createUniserveFrame = new MainFrame();
         createUniserveFrame.setVisible(true);
     }//GEN-LAST:event_new_simulation_btnActionPerformed
 
@@ -608,7 +613,6 @@ public class WelcomeFrame extends javax.swing.JFrame {
         main_right_contact_card.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_main_right_contact_cardMouseEntered
     
-    private static javax.swing.JFrame this_frame;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brazil_lang_btn;
