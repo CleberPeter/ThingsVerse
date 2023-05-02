@@ -540,7 +540,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         getContentPane().add(footer_panel, java.awt.BorderLayout.PAGE_END);
 
-        setSize(new java.awt.Dimension(1024, 668));
+        setSize(new java.awt.Dimension(1024, 727));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

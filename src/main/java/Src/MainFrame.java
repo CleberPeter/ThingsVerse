@@ -4,10 +4,19 @@
  */
 package Src;
 
+import Src.CustomWidgets.BackgroundMenuBar;
 import Src.CustomWidgets.ComponentResizer;
 import Src.CustomWidgets.FrameDragListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import javax.swing.Icon;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.UIManager;
 
 /**
  *
@@ -30,6 +39,30 @@ public class MainFrame extends javax.swing.JFrame {
         
         ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
         componentResizer.setSnapSize(new Dimension(15, 15));
+        
+        BackgroundMenuBar menuBar = new BackgroundMenuBar();
+        menuBar.setBorder(null);
+        menuBar.setColor(new Color(42,42,42));
+                
+        JMenu menu = new JMenu("Arquivo");
+        menu.setForeground(Color.white);
+        
+        JMenuItem menuItem = new JMenuItem("Novo Universo");
+        menu.add(menuItem);
+        menuItem = new JMenuItem("Abrir Universo");
+        menu.add(menuItem);
+        
+        menu.add(new JSeparator());
+        
+        menuItem = new JMenuItem("Fechar");
+        menu.add(menuItem);
+        menuBar.add(menu);
+        
+        menu = new JMenu("Editar");
+        menu.setForeground(Color.white);
+        menuBar.add(menu);
+        
+        header_panel.add(menuBar, BorderLayout.PAGE_END);
     }
 
     /**
@@ -50,7 +83,7 @@ public class MainFrame extends javax.swing.JFrame {
         header_padding_panel = new javax.swing.JPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
-        gridPanel2 = new Src.CustomWidgets.GridPanel();
+        main_panel = new Src.CustomWidgets.GridPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(42, 42, 42));
@@ -59,12 +92,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         header_panel.setBackground(new java.awt.Color(42, 42, 42));
         header_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 42, 42), 5));
-        header_panel.setPreferredSize(new java.awt.Dimension(800, 70));
+        header_panel.setPreferredSize(new java.awt.Dimension(800, 90));
         header_panel.setLayout(new java.awt.BorderLayout(10, 0));
 
         header_actions_panel.setBackground(new java.awt.Color(42, 42, 42));
         header_actions_panel.setRequestFocusEnabled(false);
-        header_actions_panel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 20));
+        header_actions_panel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
         close_btn.setBackground(new java.awt.Color(0, 0, 0));
         close_btn.setFont(new java.awt.Font("Liberation Sans", 1, 11)); // NOI18N
@@ -179,21 +212,21 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(footer_panel, java.awt.BorderLayout.PAGE_END);
 
-        gridPanel2.setBackground(new java.awt.Color(42, 42, 42));
-        gridPanel2.setcellSize(50);
+        main_panel.setBackground(new java.awt.Color(42, 42, 42));
+        main_panel.setcellSize(50);
 
-        javax.swing.GroupLayout gridPanel2Layout = new javax.swing.GroupLayout(gridPanel2);
-        gridPanel2.setLayout(gridPanel2Layout);
-        gridPanel2Layout.setHorizontalGroup(
-            gridPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1184, Short.MAX_VALUE)
+        javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
+        main_panel.setLayout(main_panelLayout);
+        main_panelLayout.setHorizontalGroup(
+            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1042, Short.MAX_VALUE)
         );
-        gridPanel2Layout.setVerticalGroup(
-            gridPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+        main_panelLayout.setVerticalGroup(
+            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
 
-        getContentPane().add(gridPanel2, java.awt.BorderLayout.CENTER);
+        getContentPane().add(main_panel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -287,11 +320,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton close_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
-    private Src.CustomWidgets.GridPanel gridPanel2;
     private javax.swing.JPanel header_actions_panel;
     private javax.swing.JPanel header_padding_panel;
     private javax.swing.JPanel header_panel;
     private javax.swing.JLabel header_title;
+    private Src.CustomWidgets.GridPanel main_panel;
     private javax.swing.JButton maximize_btn;
     private javax.swing.JButton minimize_btn;
     // End of variables declaration//GEN-END:variables

@@ -1,5 +1,8 @@
 package Src;
 
+import java.awt.Color;
+import javax.swing.UIManager;
+
 /**
  *
  * @author cleber
