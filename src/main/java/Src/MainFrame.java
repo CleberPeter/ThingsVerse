@@ -54,6 +54,13 @@ public class MainFrame extends javax.swing.JFrame {
         
         menu.add(new JSeparator());
         
+        menuItem = new JMenuItem("Salvar");
+        menu.add(menuItem);
+        menuItem = new JMenuItem("Exportar");
+        menu.add(menuItem);
+        
+        menu.add(new JSeparator());
+        
         menuItem = new JMenuItem("Fechar");
         menu.add(menuItem);
         menuBar.add(menu);
