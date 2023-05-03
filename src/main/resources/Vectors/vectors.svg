@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.3320939"
-     inkscape:cx="335.93727"
-     inkscape:cy="562.64801"
+     inkscape:cx="335.93728"
+     inkscape:cy="562.64802"
      inkscape:window-width="1846"
      inkscape:window-height="1016"
      inkscape:window-x="0"
@@ -202,7 +202,14 @@
        d="m 150.91074,141.14794 h 0.47625 V 140.124 h 1.03187 v -0.47625 h -1.03187 v -1.03188 h -0.47625 v 1.03188 h -1.03188 v 0.47625 h 1.03188 z m -1.82563,1.22237 q -0.1905,0 -0.33338,-0.14287 -0.14287,-0.14288 -0.14287,-0.33338 v -5.3975 q 0,-0.1905 0.14287,-0.33337 0.14288,-0.14288 0.33338,-0.14288 h 2.86544 l 1.73831,1.73831 v 4.13544 q 0,0.1905 -0.14287,0.33338 -0.14288,0.14287 -0.33338,0.14287 z m 2.62731,-4.39737 v -1.47638 h -2.62731 v 5.3975 h 4.1275 v -3.92112 z m -2.62731,-1.47638 v 1.47638 -1.47638 5.3975 z"
        id="path1589"
        style="fill:#ffd60a;fill-opacity:1;stroke-width:0.00793752"
-       inkscape:export-filename="/home/cleber/Documents/Cleber/dev/IoT_Verse_Sim/src/main/resources/Images/new_file.png"
+       inkscape:export-filename="/home/cleber/Documents/Cleber/dev/IoT_Verse_Sim/src/main/resources/Images/new_file_white.png"
+       inkscape:export-xdpi="63.5"
+       inkscape:export-ydpi="63.5" />
+    <path
+       d="m 141.31584,165.43649 h 0.47625 v -1.02394 h 1.03187 v -0.47625 h -1.03187 v -1.03188 h -0.47625 v 1.03188 h -1.03188 v 0.47625 h 1.03188 z m -1.82563,1.22237 q -0.1905,0 -0.33338,-0.14287 -0.14287,-0.14288 -0.14287,-0.33338 v -5.3975 q 0,-0.1905 0.14287,-0.33337 0.14288,-0.14288 0.33338,-0.14288 h 2.86544 l 1.73831,1.73831 v 4.13544 q 0,0.1905 -0.14287,0.33338 -0.14288,0.14287 -0.33338,0.14287 z m 2.62731,-4.39737 v -1.47638 h -2.62731 v 5.3975 h 4.1275 v -3.92112 z m -2.62731,-1.47638 v 1.47638 -1.47638 5.3975 z"
+       id="path1589-3"
+       style="fill:#ffd60a;fill-opacity:1;stroke-width:0.00793752"
+       inkscape:export-filename="/home/cleber/Documents/Cleber/dev/IoT_Verse_Sim/src/main/resources/Images/new_file_white.png"
        inkscape:export-xdpi="63.5"
        inkscape:export-ydpi="63.5" />
     <path
@@ -217,6 +224,13 @@
        id="path2384"
        style="fill:#ffd60a;fill-opacity:1;stroke-width:0.0105833"
        inkscape:export-filename="/home/cleber/Documents/Cleber/dev/IoT_Verse_Sim/src/main/resources/Images/website_icon.png"
+       inkscape:export-xdpi="63.5"
+       inkscape:export-ydpi="63.5" />
+    <path
+       d="m 149.44707,165.59059 q -0.15857,0 -0.27752,-0.11886 -0.11887,-0.11889 -0.11887,-0.27752 v -4.49306 q 0,-0.15857 0.11887,-0.27752 0.11888,-0.11887 0.27752,-0.11887 h 2.24654 l 1.58578,1.5858 v 1.78401 h -0.39645 v -1.51972 h -1.45365 v -1.45364 h -1.98222 v 4.49307 h 2.70906 v 0.39645 z m 4.3477,0.006 -0.84575,-0.84576 v 0.82595 h -0.39645 v -1.50649 h 1.5065 v 0.39642 h -0.83254 l 0.84576,0.84576 z m -4.3477,-0.40307 v -4.49304 z"
+       id="path1030-4"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.00660746"
+       inkscape:export-filename="/home/cleber/Documents/Cleber/dev/IoT_Verse_Sim/src/main/resources/Images/open_file_white.png"
        inkscape:export-xdpi="63.5"
        inkscape:export-ydpi="63.5" />
   </g>
