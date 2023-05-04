@@ -192,7 +192,7 @@
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder>
-                      <Color PropertyName="color" blue="a" green="d6" red="ff" type="rgb"/>
+                      <Color PropertyName="color" blue="4f" green="53" red="ef" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>
@@ -225,7 +225,7 @@
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder>
-                      <Color PropertyName="color" blue="a" green="d6" red="ff" type="rgb"/>
+                      <Color PropertyName="color" blue="4f" green="53" red="ef" type="rgb"/>
                     </LineBorder>
                   </Border>
                 </Property>

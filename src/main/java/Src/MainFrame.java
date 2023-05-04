@@ -10,6 +10,7 @@ import Src.CustomWidgets.FrameDragListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Insets;
 import javax.swing.Icon;
 import javax.swing.JMenu;
@@ -65,13 +66,13 @@ public class MainFrame extends javax.swing.JFrame {
         menu_bar_edit_btn = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         menu_bar_file_panel = new javax.swing.JPanel();
+        new_btn = new javax.swing.JButton();
+        open_btn = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        save_btn = new javax.swing.JButton();
+        export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        quit_btn = new javax.swing.JButton();
         main_panel = new Src.CustomWidgets.GridPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -194,18 +195,9 @@ public class MainFrame extends javax.swing.JFrame {
         menu_bar_file_btn.setForeground(new java.awt.Color(255, 255, 255));
         menu_bar_file_btn.setText("Arquivo");
         menu_bar_file_btn.setContentAreaFilled(false);
-        menu_bar_file_btn.setPreferredSize(new java.awt.Dimension(74, 27));
         menu_bar_file_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_bar_file_btnMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menu_bar_file_btnMouseExited(evt);
-            }
-        });
-        menu_bar_file_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_bar_file_btnActionPerformed(evt);
             }
         });
         menu_bar_panel.add(menu_bar_file_btn);
@@ -243,6 +235,59 @@ public class MainFrame extends javax.swing.JFrame {
         menu_bar_file_panelLayout.columnWeights = new double[] {0.5};
         menu_bar_file_panelLayout.rowWeights = new double[] {0.5};
         menu_bar_file_panel.setLayout(menu_bar_file_panelLayout);
+
+        new_btn.setBackground(new java.awt.Color(40, 40, 40));
+        new_btn.setForeground(new java.awt.Color(255, 255, 255));
+        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_white.png"))); // NOI18N
+        new_btn.setText("Novo");
+        new_btn.setBorderPainted(false);
+        new_btn.setContentAreaFilled(false);
+        new_btn.setFocusPainted(false);
+        new_btn.setFocusable(false);
+        new_btn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        new_btn.setIconTextGap(8);
+        new_btn.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        new_btn.setOpaque(true);
+        new_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                new_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                new_btnMouseExited(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        menu_bar_file_panel.add(new_btn, gridBagConstraints);
+
+        open_btn.setBackground(new java.awt.Color(40, 40, 40));
+        open_btn.setForeground(new java.awt.Color(255, 255, 255));
+        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_white.png"))); // NOI18N
+        open_btn.setText("Abrir");
+        open_btn.setContentAreaFilled(false);
+        open_btn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        open_btn.setIconTextGap(6);
+        open_btn.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        open_btn.setOpaque(true);
+        open_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                open_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                open_btnMouseExited(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        menu_bar_file_panel.add(open_btn, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -250,28 +295,60 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         menu_bar_file_panel.add(jSeparator1, gridBagConstraints);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Salvar");
+        save_btn.setBackground(new java.awt.Color(40, 40, 40));
+        save_btn.setForeground(new java.awt.Color(255, 255, 255));
+        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png"))); // NOI18N
+        save_btn.setText("Salvar");
+        save_btn.setContentAreaFilled(false);
+        save_btn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        save_btn.setIconTextGap(6);
+        save_btn.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        save_btn.setOpaque(true);
+        save_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                save_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                save_btnMouseExited(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        menu_bar_file_panel.add(jLabel3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        menu_bar_file_panel.add(save_btn, gridBagConstraints);
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Exportar");
+        export_btn.setBackground(new java.awt.Color(40, 40, 40));
+        export_btn.setForeground(new java.awt.Color(255, 255, 255));
+        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export.png"))); // NOI18N
+        export_btn.setText("Exportar");
+        export_btn.setContentAreaFilled(false);
+        export_btn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        export_btn.setIconTextGap(6);
+        export_btn.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        export_btn.setOpaque(true);
+        export_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                export_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                export_btnMouseExited(evt);
+            }
+        });
+        export_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                export_btnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        menu_bar_file_panel.add(jLabel4, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        menu_bar_file_panel.add(export_btn, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -279,57 +356,46 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         menu_bar_file_panel.add(jSeparator2, gridBagConstraints);
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Sair");
+        quit_btn.setBackground(new java.awt.Color(40, 40, 40));
+        quit_btn.setForeground(new java.awt.Color(255, 255, 255));
+        quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit.png"))); // NOI18N
+        quit_btn.setText("Sair");
+        quit_btn.setContentAreaFilled(false);
+        quit_btn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        quit_btn.setIconTextGap(6);
+        quit_btn.setMargin(new java.awt.Insets(0, -10, 0, 0));
+        quit_btn.setOpaque(true);
+        quit_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                quit_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                quit_btnMouseExited(evt);
+            }
+        });
+        quit_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quit_btnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        menu_bar_file_panel.add(jLabel5, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        menu_bar_file_panel.add(quit_btn, gridBagConstraints);
 
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_white.png"))); // NOI18N
-        jButton1.setText("Novo");
-        jButton1.setContentAreaFilled(false);
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton1.setIconTextGap(8);
-        jButton1.setMargin(new java.awt.Insets(0, -10, 0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        menu_bar_file_panel.add(jButton1, gridBagConstraints);
-
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_white.png"))); // NOI18N
-        jButton2.setText("Abrir");
-        jButton2.setContentAreaFilled(false);
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.setIconTextGap(6);
-        jButton2.setMargin(new java.awt.Insets(0, -10, 0, 0));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        menu_bar_file_panel.add(jButton2, gridBagConstraints);
-
-        jLayeredPane1.setLayer(menu_bar_file_panel, javax.swing.JLayeredPane.MODAL_LAYER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 40;
-        gridBagConstraints.ipady = 40;
+        gridBagConstraints.ipadx = 60;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
 
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
+        main_panel.setBorder(null);
         main_panel.setcellSize(50);
 
         javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
@@ -421,10 +487,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_maximize_btnActionPerformed
 
-    private void menu_bar_file_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_bar_file_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menu_bar_file_btnActionPerformed
-
     private void menu_bar_edit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_bar_edit_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_bar_edit_btnActionPerformed
@@ -433,13 +495,80 @@ public class MainFrame extends javax.swing.JFrame {
         menu_bar_file_panel.setVisible(true);
     }//GEN-LAST:event_menu_bar_file_btnMouseClicked
 
-    private void menu_bar_file_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_bar_file_btnMouseExited
-        
-    }//GEN-LAST:event_menu_bar_file_btnMouseExited
-
     private void menu_bar_file_panelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_bar_file_panelMouseExited
-        menu_bar_file_panel.setVisible(false);
+        if (!menu_bar_file_panel.contains(evt.getPoint()))
+        {
+            menu_bar_file_panel.setVisible(false);
+        }
     }//GEN-LAST:event_menu_bar_file_panelMouseExited
+
+    private void quit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quit_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quit_btnActionPerformed
+
+    private void export_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_export_btnActionPerformed
+
+    private void new_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseEntered
+        new_btn.setBackground(new Color(255,214,10));
+        new_btn.setForeground(new Color(0,0,0));
+        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_black.png"))); // NOI18N
+    }//GEN-LAST:event_new_btnMouseEntered
+
+    private void new_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseExited
+        new_btn.setBackground(new Color(40,40,40));
+        new_btn.setForeground(new Color(255,255,255));
+        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_white.png")));
+    }//GEN-LAST:event_new_btnMouseExited
+
+    private void open_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseEntered
+        open_btn.setBackground(new Color(255,214,10));
+        open_btn.setForeground(new Color(0,0,0));
+        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_black.png"))); // NOI18N
+    }//GEN-LAST:event_open_btnMouseEntered
+
+    private void open_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseExited
+        open_btn.setBackground(new Color(40,40,40));
+        open_btn.setForeground(new Color(255,255,255));
+        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_white.png")));
+    }//GEN-LAST:event_open_btnMouseExited
+
+    private void save_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseEntered
+        save_btn.setBackground(new Color(255,214,10));
+        save_btn.setForeground(new Color(0,0,0));
+        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save_black.png"))); // NOI18N
+    }//GEN-LAST:event_save_btnMouseEntered
+
+    private void save_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseExited
+        save_btn.setBackground(new Color(40,40,40));
+        save_btn.setForeground(new Color(255,255,255));
+        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png")));
+    }//GEN-LAST:event_save_btnMouseExited
+
+    private void export_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseEntered
+        export_btn.setBackground(new Color(255,214,10));
+        export_btn.setForeground(new Color(0,0,0));
+        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export_black.png"))); // NOI
+    }//GEN-LAST:event_export_btnMouseEntered
+
+    private void export_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseExited
+        export_btn.setBackground(new Color(40,40,40));
+        export_btn.setForeground(new Color(255,255,255));
+        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export.png")));
+    }//GEN-LAST:event_export_btnMouseExited
+
+    private void quit_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quit_btnMouseEntered
+        quit_btn.setBackground(new Color(255,214,10));
+        quit_btn.setForeground(new Color(0,0,0));
+        quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit_black.png"))); // NOI
+    }//GEN-LAST:event_quit_btnMouseEntered
+
+    private void quit_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quit_btnMouseExited
+        quit_btn.setBackground(new Color(40,40,40));
+        quit_btn.setForeground(new Color(255,255,255));
+        quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit.png")));
+    }//GEN-LAST:event_quit_btnMouseExited
 
     /**
      * @param args the command line arguments
@@ -481,17 +610,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close_btn;
+    private javax.swing.JButton export_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
     private javax.swing.JPanel header_actions_panel;
     private javax.swing.JPanel header_padding_panel;
     private javax.swing.JPanel header_panel;
     private javax.swing.JLabel header_title;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -502,5 +627,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel menu_bar_file_panel;
     private javax.swing.JPanel menu_bar_panel;
     private javax.swing.JButton minimize_btn;
+    private javax.swing.JButton new_btn;
+    private javax.swing.JButton open_btn;
+    private javax.swing.JButton quit_btn;
+    private javax.swing.JButton save_btn;
     // End of variables declaration//GEN-END:variables
 }
