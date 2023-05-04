@@ -397,6 +397,11 @@ public class MainFrame extends javax.swing.JFrame {
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
         main_panel.setBorder(null);
         main_panel.setcellSize(50);
+        main_panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                main_panelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
         main_panel.setLayout(main_panelLayout);
@@ -569,6 +574,10 @@ public class MainFrame extends javax.swing.JFrame {
         quit_btn.setForeground(new Color(255,255,255));
         quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit.png")));
     }//GEN-LAST:event_quit_btnMouseExited
+
+    private void main_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_main_panelMouseClicked
+        menu_bar_file_panel.setVisible(false);
+    }//GEN-LAST:event_main_panelMouseClicked
 
     /**
      * @param args the command line arguments
