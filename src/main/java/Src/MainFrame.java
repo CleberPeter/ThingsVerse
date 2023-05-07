@@ -219,6 +219,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(header_panel, java.awt.BorderLayout.PAGE_START);
 
+        jLayeredPane1.setBackground(new java.awt.Color(42, 42, 42));
+        jLayeredPane1.setOpaque(true);
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
         jLayeredPane1Layout.columnWeights = new double[] {0.5};
         jLayeredPane1Layout.rowWeights = new double[] {0.5};
@@ -407,7 +409,7 @@ public class MainFrame extends javax.swing.JFrame {
         main_panel.setLayout(main_panelLayout);
         main_panelLayout.setHorizontalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1520, Short.MAX_VALUE)
+            .addGap(0, 1510, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,6 +425,7 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 1054;
         gridBagConstraints.ipady = 392;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         jLayeredPane1.add(main_panel, gridBagConstraints);
 
         getContentPane().add(jLayeredPane1, java.awt.BorderLayout.CENTER);

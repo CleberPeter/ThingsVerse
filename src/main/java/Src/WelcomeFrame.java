@@ -162,7 +162,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         brazil_lang_btn.setBackground(new java.awt.Color(0, 0, 0));
         brazil_lang_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/brazil_flag.png"))); // NOI18N
-        brazil_lang_btn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 83, 79)));
+        brazil_lang_btn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 214, 10)));
         brazil_lang_btn.setContentAreaFilled(false);
         brazil_lang_btn.setFocusPainted(false);
         brazil_lang_btn.setFocusable(false);
@@ -179,7 +179,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         usa_lang_btn.setBackground(new java.awt.Color(0, 0, 0));
         usa_lang_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/usa_flag.png"))); // NOI18N
-        usa_lang_btn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 83, 79)));
+        usa_lang_btn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 214, 10)));
         usa_lang_btn.setBorderPainted(false);
         usa_lang_btn.setContentAreaFilled(false);
         usa_lang_btn.setFocusPainted(false);
