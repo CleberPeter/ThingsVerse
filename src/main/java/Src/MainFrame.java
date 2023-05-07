@@ -511,7 +511,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_bar_file_panelMouseExited
 
     private void quit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quit_btnActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_quit_btnActionPerformed
 
     private void export_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_btnActionPerformed
