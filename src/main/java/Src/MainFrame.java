@@ -11,8 +11,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -42,6 +44,16 @@ public class MainFrame extends javax.swing.JFrame {
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         menu_bar_file_panel.setVisible(false);
+        
+        
+        Src.CustomWidgets.SensorNode SensorNode = new Src.CustomWidgets.SensorNode();
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(100, 100, 0, 0);
+        
+        jLayeredPane1.add(SensorNode,gridBagConstraints, 1);
     }
 
     /**
@@ -73,6 +85,7 @@ public class MainFrame extends javax.swing.JFrame {
         export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         quit_btn = new javax.swing.JButton();
+        sensorNode1 = new Src.CustomWidgets.SensorNode();
         main_panel = new Src.CustomWidgets.GridPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -396,6 +409,29 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
 
+        sensorNode1.setMinimumSize(new java.awt.Dimension(100, 100));
+        sensorNode1.setPreferredSize(new java.awt.Dimension(100, 100));
+        sensorNode1.setRadius(25);
+
+        javax.swing.GroupLayout sensorNode1Layout = new javax.swing.GroupLayout(sensorNode1);
+        sensorNode1.setLayout(sensorNode1Layout);
+        sensorNode1Layout.setHorizontalGroup(
+            sensorNode1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        sensorNode1Layout.setVerticalGroup(
+            sensorNode1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(50, 50, 0, 0);
+        jLayeredPane1.add(sensorNode1, gridBagConstraints);
+
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
         main_panel.setBorder(null);
         main_panel.setcellSize(50);
@@ -409,11 +445,11 @@ public class MainFrame extends javax.swing.JFrame {
         main_panel.setLayout(main_panelLayout);
         main_panelLayout.setHorizontalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1510, Short.MAX_VALUE)
+            .addGap(0, 1587, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -514,57 +550,11 @@ public class MainFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_quit_btnActionPerformed
 
-    private void export_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_export_btnActionPerformed
-
-    private void new_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseEntered
-        new_btn.setBackground(new Color(255,214,10));
-        new_btn.setForeground(new Color(0,0,0));
-        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_black.png"))); // NOI18N
-    }//GEN-LAST:event_new_btnMouseEntered
-
-    private void new_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseExited
-        new_btn.setBackground(new Color(40,40,40));
-        new_btn.setForeground(new Color(255,255,255));
-        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_white.png")));
-    }//GEN-LAST:event_new_btnMouseExited
-
-    private void open_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseEntered
-        open_btn.setBackground(new Color(255,214,10));
-        open_btn.setForeground(new Color(0,0,0));
-        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_black.png"))); // NOI18N
-    }//GEN-LAST:event_open_btnMouseEntered
-
-    private void open_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseExited
-        open_btn.setBackground(new Color(40,40,40));
-        open_btn.setForeground(new Color(255,255,255));
-        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_white.png")));
-    }//GEN-LAST:event_open_btnMouseExited
-
-    private void save_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseEntered
-        save_btn.setBackground(new Color(255,214,10));
-        save_btn.setForeground(new Color(0,0,0));
-        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save_black.png"))); // NOI18N
-    }//GEN-LAST:event_save_btnMouseEntered
-
-    private void save_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseExited
-        save_btn.setBackground(new Color(40,40,40));
-        save_btn.setForeground(new Color(255,255,255));
-        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png")));
-    }//GEN-LAST:event_save_btnMouseExited
-
-    private void export_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseEntered
-        export_btn.setBackground(new Color(255,214,10));
-        export_btn.setForeground(new Color(0,0,0));
-        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export_black.png"))); // NOI
-    }//GEN-LAST:event_export_btnMouseEntered
-
-    private void export_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseExited
-        export_btn.setBackground(new Color(40,40,40));
-        export_btn.setForeground(new Color(255,255,255));
-        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export.png")));
-    }//GEN-LAST:event_export_btnMouseExited
+    private void quit_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quit_btnMouseExited
+        quit_btn.setBackground(new Color(40,40,40));
+        quit_btn.setForeground(new Color(255,255,255));
+        quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit.png")));
+    }//GEN-LAST:event_quit_btnMouseExited
 
     private void quit_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quit_btnMouseEntered
         quit_btn.setBackground(new Color(255,214,10));
@@ -572,11 +562,57 @@ public class MainFrame extends javax.swing.JFrame {
         quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit_black.png"))); // NOI
     }//GEN-LAST:event_quit_btnMouseEntered
 
-    private void quit_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quit_btnMouseExited
-        quit_btn.setBackground(new Color(40,40,40));
-        quit_btn.setForeground(new Color(255,255,255));
-        quit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/quit.png")));
-    }//GEN-LAST:event_quit_btnMouseExited
+    private void export_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_export_btnActionPerformed
+
+    private void export_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseExited
+        export_btn.setBackground(new Color(40,40,40));
+        export_btn.setForeground(new Color(255,255,255));
+        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export.png")));
+    }//GEN-LAST:event_export_btnMouseExited
+
+    private void export_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_export_btnMouseEntered
+        export_btn.setBackground(new Color(255,214,10));
+        export_btn.setForeground(new Color(0,0,0));
+        export_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/export_black.png"))); // NOI
+    }//GEN-LAST:event_export_btnMouseEntered
+
+    private void save_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseExited
+        save_btn.setBackground(new Color(40,40,40));
+        save_btn.setForeground(new Color(255,255,255));
+        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save.png")));
+    }//GEN-LAST:event_save_btnMouseExited
+
+    private void save_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_btnMouseEntered
+        save_btn.setBackground(new Color(255,214,10));
+        save_btn.setForeground(new Color(0,0,0));
+        save_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/save_black.png"))); // NOI18N
+    }//GEN-LAST:event_save_btnMouseEntered
+
+    private void open_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseExited
+        open_btn.setBackground(new Color(40,40,40));
+        open_btn.setForeground(new Color(255,255,255));
+        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_white.png")));
+    }//GEN-LAST:event_open_btnMouseExited
+
+    private void open_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_open_btnMouseEntered
+        open_btn.setBackground(new Color(255,214,10));
+        open_btn.setForeground(new Color(0,0,0));
+        open_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/open_file_black.png"))); // NOI18N
+    }//GEN-LAST:event_open_btnMouseEntered
+
+    private void new_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseExited
+        new_btn.setBackground(new Color(40,40,40));
+        new_btn.setForeground(new Color(255,255,255));
+        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_white.png")));
+    }//GEN-LAST:event_new_btnMouseExited
+
+    private void new_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseEntered
+        new_btn.setBackground(new Color(255,214,10));
+        new_btn.setForeground(new Color(0,0,0));
+        new_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/new_file_black.png"))); // NOI18N
+    }//GEN-LAST:event_new_btnMouseEntered
 
     private void main_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_main_panelMouseClicked
         menu_bar_file_panel.setVisible(false);
@@ -643,5 +679,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton open_btn;
     private javax.swing.JButton quit_btn;
     private javax.swing.JButton save_btn;
+    private Src.CustomWidgets.SensorNode sensorNode1;
     // End of variables declaration//GEN-END:variables
 }

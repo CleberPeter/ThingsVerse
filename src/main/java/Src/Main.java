@@ -31,11 +31,11 @@ public class Main {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                WelcomeFrame welcomeFrame = new WelcomeFrame();
-                welcomeFrame.setVisible(true);
+//                WelcomeFrame welcomeFrame = new WelcomeFrame();
+//                welcomeFrame.setVisible(true);
                 
-//                MainFrame mainFrame = new MainFrame();
-//                mainFrame.setVisible(true);
+                MainFrame mainFrame = new MainFrame();
+                mainFrame.setVisible(true);
             }
         });
     }
