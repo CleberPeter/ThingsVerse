@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
@@ -45,15 +46,33 @@ public class MainFrame extends javax.swing.JFrame {
         
         menu_bar_file_panel.setVisible(false);
         
+        Src.CustomWidgets.SensorNode[] SensorNodes = new Src.CustomWidgets.SensorNode[3];
+        Color[] colors = new Color[3];
         
-        Src.CustomWidgets.SensorNode SensorNode = new Src.CustomWidgets.SensorNode();
+        colors[0] =  new Color(48, 189, 68);
+        colors[1] =  new Color(240, 178, 61);
+        colors[2] =  new Color(255, 102, 102);
+        
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(100, 100, 0, 0);
         
-        jLayeredPane1.add(SensorNode,gridBagConstraints, 1);
+        int i = 0;
+        for(Src.CustomWidgets.SensorNode sn : SensorNodes) 
+        {
+            sn = new Src.CustomWidgets.SensorNode();
+            sn.setName("S" + Integer.toString(i));
+            sn.setRadius(40);
+            sn.setColor(colors[i]);
+            
+            gridBagConstraints.insets = new java.awt.Insets(100, (i + 1)*100, 0, 0);
+            contextPanel1.add(sn, gridBagConstraints);
+            
+            i++;
+        }
     }
 
     /**
@@ -85,7 +104,7 @@ public class MainFrame extends javax.swing.JFrame {
         export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         quit_btn = new javax.swing.JButton();
-        sensorNode1 = new Src.CustomWidgets.SensorNode();
+        contextPanel1 = new Src.CustomWidgets.ContextPanel();
         main_panel = new Src.CustomWidgets.GridPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -409,28 +428,14 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
 
-        sensorNode1.setMinimumSize(new java.awt.Dimension(100, 100));
-        sensorNode1.setPreferredSize(new java.awt.Dimension(100, 100));
-        sensorNode1.setRadius(25);
-
-        javax.swing.GroupLayout sensorNode1Layout = new javax.swing.GroupLayout(sensorNode1);
-        sensorNode1.setLayout(sensorNode1Layout);
-        sensorNode1Layout.setHorizontalGroup(
-            sensorNode1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        sensorNode1Layout.setVerticalGroup(
-            sensorNode1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
+        contextPanel1.setHeight(480);
+        contextPanel1.setWidth(800);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(50, 50, 0, 0);
-        jLayeredPane1.add(sensorNode1, gridBagConstraints);
+        jLayeredPane1.add(contextPanel1, gridBagConstraints);
 
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
         main_panel.setBorder(null);
@@ -445,11 +450,11 @@ public class MainFrame extends javax.swing.JFrame {
         main_panel.setLayout(main_panelLayout);
         main_panelLayout.setHorizontalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1587, Short.MAX_VALUE)
+            .addGap(0, 1418, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -658,6 +663,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close_btn;
+    private Src.CustomWidgets.ContextPanel contextPanel1;
     private javax.swing.JButton export_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
@@ -679,6 +685,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton open_btn;
     private javax.swing.JButton quit_btn;
     private javax.swing.JButton save_btn;
-    private Src.CustomWidgets.SensorNode sensorNode1;
     // End of variables declaration//GEN-END:variables
 }

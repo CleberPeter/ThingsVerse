@@ -34,8 +34,8 @@ public class Main {
 //                WelcomeFrame welcomeFrame = new WelcomeFrame();
 //                welcomeFrame.setVisible(true);
                 
-                MainFrame mainFrame = new MainFrame();
-                mainFrame.setVisible(true);
+                 MainFrame mainFrame = new MainFrame();
+                 mainFrame.setVisible(true);
             }
         });
     }

@@ -15,6 +15,15 @@ import javax.swing.JPanel;
 
 public class PanelRound extends JPanel {
 
+    public void setRoundDefault(int round) {
+        this.roundTopLeft = round;
+        this.roundTopRight = round;
+        this.roundBottomLeft = round;
+        this.roundBottomRight = round;
+        
+        repaint();
+    }
+    
     public int getRoundTopLeft() {
         return roundTopLeft;
     }
