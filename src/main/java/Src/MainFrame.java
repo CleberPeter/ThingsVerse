@@ -34,6 +34,8 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
+        
+        jLayeredPane1.setLayout(null);
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         maximized = true;
         
@@ -69,7 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
             sn.setColor(colors[i]);
             
             gridBagConstraints.insets = new java.awt.Insets(100, (i + 1)*100, 0, 0);
-            contextPanel1.add(sn, gridBagConstraints);
+            contextPanel.add(sn, gridBagConstraints);
             
             i++;
         }
@@ -104,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
         export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         quit_btn = new javax.swing.JButton();
-        contextPanel1 = new Src.CustomWidgets.ContextPanel();
+        contextPanel = new Src.CustomWidgets.ContextPanel();
         main_panel = new Src.CustomWidgets.GridPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -254,6 +256,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLayeredPane1.setBackground(new java.awt.Color(42, 42, 42));
         jLayeredPane1.setOpaque(true);
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
+        jLayeredPane1Layout.columnWidths = new int[] {1};
+        jLayeredPane1Layout.rowHeights = new int[] {1};
         jLayeredPane1Layout.columnWeights = new double[] {0.5};
         jLayeredPane1Layout.rowWeights = new double[] {0.5};
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -428,14 +432,14 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
 
-        contextPanel1.setHeight(480);
-        contextPanel1.setWidth(800);
+        contextPanel.setMinimumSize(new java.awt.Dimension(800, 480));
+        contextPanel.setPreferredSize(new java.awt.Dimension(800, 480));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        jLayeredPane1.add(contextPanel1, gridBagConstraints);
+        jLayeredPane1.add(contextPanel, gridBagConstraints);
 
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
         main_panel.setBorder(null);
@@ -450,11 +454,11 @@ public class MainFrame extends javax.swing.JFrame {
         main_panel.setLayout(main_panelLayout);
         main_panelLayout.setHorizontalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1418, Short.MAX_VALUE)
+            .addGap(0, 1054, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -663,7 +667,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close_btn;
-    private Src.CustomWidgets.ContextPanel contextPanel1;
+    private Src.CustomWidgets.ContextPanel contextPanel;
     private javax.swing.JButton export_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;

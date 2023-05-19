@@ -7,7 +7,11 @@ package Src.CustomWidgets;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -15,10 +19,12 @@ import javax.swing.JPanel;
  *
  * @author cleber
  */
-public class ContextPanel extends PanelRound {
+public class ContextPanel extends PanelRound implements ComponentListener {
     public ContextPanel() {
         
-        setLayout(new java.awt.GridBagLayout());
+        this.addComponentListener(this);
+        
+        setLayout(new java.awt.GridBagLayout()); 
         
         header_panel = new PanelRound();
         header_panel.setLayout(new java.awt.GridBagLayout());
@@ -43,8 +49,11 @@ public class ContextPanel extends PanelRound {
         
         ComponentMover componentMover = new ComponentMover();
         componentMover.registerComponent(this);
+        componentMover.setDragInsets(new Insets(10, 10, 10, 10));
         
-        setSize();
+        ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
+        componentResizer.setSnapSize(new Dimension(15, 15));
+        
         setColor(this.color);
         setTitle(title);
         setRoundDefault(20);
@@ -63,11 +72,6 @@ public class ContextPanel extends PanelRound {
         repaint();
     }
     
-    public int getWidth()
-    {
-        return width;
-    }
-    
     public void setTitle(String title)
     {
         this.title = title;
@@ -82,39 +86,35 @@ public class ContextPanel extends PanelRound {
         return this.title;
     }
     
-    public void setWidth(int width)
+    public void recalculateSizes()
     {
-        this.width = width;
-        
-        setSize();
-    }
-    
-    public int getHeight()
-    {
-        return height;
-    }
-    
-    public void setHeight(int height)
-    {
-        this.height = height;
-        
-        setSize();
-    }
-    
-    private void setSize()
-    {
-        Dimension context_panel_dimension = new Dimension(this.width, this.height);
-        setPreferredSize(context_panel_dimension);
-        setMinimumSize(context_panel_dimension);
-        
-        Dimension context_panel_header_dimension = new Dimension(this.width, 30);
+        Dimension context_panel_header_dimension = new Dimension(this.getWidth(), 30);
         header_panel.setPreferredSize(context_panel_header_dimension);
+        header_panel.setMinimumSize(context_panel_header_dimension);
+        
+        header_panel.setLayout(new java.awt.GridBagLayout());
+    }
+    
+    @Override
+    public void componentResized(ComponentEvent ce) 
+    {
+        recalculateSizes();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent ce) {
     }
     
     private PanelRound header_panel;
     private Color color = Color.WHITE;
-    private int width = 640;
-    private int height = 320;
     private JLabel titleLabel = new JLabel();
     private String title = "Contexto A";
 }

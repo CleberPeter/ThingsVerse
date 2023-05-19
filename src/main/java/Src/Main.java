@@ -36,6 +36,9 @@ public class Main {
                 
                  MainFrame mainFrame = new MainFrame();
                  mainFrame.setVisible(true);
+
+//                testFrame mainFrame = new testFrame();
+//                mainFrame.setVisible(true);
             }
         });
     }

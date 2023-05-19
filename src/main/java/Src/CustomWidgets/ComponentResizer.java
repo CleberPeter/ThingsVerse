@@ -417,7 +417,7 @@ public class ComponentResizer extends MouseAdapter
                     height += drag;
 		}
 
-		source.setBounds(x, y, width, height);
+                source.setBounds(x, y, width, height);
 		source.validate();
 	}
 
