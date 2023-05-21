@@ -416,9 +416,8 @@ public class ComponentResizer extends MouseAdapter
                     // drag = getDragBounded(drag, snapSize.height, height, minimumSize.height, maximum);
                     height += drag;
 		}
-
                 source.setBounds(x, y, width, height);
-		source.validate();
+                source.validate();
 	}
 
 	/*

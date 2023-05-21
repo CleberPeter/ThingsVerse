@@ -34,8 +34,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        
-        jLayeredPane1.setLayout(null);
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         maximized = true;
         
@@ -48,31 +46,16 @@ public class MainFrame extends javax.swing.JFrame {
         
         menu_bar_file_panel.setVisible(false);
         
-        Src.CustomWidgets.SensorNode[] SensorNodes = new Src.CustomWidgets.SensorNode[3];
         Color[] colors = new Color[3];
         
         colors[0] =  new Color(48, 189, 68);
         colors[1] =  new Color(240, 178, 61);
         colors[2] =  new Color(255, 102, 102);
         
-        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        
         int i = 0;
-        for(Src.CustomWidgets.SensorNode sn : SensorNodes) 
+        for(Color color : colors) 
         {
-            sn = new Src.CustomWidgets.SensorNode();
-            sn.setName("S" + Integer.toString(i));
-            sn.setRadius(40);
-            sn.setColor(colors[i]);
-            
-            gridBagConstraints.insets = new java.awt.Insets(100, (i + 1)*100, 0, 0);
-            contextPanel.add(sn, gridBagConstraints);
-            
+            contextPanel.addSensorNode("S" + Integer.toString(i), 25, color, new java.awt.Insets(100, (i + 1)*100, 0, 0));   
             i++;
         }
     }
@@ -256,8 +239,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLayeredPane1.setBackground(new java.awt.Color(42, 42, 42));
         jLayeredPane1.setOpaque(true);
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
-        jLayeredPane1Layout.columnWidths = new int[] {1};
-        jLayeredPane1Layout.rowHeights = new int[] {1};
+        jLayeredPane1Layout.columnWidths = new int[] {0};
+        jLayeredPane1Layout.rowHeights = new int[] {0};
         jLayeredPane1Layout.columnWeights = new double[] {0.5};
         jLayeredPane1Layout.rowWeights = new double[] {0.5};
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -458,7 +441,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();

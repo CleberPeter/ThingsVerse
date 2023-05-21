@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +40,7 @@ public class SensorNode extends JPanel {
         
         add(this.name_label, gridBagConstraints);
     }
-    
+
     public int getRadius()
     {
         return this.radius;
