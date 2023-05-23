@@ -22,8 +22,8 @@ import javax.swing.JLabel;
 public class ContextPanel extends PanelRound implements ComponentListener {
     public ContextPanel() {
         
-        gridBagLayout = new GridBagLayout();
-        setLayout(gridBagLayout);
+        layout = new GridBagLayout();
+        setLayout(layout);
         
         header_panel = new PanelRound();
         header_panel.setName("header_panel");
@@ -136,7 +136,7 @@ public class ContextPanel extends PanelRound implements ComponentListener {
         
         gridBagConstraints.insets = new Insets(ce.getComponent().getY(), ce.getComponent().getX(), 0, 0);
         
-        gridBagLayout.setConstraints(ce.getComponent(), gridBagConstraints);
+        layout.setConstraints(ce.getComponent(), gridBagConstraints);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class ContextPanel extends PanelRound implements ComponentListener {
         System.out.println("Src.CustomWidgets.ContextPanel.componentHidden(): " + ce.getComponent().getName());
     }
     
-    private GridBagLayout gridBagLayout;
+    private GridBagLayout layout;
     private PanelRound header_panel;
     private Color color = Color.WHITE;
     private JLabel titleLabel = new JLabel();

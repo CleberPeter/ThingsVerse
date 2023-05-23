@@ -6,27 +6,23 @@ package Src;
 
 import Src.CustomWidgets.BackgroundMenuBar;
 import Src.CustomWidgets.ComponentResizer;
+import Src.CustomWidgets.ContextPanel;
 import Src.CustomWidgets.FrameDragListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.UIManager;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  *
  * @author cleber
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Creates new form CreateUniserveFrame
@@ -45,6 +41,12 @@ public class MainFrame extends javax.swing.JFrame {
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         menu_bar_file_panel.setVisible(false);
+   
+        contextPanel = new ContextPanel();
+        contextPanel.setTitle("Contexto A");
+        contextPanel.setPreferredSize(new Dimension(800, 480));
+        contextPanel.setMinimumSize(new Dimension(800, 480));
+        contextPanel.setColor(Color.white);
         
         Color[] colors = new Color[3];
         
@@ -58,6 +60,17 @@ public class MainFrame extends javax.swing.JFrame {
             contextPanel.addSensorNode("S" + Integer.toString(i), 25, color, new java.awt.Insets(100, (i + 1)*100, 0, 0));   
             i++;
         }
+        
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(100, 100, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        
+        contextPanel.addComponentListener(this);
+        layeredPanel.add(contextPanel, gridBagConstraints, 1);
     }
 
     /**
@@ -80,7 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         menu_bar_panel = new javax.swing.JPanel();
         menu_bar_file_btn = new javax.swing.JButton();
         menu_bar_edit_btn = new javax.swing.JButton();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
+        layeredPanel = new javax.swing.JLayeredPane();
         menu_bar_file_panel = new javax.swing.JPanel();
         new_btn = new javax.swing.JButton();
         open_btn = new javax.swing.JButton();
@@ -89,7 +102,6 @@ public class MainFrame extends javax.swing.JFrame {
         export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         quit_btn = new javax.swing.JButton();
-        contextPanel = new Src.CustomWidgets.ContextPanel();
         main_panel = new Src.CustomWidgets.GridPanel();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -236,14 +248,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(header_panel, java.awt.BorderLayout.PAGE_START);
 
-        jLayeredPane1.setBackground(new java.awt.Color(42, 42, 42));
-        jLayeredPane1.setOpaque(true);
+        layeredPanel.setBackground(new java.awt.Color(42, 42, 42));
+        layeredPanel.setOpaque(true);
         java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
         jLayeredPane1Layout.columnWidths = new int[] {0};
         jLayeredPane1Layout.rowHeights = new int[] {0};
         jLayeredPane1Layout.columnWeights = new double[] {0.5};
         jLayeredPane1Layout.rowWeights = new double[] {0.5};
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        layeredPanel.setLayout(jLayeredPane1Layout);
 
         menu_bar_file_panel.setBackground(new java.awt.Color(40, 40, 40));
         menu_bar_file_panel.setPreferredSize(new java.awt.Dimension(243, 100));
@@ -413,16 +425,7 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 60;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
-
-        contextPanel.setMinimumSize(new java.awt.Dimension(800, 480));
-        contextPanel.setPreferredSize(new java.awt.Dimension(800, 480));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        jLayeredPane1.add(contextPanel, gridBagConstraints);
+        layeredPanel.add(menu_bar_file_panel, gridBagConstraints);
 
         main_panel.setBackground(new java.awt.Color(42, 42, 42));
         main_panel.setBorder(null);
@@ -454,9 +457,9 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.ipady = 392;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        jLayeredPane1.add(main_panel, gridBagConstraints);
+        layeredPanel.add(main_panel, gridBagConstraints);
 
-        getContentPane().add(jLayeredPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(layeredPanel, java.awt.BorderLayout.CENTER);
 
         footer_panel.setBackground(new java.awt.Color(255, 255, 255));
         footer_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
@@ -645,12 +648,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    private Boolean maximized;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close_btn;
-    private Src.CustomWidgets.ContextPanel contextPanel;
     private javax.swing.JButton export_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
@@ -658,9 +658,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel header_padding_panel;
     private javax.swing.JPanel header_panel;
     private javax.swing.JLabel header_title;
-    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLayeredPane layeredPanel;
     private Src.CustomWidgets.GridPanel main_panel;
     private javax.swing.JButton maximize_btn;
     private javax.swing.JButton menu_bar_edit_btn;
@@ -673,4 +673,40 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton quit_btn;
     private javax.swing.JButton save_btn;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void componentResized(ComponentEvent ce) {        
+        contextPanel.setPreferredSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
+        contextPanel.setMinimumSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent ce) {
+        
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        
+        gridBagConstraints.insets = new Insets(ce.getComponent().getY(), ce.getComponent().getX(), 0, 0);
+        
+        GridBagLayout layout = (GridBagLayout) layeredPanel.getLayout();
+        layout.setConstraints(ce.getComponent(), gridBagConstraints);
+    }
+
+    @Override
+    public void componentShown(ComponentEvent ce) {
+        System.out.println("Src.MainFrame.componentShown()");
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent ce) {
+        System.out.println("Src.MainFrame.componentHidden()");
+    }
+    
+    private Boolean maximized;
+    private GridBagLayout layeredPanelLayout;
+    private ContextPanel contextPanel;
 }
