@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Src.CustomWidgets;
+package components;
 
+import mouseAdapters.ComponentMover;
+import mouseAdapters.ComponentResizer;
+import customWidgets.PanelRound;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,14 +21,55 @@ import javax.swing.JLabel;
  *
  * @author cleber
  */
-public class ContextPanel extends PanelRound implements ComponentListener {
-    public ContextPanel() {
-        
-        layout = new GridBagLayout();
-        setLayout(layout);
+public class Context extends PanelRound implements ComponentListener {
+    
+    private static final String DEFAULT_TITLE = "Contexto A";
+    private static final Color DEFAULT_COLOR = Color.WHITE;
+
+    private PanelRound header_panel;
+    private Color color;
+    
+    private JLabel titleLabel;
+    private String title;
+    
+    public Context() 
+    {    
+        initComponents();
+        initListeners();
+        setUpLayout();    
+    }
+   
+    private void initComponents()
+    {
+        setBackground(new Color(DEFAULT_COLOR.getRed(), DEFAULT_COLOR.getGreen(), DEFAULT_COLOR.getBlue(), 100));
+        setRoundDefault(20);
         
         header_panel = new PanelRound();
-        header_panel.setName("header_panel");
+        header_panel.setRoundTopLeft(20);
+        header_panel.setRoundTopRight(20);
+        header_panel.setBackground(DEFAULT_COLOR);
+        
+        titleLabel = new JLabel();
+        titleLabel.setText(DEFAULT_TITLE);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 14));   
+    }
+    
+    private void initListeners()
+    {
+        ComponentMover componentMover = new ComponentMover();
+        componentMover.registerComponent(this);
+        componentMover.setDragInsets(new Insets(10, 10, 10, 10));
+        
+        ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
+        componentResizer.setSnapSize(new Dimension(15, 15));
+        
+        addComponentListener(this);
+    }
+    
+    private void setUpLayout()
+    {
+        setLayout(new GridBagLayout());
+        
         header_panel.setLayout(new java.awt.GridBagLayout());
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -36,34 +79,15 @@ public class ContextPanel extends PanelRound implements ComponentListener {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
         
-        titleLabel = new JLabel();
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
         header_panel.add(titleLabel, gridBagConstraints);
-        
-        header_panel.setRoundTopLeft(20);
-        header_panel.setRoundTopRight(20);
-        header_panel.setBackground(this.color);
         
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(header_panel, gridBagConstraints);
-        
-        ComponentMover componentMover = new ComponentMover();
-        componentMover.registerComponent(this);
-        componentMover.setDragInsets(new Insets(10, 10, 10, 10));
-        
-        ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
-        componentResizer.setSnapSize(new Dimension(15, 15));
-        
-        addComponentListener(this);
-        
-        setColor(this.color);
-        setTitle(title);
-        setRoundDefault(20);
     }
     
     public void addSensorNode(String name, int radius, Color color, Insets insets)
     {
-        Src.CustomWidgets.SensorNode sensorNode = new Src.CustomWidgets.SensorNode();
+        components.SensorNode sensorNode = new components.SensorNode();
         
         sensorNode.setName(name);
         sensorNode.setRadius(radius);
@@ -136,6 +160,7 @@ public class ContextPanel extends PanelRound implements ComponentListener {
         
         gridBagConstraints.insets = new Insets(ce.getComponent().getY(), ce.getComponent().getX(), 0, 0);
         
+        GridBagLayout layout = (GridBagLayout) getLayout();
         layout.setConstraints(ce.getComponent(), gridBagConstraints);
     }
 
@@ -148,10 +173,4 @@ public class ContextPanel extends PanelRound implements ComponentListener {
     public void componentHidden(ComponentEvent ce) {
         System.out.println("Src.CustomWidgets.ContextPanel.componentHidden(): " + ce.getComponent().getName());
     }
-    
-    private GridBagLayout layout;
-    private PanelRound header_panel;
-    private Color color = Color.WHITE;
-    private JLabel titleLabel = new JLabel();
-    private String title = "Contexto A";
 }

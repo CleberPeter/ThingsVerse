@@ -914,7 +914,7 @@
                     <Property name="verticalGap" type="int" value="15"/>
                   </Layout>
                   <SubComponents>
-                    <Container class="Src.CustomWidgets.PanelRound" name="main_rigth_panel_gallery_card">
+                    <Container class="main.CustomWidgets.PanelRound" name="main_rigth_panel_gallery_card">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="34" green="34" red="34" type="rgb"/>
@@ -979,7 +979,7 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Container class="Src.CustomWidgets.PanelRound" name="gallery_card_footer">
+                        <Container class="main.CustomWidgets.PanelRound" name="gallery_card_footer">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1001,7 +1001,7 @@
                             <Property name="verticalGap" type="int" value="0"/>
                           </Layout>
                           <SubComponents>
-                            <Container class="Src.CustomWidgets.PanelRound" name="gallery_card_left_footer">
+                            <Container class="main.CustomWidgets.PanelRound" name="gallery_card_left_footer">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="a" green="d6" red="ff" type="rgb"/>
@@ -1025,7 +1025,7 @@
                                 </DimensionLayout>
                               </Layout>
                             </Container>
-                            <Container class="Src.CustomWidgets.PanelRound" name="gallery_card_footer_right">
+                            <Container class="main.CustomWidgets.PanelRound" name="gallery_card_footer_right">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="42" green="42" red="42" type="rgb"/>
@@ -1098,7 +1098,7 @@
                         </CodeStatement>
                         <CodeStatement>
                           <CodeExpression id="28_main_rigth_panel_gallery_card">
-                            <CodeVariable name="main_rigth_panel_gallery_card" type="8194" declaredType="Src.CustomWidgets.PanelRound"/>
+                            <CodeVariable name="main_rigth_panel_gallery_card" type="8194" declaredType="main.CustomWidgets.PanelRound"/>
                             <ExpressionOrigin>
                               <ExpressionProvider type="ComponentRef">
                                 <ComponentRef name="main_rigth_panel_gallery_card"/>
@@ -1430,7 +1430,7 @@
                           </StatementProvider>
                           <Parameters>
                             <CodeExpression id="52_gallery_card_footer">
-                              <CodeVariable name="gallery_card_footer" type="8194" declaredType="Src.CustomWidgets.PanelRound"/>
+                              <CodeVariable name="gallery_card_footer" type="8194" declaredType="main.CustomWidgets.PanelRound"/>
                               <ExpressionOrigin>
                                 <ExpressionProvider type="ComponentRef">
                                   <ComponentRef name="gallery_card_footer"/>
@@ -1442,7 +1442,7 @@
                         </CodeStatement>
                       </LayoutCode>
                     </Container>
-                    <Container class="Src.CustomWidgets.PanelRound" name="main_right_learn_card">
+                    <Container class="main.CustomWidgets.PanelRound" name="main_right_learn_card">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="34" green="34" red="34" type="rgb"/>
@@ -1492,7 +1492,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Container class="Src.CustomWidgets.PanelRound" name="main_right_contact_card">
+                    <Container class="main.CustomWidgets.PanelRound" name="main_right_contact_card">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="34" green="34" red="34" type="rgb"/>

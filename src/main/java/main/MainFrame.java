@@ -2,16 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Src;
+package main;
 
-import Src.CustomWidgets.BackgroundMenuBar;
-import Src.CustomWidgets.ComponentResizer;
-import Src.CustomWidgets.ContextPanel;
-import Src.CustomWidgets.FrameDragListener;
-import java.awt.BorderLayout;
+import components.AirConditioning;
+import mouseAdapters.ComponentResizer;
+import components.Context;
+import mouseAdapters.FrameDragListener;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -42,10 +40,10 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         menu_bar_file_panel.setVisible(false);
    
-        contextPanel = new ContextPanel();
-        contextPanel.setTitle("Contexto A");
-        contextPanel.setPreferredSize(new Dimension(800, 480));
-        contextPanel.setMinimumSize(new Dimension(800, 480));
+        contextPanel = new Context();
+        contextPanel.setTitle("Salão Principal");
+        contextPanel.setPreferredSize(new Dimension(1024, 768));
+        contextPanel.setMinimumSize(new Dimension(1024, 768));
         contextPanel.setColor(Color.white);
         
         Color[] colors = new Color[3];
@@ -57,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         int i = 0;
         for(Color color : colors) 
         {
-            contextPanel.addSensorNode("S" + Integer.toString(i), 25, color, new java.awt.Insets(100, (i + 1)*100, 0, 0));   
+            //contextPanel.addSensorNode("S" + Integer.toString(i), 25, color, new java.awt.Insets(100, (i + 1)*100, 0, 0));   
             i++;
         }
         
@@ -69,8 +67,14 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         gridBagConstraints.insets = new java.awt.Insets(100, 100, 0, 0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
-        contextPanel.addComponentListener(this);
         layeredPanel.add(contextPanel, gridBagConstraints, 1);
+        
+        AirConditioning airConditioning = new AirConditioning();
+        
+        gridBagConstraints.insets = new java.awt.Insets(200, 100, 0, 0);
+        contextPanel.add(airConditioning, gridBagConstraints);
+        
+        contextPanel.addComponentListener(this);
     }
 
     /**
@@ -102,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         export_btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         quit_btn = new javax.swing.JButton();
-        main_panel = new Src.CustomWidgets.GridPanel();
+        gridBackground = new customWidgets.GridBackground();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
 
@@ -258,7 +262,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         layeredPanel.setLayout(jLayeredPane1Layout);
 
         menu_bar_file_panel.setBackground(new java.awt.Color(40, 40, 40));
-        menu_bar_file_panel.setPreferredSize(new java.awt.Dimension(243, 100));
+        menu_bar_file_panel.setPreferredSize(new java.awt.Dimension(200, 120));
         menu_bar_file_panel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 menu_bar_file_panelMouseExited(evt);
@@ -422,42 +426,31 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 60;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         layeredPanel.add(menu_bar_file_panel, gridBagConstraints);
 
-        main_panel.setBackground(new java.awt.Color(42, 42, 42));
-        main_panel.setBorder(null);
-        main_panel.setcellSize(50);
-        main_panel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                main_panelMouseClicked(evt);
-            }
-        });
+        gridBackground.setBackground(new java.awt.Color(0, 0, 0));
+        gridBackground.setcellSize(50);
 
-        javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
-        main_panel.setLayout(main_panelLayout);
-        main_panelLayout.setHorizontalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1054, Short.MAX_VALUE)
+        javax.swing.GroupLayout gridBackgroundLayout = new javax.swing.GroupLayout(gridBackground);
+        gridBackground.setLayout(gridBackgroundLayout);
+        gridBackgroundLayout.setHorizontalGroup(
+            gridBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1064, Short.MAX_VALUE)
         );
-        main_panelLayout.setVerticalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        gridBackgroundLayout.setVerticalGroup(
+            gridBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 475, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 1054;
-        gridBagConstraints.ipady = 392;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        layeredPanel.add(main_panel, gridBagConstraints);
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        layeredPanel.add(gridBackground, gridBagConstraints);
 
         getContentPane().add(layeredPanel, java.awt.BorderLayout.CENTER);
 
@@ -654,6 +647,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JButton export_btn;
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
+    private customWidgets.GridBackground gridBackground;
     private javax.swing.JPanel header_actions_panel;
     private javax.swing.JPanel header_padding_panel;
     private javax.swing.JPanel header_panel;
@@ -661,7 +655,6 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLayeredPane layeredPanel;
-    private Src.CustomWidgets.GridPanel main_panel;
     private javax.swing.JButton maximize_btn;
     private javax.swing.JButton menu_bar_edit_btn;
     private javax.swing.JButton menu_bar_file_btn;
@@ -708,5 +701,5 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     
     private Boolean maximized;
     private GridBagLayout layeredPanelLayout;
-    private ContextPanel contextPanel;
+    private Context contextPanel;
 }

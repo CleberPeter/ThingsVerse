@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Src;
+package main;
 
-import Src.CustomWidgets.FrameDragListener;
+import mouseAdapters.FrameDragListener;
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.geom.RoundRectangle2D;
@@ -66,15 +66,15 @@ public class WelcomeFrame extends javax.swing.JFrame {
         main_right_panel_explore_section = new javax.swing.JPanel();
         main_rigth_panel_explore_section_title = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        main_rigth_panel_gallery_card = new Src.CustomWidgets.PanelRound();
+        main_rigth_panel_gallery_card = new customWidgets.PanelRound();
         gallery_card_title = new javax.swing.JLabel();
         gallery_card_body = new javax.swing.JLabel();
-        gallery_card_footer = new Src.CustomWidgets.PanelRound();
-        gallery_card_left_footer = new Src.CustomWidgets.PanelRound();
-        gallery_card_footer_right = new Src.CustomWidgets.PanelRound();
-        main_right_learn_card = new Src.CustomWidgets.PanelRound();
+        gallery_card_footer = new customWidgets.PanelRound();
+        gallery_card_left_footer = new customWidgets.PanelRound();
+        gallery_card_footer_right = new customWidgets.PanelRound();
+        main_right_learn_card = new customWidgets.PanelRound();
         main_right_learn_card_btn = new javax.swing.JButton();
-        main_right_contact_card = new Src.CustomWidgets.PanelRound();
+        main_right_contact_card = new customWidgets.PanelRound();
         main_right_contact_card_btn = new javax.swing.JButton();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
@@ -620,9 +620,9 @@ public class WelcomeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel footer_panel;
     private javax.swing.JLabel footer_title;
     private javax.swing.JLabel gallery_card_body;
-    private Src.CustomWidgets.PanelRound gallery_card_footer;
-    private Src.CustomWidgets.PanelRound gallery_card_footer_right;
-    private Src.CustomWidgets.PanelRound gallery_card_left_footer;
+    private customWidgets.PanelRound gallery_card_footer;
+    private customWidgets.PanelRound gallery_card_footer_right;
+    private customWidgets.PanelRound gallery_card_left_footer;
     private javax.swing.JLabel gallery_card_title;
     private javax.swing.JPanel header_actions_panel;
     private javax.swing.JPanel header_lang_panel;
@@ -639,14 +639,14 @@ public class WelcomeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel main_left_panel_recent_section;
     private javax.swing.JLabel main_left_panel_recent_section_title;
     private javax.swing.JPanel main_panel;
-    private Src.CustomWidgets.PanelRound main_right_contact_card;
+    private customWidgets.PanelRound main_right_contact_card;
     private javax.swing.JButton main_right_contact_card_btn;
-    private Src.CustomWidgets.PanelRound main_right_learn_card;
+    private customWidgets.PanelRound main_right_learn_card;
     private javax.swing.JButton main_right_learn_card_btn;
     private javax.swing.JPanel main_right_panel;
     private javax.swing.JPanel main_right_panel_explore_section;
     private javax.swing.JLabel main_rigth_panel_explore_section_title;
-    private Src.CustomWidgets.PanelRound main_rigth_panel_gallery_card;
+    private customWidgets.PanelRound main_rigth_panel_gallery_card;
     private javax.swing.JButton minimize_btn;
     private javax.swing.JButton new_simulation_btn;
     private javax.swing.JButton open_simulation_btn1;

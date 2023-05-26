@@ -1,4 +1,4 @@
-package Src.CustomWidgets;
+package mouseAdapters;
 
 import java.awt.*;
 import java.awt.event.*;
