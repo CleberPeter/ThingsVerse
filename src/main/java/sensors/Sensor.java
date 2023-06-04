@@ -2,28 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package components;
+package sensors;
 
-import mouseAdapters.ComponentMover;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import mouseAdapters.ComponentMover;
 
 /**
  *
  * @author cleber
  */
-public class SensorNode extends JPanel {
+public class Sensor extends JPanel {
 
-    public SensorNode() {
+    public Sensor() {
         setOpaque(false);
         setLayout(new java.awt.GridBagLayout());
         

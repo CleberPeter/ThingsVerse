@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package components.basic;
+package blocks;
 
 import customWidgets.FilledCircle;
 import java.awt.Color;
@@ -18,15 +18,15 @@ import javax.swing.JPanel;
  *
  * @author cleber
  */
-public class Output extends JPanel
+public class Input extends JPanel
 {
-    private static final Color DEFAULT_COLOR = new Color(240, 178, 61);
+    private static final Color DEFAULT_COLOR = new Color(48, 189, 68);
     
     private String name;
     private double value;
     FilledCircle connectionPoint;
     
-    public Output(String name, double value) 
+    public Input(String name, double value) 
     {
         setLayout(new GridBagLayout());
         
@@ -37,8 +37,8 @@ public class Output extends JPanel
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         add(connectionPoint, gridBagConstraints);
         
         JLabel name_label = new JLabel();
@@ -46,7 +46,7 @@ public class Output extends JPanel
         name_label.setForeground(Color.white);
         name_label.setText(name);
         
-        gridBagConstraints.insets = new Insets(0, 0, 0, 30);
+        gridBagConstraints.insets = new Insets(0, 30, 0, 0);
         add(name_label, gridBagConstraints);
         
         setOpaque(false);

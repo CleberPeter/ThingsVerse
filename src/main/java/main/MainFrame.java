@@ -4,9 +4,11 @@
  */
 package main;
 
-import components.AirConditioning;
+import adapters.AirToTemperatureAdapter;
+import devices.AirConditioningDevice;
 import mouseAdapters.ComponentResizer;
-import components.Context;
+import contexts.EmptyContext;
+import variables.TemperatureVariable;
 import mouseAdapters.FrameDragListener;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +17,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import sensors.Sensor;
+import variables.VolumeVariable;
 
 /**
  *
@@ -40,24 +44,11 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         menu_bar_file_panel.setVisible(false);
    
-        contextPanel = new Context();
-        contextPanel.setTitle("Salão Principal");
-        contextPanel.setPreferredSize(new Dimension(1024, 768));
-        contextPanel.setMinimumSize(new Dimension(1024, 768));
+        contextPanel = new EmptyContext();
+        contextPanel.setTitle("Sala");
+        contextPanel.setPreferredSize(new Dimension(2048, 768));
+        contextPanel.setMinimumSize(new Dimension(2048, 768));
         contextPanel.setColor(Color.white);
-        
-        Color[] colors = new Color[3];
-        
-        colors[0] =  new Color(48, 189, 68);
-        colors[1] =  new Color(240, 178, 61);
-        colors[2] =  new Color(255, 102, 102);
-        
-        int i = 0;
-        for(Color color : colors) 
-        {
-            //contextPanel.addSensorNode("S" + Integer.toString(i), 25, color, new java.awt.Insets(100, (i + 1)*100, 0, 0));   
-            i++;
-        }
         
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -69,12 +60,40 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         layeredPanel.add(contextPanel, gridBagConstraints, 1);
         
-        AirConditioning airConditioning = new AirConditioning();
+        
+        Sensor sensor = new Sensor();
+        
+        sensor.setName("S1");
+        sensor.setRadius(25);
+        sensor.setColor(new Color(255,102, 102));
+        sensor.addComponentListener(contextPanel);
+        
+        gridBagConstraints.insets = new java.awt.Insets(400, 10, 0, 0);
+        contextPanel.add(sensor, gridBagConstraints);
+        
+        
+        VolumeVariable volume = new VolumeVariable();
+        
+        gridBagConstraints.insets = new java.awt.Insets(50, 400, 0, 0);
+        contextPanel.add(volume, gridBagConstraints);
+        
+        AirConditioningDevice airConditioning = new AirConditioningDevice();
         
         gridBagConstraints.insets = new java.awt.Insets(200, 100, 0, 0);
         contextPanel.add(airConditioning, gridBagConstraints);
         
+        AirToTemperatureAdapter air_to_temp = new AirToTemperatureAdapter();
+        
+        gridBagConstraints.insets = new java.awt.Insets(200, 600, 0, 0);
+        contextPanel.add(air_to_temp, gridBagConstraints);
+        
+        TemperatureVariable temperature = new TemperatureVariable();
+        
+        gridBagConstraints.insets = new java.awt.Insets(400, 400, 0, 0);
+        contextPanel.add(temperature, gridBagConstraints);
+        
         contextPanel.addComponentListener(this);
+        
     }
 
     /**
@@ -668,7 +687,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void componentResized(ComponentEvent ce) {        
+    public void componentResized(ComponentEvent ce) {     
         contextPanel.setPreferredSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
         contextPanel.setMinimumSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
     }
@@ -701,5 +720,5 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     
     private Boolean maximized;
     private GridBagLayout layeredPanelLayout;
-    private Context contextPanel;
+    private EmptyContext contextPanel;
 }

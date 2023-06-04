@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package components.interfaces;
+package blocks;
 
-import components.basic.Input;
-import components.basic.Output;
 import customWidgets.PanelRound;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,9 +13,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 
@@ -25,16 +24,21 @@ import mouseAdapters.ComponentResizer;
  *
  * @author cleber
  */
-public abstract class Device extends PanelRound implements ComponentListener
+public abstract class Block extends JLayeredPane implements ComponentListener
 {
-    private static final Color DEFAULT_COLOR = new Color(35, 35, 35, 164);
+    private static final Color DEFAULT_COLOR = new Color(60,60,60);
+    private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
     private PanelRound header_panel;
+    private PanelRound main_panel;
     private String name;
-    private List<Input> inputs;
-    private List<Output> outputs;
+    private List<Input> inputs = new ArrayList<>();
+    private List<Output> outputs = new ArrayList<>();
     
-    public Device(String name)
+    private int inputs_top_padding = 50;
+    private int outputs_top_padding = 50;
+    
+    public Block(String name)
     {   
         setLayout(new GridBagLayout());
         
@@ -56,14 +60,20 @@ public abstract class Device extends PanelRound implements ComponentListener
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
-        
         header_panel.add(titleLabel, gridBagConstraints);
         
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         add(header_panel, gridBagConstraints);
         
-        setBackground(DEFAULT_COLOR);
-        setRoundDefault(20);
+        main_panel = new PanelRound();
+        main_panel.setRoundDefault(20);
+        main_panel.setBackground(DEFAULT_COLOR);
+        
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(main_panel, gridBagConstraints, 1);
+        
+        setBackground(TRANSPARENT_COLOR);
         setName(name);
         
         ComponentMover componentMover = new ComponentMover();
@@ -96,12 +106,10 @@ public abstract class Device extends PanelRound implements ComponentListener
     public List<Input> getInputs() {
         return inputs;
     }
-
-    /**
-     * @param inputs the inputs to set
-     */
-    public void setInputs(List<Input> inputs) {
-        this.inputs = inputs;
+    
+    public void addInput(Input input) 
+    {   
+        this.inputs.add(input);
     
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -110,14 +118,10 @@ public abstract class Device extends PanelRound implements ComponentListener
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
-        int top_padding = 50;
-        for (Input input : inputs) 
-        {
-            gridBagConstraints.insets = new Insets(top_padding, 10, 0, 0);
-            add(input, gridBagConstraints);
-            
-            top_padding += 40;
-        }
+        gridBagConstraints.insets = new Insets(inputs_top_padding, 0, 0, 0);
+        add(input, gridBagConstraints, 1);
+        
+        inputs_top_padding += 50;
     }
 
     /**
@@ -127,12 +131,9 @@ public abstract class Device extends PanelRound implements ComponentListener
         return outputs;
     }
 
-    /**
-     * @param outputs the outputs to set
-     */
-    public void setOutputs(List<Output> outputs) 
-    {
-        this.outputs = outputs;
+    public void addOutput(Output output) 
+    {   
+        this.outputs.add(output);
     
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -141,23 +142,22 @@ public abstract class Device extends PanelRound implements ComponentListener
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         
-        int top_padding = 50;
-        for (Output output : outputs) 
-        {
-            gridBagConstraints.insets = new Insets(top_padding, 0, 0, 10);
-            add(output, gridBagConstraints);
-            
-            top_padding += 40;
-        }
+        gridBagConstraints.insets = new Insets(outputs_top_padding, 0, 0, 0);
+        add(output, gridBagConstraints, 1);
+        
+        outputs_top_padding += 50;
     }
     
     public void recalculateSizes()
     {   
-        Dimension context_panel_header_dimension = new Dimension(this.getWidth(), 30);
-        header_panel.setPreferredSize(context_panel_header_dimension);
-        header_panel.setMinimumSize(context_panel_header_dimension);
-        
+        Dimension header_panel_dimension = new Dimension(this.getWidth() - 20, 30);
+        header_panel.setPreferredSize(header_panel_dimension);
+        header_panel.setMinimumSize(header_panel_dimension);
         header_panel.setLayout(new java.awt.GridBagLayout());
+        
+        Dimension main_panel_dimension = new Dimension(header_panel_dimension.width, this.getHeight());
+        main_panel.setPreferredSize(main_panel_dimension);
+        main_panel.setMinimumSize(main_panel_dimension);
     }
     
     @Override

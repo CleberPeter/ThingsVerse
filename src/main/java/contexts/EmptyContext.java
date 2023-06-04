@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package components;
+package contexts;
 
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
@@ -21,7 +21,7 @@ import javax.swing.JLabel;
  *
  * @author cleber
  */
-public class Context extends PanelRound implements ComponentListener {
+public class EmptyContext extends PanelRound implements ComponentListener {
     
     private static final String DEFAULT_TITLE = "Contexto A";
     private static final Color DEFAULT_COLOR = Color.WHITE;
@@ -32,7 +32,7 @@ public class Context extends PanelRound implements ComponentListener {
     private JLabel titleLabel;
     private String title;
     
-    public Context() 
+    public EmptyContext() 
     {    
         initComponents();
         initListeners();
@@ -83,27 +83,6 @@ public class Context extends PanelRound implements ComponentListener {
         
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(header_panel, gridBagConstraints);
-    }
-    
-    public void addSensorNode(String name, int radius, Color color, Insets insets)
-    {
-        components.SensorNode sensorNode = new components.SensorNode();
-        
-        sensorNode.setName(name);
-        sensorNode.setRadius(radius);
-        sensorNode.setColor(color);
-        sensorNode.addComponentListener(this);
-        sensorNode.setLocation(insets.left, insets.top);
-        
-        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        
-        gridBagConstraints.insets = insets;
-        add(sensorNode, gridBagConstraints);
     }
     
     public Color getColor()
