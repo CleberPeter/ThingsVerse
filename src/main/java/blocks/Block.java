@@ -6,6 +6,7 @@ package blocks;
 
 import customWidgets.PanelRound;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,6 +15,8 @@ import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -26,21 +29,20 @@ import mouseAdapters.ComponentResizer;
  */
 public abstract class Block extends JLayeredPane implements ComponentListener
 {
-    private static final Color DEFAULT_COLOR = new Color(60,60,60);
+    private static final Color BACKGROUND_COLOR = new Color(60,60,60);
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
     private PanelRound header_panel;
     private PanelRound main_panel;
     private String name;
-    private List<Input> inputs = new ArrayList<>();
-    private List<Output> outputs = new ArrayList<>();
     
-    private int inputs_top_padding = 50;
-    private int outputs_top_padding = 50;
+    private List<ConnectionPoint> connectionPointsList;
     
     public Block(String name)
     {   
         setLayout(new GridBagLayout());
+        
+        connectionPointsList = new ArrayList<>();
         
         header_panel = new PanelRound();
         
@@ -53,6 +55,8 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14)); 
         
         header_panel.setLayout(new java.awt.GridBagLayout());
+        header_panel.setPreferredSize(new Dimension(0, 30));
+        header_panel.setMinimumSize(new Dimension(0, 30));
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -62,15 +66,18 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
         header_panel.add(titleLabel, gridBagConstraints);
         
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         add(header_panel, gridBagConstraints);
         
         main_panel = new PanelRound();
         main_panel.setRoundDefault(20);
-        main_panel.setBackground(DEFAULT_COLOR);
+        main_panel.setBackground(BACKGROUND_COLOR);
         
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         add(main_panel, gridBagConstraints, 1);
         
         setBackground(TRANSPARENT_COLOR);
@@ -99,71 +106,111 @@ public abstract class Block extends JLayeredPane implements ComponentListener
     public void setName(String name) {
         this.name = name;
     }
-
-    /**
-     * @return the inputs
-     */
-    public List<Input> getInputs() {
-        return inputs;
-    }
     
-    public void addInput(Input input) 
+    public void setInput(String name) 
     {   
-        this.inputs.add(input);
-    
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
         
-        gridBagConstraints.insets = new Insets(inputs_top_padding, 0, 0, 0);
-        add(input, gridBagConstraints, 1);
-        
-        inputs_top_padding += 50;
+        ConnectionPoint inputConnectionPoint = new ConnectionPoint(name, ConnectionPointType.INPUT, gridBagConstraints.anchor);
+        connectionPointsList.add(inputConnectionPoint);
+        add(inputConnectionPoint, gridBagConstraints, 1);
     }
 
-    /**
-     * @return the outputs
-     */
-    public List<Output> getOutputs() {
-        return outputs;
-    }
-
-    public void addOutput(Output output) 
+    public void setOutput(String name) 
     {   
-        this.outputs.add(output);
-    
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
         
-        gridBagConstraints.insets = new Insets(outputs_top_padding, 0, 0, 0);
-        add(output, gridBagConstraints, 1);
-        
-        outputs_top_padding += 50;
+        ConnectionPoint outputConnectionPoint = new ConnectionPoint(name, ConnectionPointType.OUTPUT, gridBagConstraints.anchor);
+        connectionPointsList.add(outputConnectionPoint);
+        add(outputConnectionPoint, gridBagConstraints, 1);
     }
     
-    public void recalculateSizes()
-    {   
-        Dimension header_panel_dimension = new Dimension(this.getWidth() - 20, 30);
-        header_panel.setPreferredSize(header_panel_dimension);
-        header_panel.setMinimumSize(header_panel_dimension);
-        header_panel.setLayout(new java.awt.GridBagLayout());
+    public int getConnectionPointsCount(int anchor)
+    {
+        int count = 0;
         
-        Dimension main_panel_dimension = new Dimension(header_panel_dimension.width, this.getHeight());
-        main_panel.setPreferredSize(main_panel_dimension);
-        main_panel.setMinimumSize(main_panel_dimension);
+        for (ConnectionPoint connectionPoint : connectionPointsList)
+        {
+            if (connectionPoint.getAnchor() == anchor) count++;
+        }
+        
+        return count;
+    }
+    
+    public void removeInvisibleConnectionPoints(int usable_height)
+    {
+        // iterator prevents java.util.ConcurrentModificationException
+        for (Iterator<ConnectionPoint> iterator = connectionPointsList.iterator(); iterator.hasNext();) 
+        {
+            ConnectionPoint connectionPoint = iterator.next();
+            
+            if (connectionPoint.getType() == ConnectionPointType.UNUSED)
+            {
+                GridBagLayout layout = (GridBagLayout) getLayout();                
+                GridBagConstraints gridBagConstraints = layout.getConstraints(connectionPoint);
+                
+                if (gridBagConstraints.insets.top >= usable_height)
+                {
+                    remove(connectionPoint);
+                    iterator.remove();
+                }
+            }
+        }
+    }
+    
+    public void fillWithUnusedConnectionPoints(int connectionPointsLen, int anchor)
+    {
+        int filledConnectionPoints = getConnectionPointsCount(anchor);
+        
+        if (filledConnectionPoints < connectionPointsLen)
+        {
+            GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.5;
+            gridBagConstraints.weighty = 0.5;
+
+            while(filledConnectionPoints++ != connectionPointsLen)
+            {
+                gridBagConstraints.insets = new Insets(filledConnectionPoints*50, 0, 0, 0);
+                gridBagConstraints.anchor = anchor;
+
+                ConnectionPoint unusedConnectionPoint = new ConnectionPoint("unused", ConnectionPointType.UNUSED, gridBagConstraints.anchor);
+                connectionPointsList.add(unusedConnectionPoint);
+                add(unusedConnectionPoint, gridBagConstraints, 1);
+            }
+        }
+    }
+    
+    public void populateConnectionPoints()
+    {   
+        int usable_height = this.getHeight() - 50;
+        int connectionPointsLen = usable_height/50;
+        
+        removeInvisibleConnectionPoints(usable_height);
+        
+        fillWithUnusedConnectionPoints(connectionPointsLen, java.awt.GridBagConstraints.NORTHWEST);
+        fillWithUnusedConnectionPoints(connectionPointsLen,java.awt.GridBagConstraints.NORTHEAST);
+        
+        validate();
     }
     
     @Override
     public void componentResized(ComponentEvent ce) 
     {
-        recalculateSizes();
+        populateConnectionPoints();
     }
     
     @Override

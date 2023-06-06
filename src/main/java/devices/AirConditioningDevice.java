@@ -4,8 +4,6 @@
  */
 package devices;
 
-import blocks.Input;
-import blocks.Output;
 import blocks.Block;
 import java.awt.Dimension;
 
@@ -27,11 +25,11 @@ public class AirConditioningDevice extends Block
     
     public void initComponents()
     {
-        addOutput(new Output("Consumo Energético", 0.0));
-        addOutput(new Output("Ar", 0.0));
+        setOutput("Consumo Energético");
+        setOutput("Ar");
         
-        addInput(new Input("On/Off", 0.0));
-        addInput(new Input("Temperatura", 0.0));
+        setInput("On/Off");
+        setInput("Temperatura");
     }
     
     private void setUpLayout()

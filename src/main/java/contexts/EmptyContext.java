@@ -71,6 +71,10 @@ public class EmptyContext extends PanelRound implements ComponentListener {
         setLayout(new GridBagLayout());
         
         header_panel.setLayout(new java.awt.GridBagLayout());
+        
+        Dimension header_dimension = new Dimension(0, 30); // width = 0 will be repleaced by fill horizontal on gridBagConstraints
+        header_panel.setPreferredSize(header_dimension);
+        header_panel.setMinimumSize(header_dimension);
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -82,6 +86,7 @@ public class EmptyContext extends PanelRound implements ComponentListener {
         header_panel.add(titleLabel, gridBagConstraints);
         
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(header_panel, gridBagConstraints);
     }
     
@@ -112,19 +117,10 @@ public class EmptyContext extends PanelRound implements ComponentListener {
         return this.title;
     }
     
-    public void recalculateSizes()
-    {   
-        Dimension context_panel_header_dimension = new Dimension(this.getWidth(), 30);
-        header_panel.setPreferredSize(context_panel_header_dimension);
-        header_panel.setMinimumSize(context_panel_header_dimension);
-        
-        header_panel.setLayout(new java.awt.GridBagLayout());
-    }
-    
     @Override
     public void componentResized(ComponentEvent ce) 
     {
-        recalculateSizes();
+//        System.out.println("contexts.EmptyContext.componentResized()");
     }
 
     @Override

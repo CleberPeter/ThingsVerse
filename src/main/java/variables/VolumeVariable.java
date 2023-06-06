@@ -5,8 +5,6 @@
 package variables;
 
 import blocks.Block;
-import blocks.Input;
-import blocks.Output;
 import java.awt.Dimension;
 
 /**
@@ -27,8 +25,8 @@ public class VolumeVariable extends Block {
     
     public void initComponents()
     {
-        addOutput(new Output("Volume", 26));
-        addInput(new Input("dV/dt", 0));
+        setOutput("Volume");
+        setInput("dV/dt");
     }
     
     private void setUpLayout()

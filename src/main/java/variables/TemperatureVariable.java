@@ -4,8 +4,6 @@
  */
 package variables;
 
-import blocks.Input;
-import blocks.Output;
 import blocks.Block;
 import java.awt.Dimension;
 
@@ -27,8 +25,8 @@ public class TemperatureVariable extends Block
     
     public void initComponents()
     {
-        addOutput(new Output("Temperatura", 26));
-        addInput(new Input("dT/dt", 0));
+        setOutput("Temperatura");
+        setInput("dT/dt");
     }
     
     private void setUpLayout()

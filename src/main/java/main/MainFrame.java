@@ -46,8 +46,8 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
    
         contextPanel = new EmptyContext();
         contextPanel.setTitle("Sala");
-        contextPanel.setPreferredSize(new Dimension(2048, 768));
-        contextPanel.setMinimumSize(new Dimension(2048, 768));
+        contextPanel.setPreferredSize(new Dimension(1024, 768));
+        contextPanel.setMinimumSize(new Dimension(1024, 768));
         contextPanel.setColor(Color.white);
         
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
@@ -55,11 +55,10 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(100, 100, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(50, 50, 0, 0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
         layeredPanel.add(contextPanel, gridBagConstraints, 1);
-        
         
         Sensor sensor = new Sensor();
         
@@ -70,7 +69,6 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         gridBagConstraints.insets = new java.awt.Insets(400, 10, 0, 0);
         contextPanel.add(sensor, gridBagConstraints);
-        
         
         VolumeVariable volume = new VolumeVariable();
         
@@ -91,9 +89,6 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         gridBagConstraints.insets = new java.awt.Insets(400, 400, 0, 0);
         contextPanel.add(temperature, gridBagConstraints);
-        
-        contextPanel.addComponentListener(this);
-        
     }
 
     /**
@@ -687,9 +682,8 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void componentResized(ComponentEvent ce) {     
-        contextPanel.setPreferredSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
-        contextPanel.setMinimumSize(new Dimension(ce.getComponent().getWidth(), ce.getComponent().getHeight()));
+    public void componentResized(ComponentEvent ce) {
+//        System.out.println("main.MainFrame.componentResized()");
     }
 
     @Override

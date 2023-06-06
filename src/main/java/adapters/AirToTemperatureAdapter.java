@@ -5,8 +5,6 @@
 package adapters;
 
 import blocks.Block;
-import blocks.Input;
-import blocks.Output;
 import java.awt.Dimension;
 
 /**
@@ -27,10 +25,10 @@ public class AirToTemperatureAdapter extends Block
     
     public void initComponents()
     {
-        addOutput(new Output("dT/dt", 0));
+        setOutput("dT/dt");
         
-        addInput(new Input("Volume", 0));
-        addInput(new Input("Ar", 0));
+        setInput("Volume");
+        setInput("Ar");
     }
     
     private void setUpLayout()
