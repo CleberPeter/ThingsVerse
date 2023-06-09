@@ -40,7 +40,8 @@ public class ConnectionPoint extends JPanel
     private ConnectionPointType type;
     private int anchor;
     private FilledCircle filledCircle;
-    
+    JLabel name_label;
+            
     public ConnectionPoint(String name, ConnectionPointType type, int anchor)
     {
         this.name = name;
@@ -62,7 +63,7 @@ public class ConnectionPoint extends JPanel
         
         if (this.type != ConnectionPointType.UNUSED)
         {
-            JLabel name_label = new JLabel();
+            name_label = new JLabel();
             name_label.setFont(new Font("Arial", Font.BOLD, 16));
             name_label.setForeground(Color.white);
             name_label.setText(this.name);
@@ -73,7 +74,6 @@ public class ConnectionPoint extends JPanel
             add(name_label, gridBagConstraints);
 
             setName(this.name);
-            setPreferredSize(new Dimension(220, 20));
         }
         
         setOpaque(false);    
@@ -87,5 +87,31 @@ public class ConnectionPoint extends JPanel
     public int getAnchor()
     {
         return this.anchor;
+    }
+    
+    public void setAnchor(int anchor)
+    {
+        if (anchor != getAnchor() && getType() != ConnectionPointType.UNUSED)
+        {
+            GridBagLayout gridBagLayout = (GridBagLayout) getLayout();
+        
+            GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.5;
+            gridBagConstraints.weighty = 0.5;
+            gridBagConstraints.anchor = anchor;
+            
+            gridBagLayout.setConstraints(filledCircle, gridBagConstraints);
+            
+            if (anchor == java.awt.GridBagConstraints.NORTHEAST) gridBagConstraints.insets = new Insets(0, 0, 0, 30);
+            else if (anchor == java.awt.GridBagConstraints.NORTHWEST) gridBagConstraints.insets = new Insets(0, 30, 0, 0);
+            
+            gridBagLayout.setConstraints(name_label, gridBagConstraints);
+            
+            revalidate();
+        }
+        
+        this.anchor = anchor;
     }
 }
