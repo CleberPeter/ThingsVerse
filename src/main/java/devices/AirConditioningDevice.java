@@ -5,6 +5,7 @@
 package devices;
 
 import blocks.Block;
+import contexts.Context;
 import java.awt.Dimension;
 
 /**
@@ -15,9 +16,9 @@ public class AirConditioningDevice extends Block
 {
     private static final Dimension DEFAULT_DIMESION = new Dimension(400, 150);
         
-    public AirConditioningDevice()
+    public AirConditioningDevice(Context parentContext)
     {   
-        super("Ar Condicionado");
+        super("Ar Condicionado", parentContext);
 
         initComponents();
         setUpLayout();

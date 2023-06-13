@@ -5,6 +5,7 @@
 package variables;
 
 import blocks.Block;
+import contexts.Context;
 import java.awt.Dimension;
 
 /**
@@ -15,9 +16,9 @@ public class VolumeVariable extends Block {
  
     private static final Dimension DEFAULT_DIMESION = new Dimension(300, 100);
         
-    public VolumeVariable()
+    public VolumeVariable(Context parentContext)
     {   
-        super("Volume");
+        super("Volume", parentContext);
 
         initComponents();
         setUpLayout();

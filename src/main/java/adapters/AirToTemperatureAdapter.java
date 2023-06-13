@@ -5,6 +5,7 @@
 package adapters;
 
 import blocks.Block;
+import contexts.Context;
 import java.awt.Dimension;
 
 /**
@@ -15,9 +16,9 @@ public class AirToTemperatureAdapter extends Block
 {
     private static final Dimension DEFAULT_DIMESION = new Dimension(400, 150);
         
-    public AirToTemperatureAdapter()
+    public AirToTemperatureAdapter(Context parentContext)
     {   
-        super("Ar Condicionado -> Temperatura");
+        super("Ar Condicionado -> Temperatura", parentContext);
 
         initComponents();
         setUpLayout();

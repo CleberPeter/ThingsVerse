@@ -4,6 +4,7 @@
  */
 package blocks;
 
+import contexts.Context;
 import customWidgets.PanelRound;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +12,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
@@ -28,20 +30,23 @@ import mouseAdapters.ConnectionPointsMover;
  */
 public abstract class Block extends JLayeredPane implements ComponentListener
 {
-    private static final Color BACKGROUND_COLOR = new Color(60,60,60);
+    private static final Color BACKGROUND_COLOR = new Color(60,60,60, 128);
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
     private PanelRound header_panel;
     private JLabel titleLabel;
     private PanelRound main_panel;
     private String name;
+    private Context parentContext;
     
     private List<ConnectionPoint> connectionPointsList;
     private ComponentMover componentMover;
     private ConnectionPointsMover connectionPointsMover;
     
-    public Block(String name)
+    public Block(String name, Context parentContext)
     {   
+        this.parentContext = parentContext;
+        
         initComponents(name);
         setUpLayout();
         initListeners();
@@ -119,7 +124,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
         
-        ConnectionPoint inputConnectionPoint = new ConnectionPoint(name, ConnectionPointType.INPUT, gridBagConstraints.anchor);
+        ConnectionPoint inputConnectionPoint = new ConnectionPoint(this, name, ConnectionPointType.INPUT, gridBagConstraints.anchor);
         connectionPointsList.add(inputConnectionPoint);
         add(inputConnectionPoint, gridBagConstraints, 1);
         
@@ -136,7 +141,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
         
-        ConnectionPoint outputConnectionPoint = new ConnectionPoint(name, ConnectionPointType.OUTPUT, gridBagConstraints.anchor);
+        ConnectionPoint outputConnectionPoint = new ConnectionPoint(this, name, ConnectionPointType.OUTPUT, gridBagConstraints.anchor);
         connectionPointsList.add(outputConnectionPoint);
         add(outputConnectionPoint, gridBagConstraints, 1);
         
@@ -196,6 +201,8 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         layout.setConstraints(cp2, cp1Constraints);
         
         validate();
+        
+        parentContext.onBlockConnectionPointMoved();
     }
     
     private void fillWithUnusedConnectionPoints(int connectionPointsLen, int anchor)
@@ -215,7 +222,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
                 gridBagConstraints.insets = new Insets(filledConnectionPoints*50, 0, 0, 0);
                 gridBagConstraints.anchor = anchor;
 
-                ConnectionPoint unusedConnectionPoint = new ConnectionPoint("unused", ConnectionPointType.UNUSED, gridBagConstraints.anchor);
+                ConnectionPoint unusedConnectionPoint = new ConnectionPoint(this, "unused", ConnectionPointType.UNUSED, gridBagConstraints.anchor);
                 connectionPointsList.add(unusedConnectionPoint);
                 add(unusedConnectionPoint, gridBagConstraints, 1);
             }
@@ -238,6 +245,44 @@ public abstract class Block extends JLayeredPane implements ComponentListener
     public List<ConnectionPoint> getConnectionPointsList()
     {
         return this.connectionPointsList;
+    }
+    
+    public Point getConnectionPointContextRelativeLocation(ConnectionPoint connectionPoint)
+    {
+        Point blockLocation = getLocation();
+        Point blockRelativeLocationClicked = connectionPoint.getFilledCircleBlockRelativeLocation();
+        
+        return new Point(blockRelativeLocationClicked.x + blockLocation.x, blockRelativeLocationClicked.y + blockLocation.y);
+    }
+    
+    public ConnectionPoint getConnectionPoint(String name)
+    {
+        for (ConnectionPoint connectionPoint : connectionPointsList)
+        {
+            if (connectionPoint.getName().equals(name)) return connectionPoint;
+        }
+        
+        return null;
+    }
+    
+    public void onConnectionPointPressed(ConnectionPoint connectionPoint)
+    {
+        this.parentContext.onBlockConnectionPointPressed(this, connectionPoint);
+    }
+    
+    public void onConnectionPointEntered(ConnectionPoint connectionPoint)
+    {
+        this.parentContext.onBlockConnectionPointEntered(this, connectionPoint);
+    }
+    
+    public void onConnectionPointReleased()
+    {
+        this.parentContext.onBlockConnectionPointReleased();
+    }
+    
+    public void onConnectionPointDragged(Point relativeMouseLocation)
+    {
+        this.parentContext.onBlockConnectionPointDragged(relativeMouseLocation);
     }
     
     @Override

@@ -6,11 +6,15 @@ package blocks;
 
 import customWidgets.FilledCircle;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,32 +22,18 @@ import javax.swing.JPanel;
  *
  * @author cleber
  */
-enum ConnectionPointType {
-    INPUT(new Color(48, 189, 68)),
-    OUTPUT(new Color(240, 178, 61)),
-    UNUSED(new Color(192, 192, 192));
-
-    private Color color;
-
-    ConnectionPointType(Color color) {
-        this.color = color;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-}
-
-public class ConnectionPoint extends JPanel
+public class ConnectionPoint extends JPanel implements MouseListener, MouseMotionListener
 {
     private String name;
     private ConnectionPointType type;
     private int anchor;
     private FilledCircle filledCircle;
-    JLabel name_label;
+    private JLabel name_label;
+    private Block parentBlock;
             
-    public ConnectionPoint(String name, ConnectionPointType type, int anchor)
+    public ConnectionPoint(Block parentBlock, String name, ConnectionPointType type, int anchor)
     {
+        this.parentBlock = parentBlock;
         this.name = name;
         this.type = type;
         this.anchor = anchor;
@@ -51,6 +41,8 @@ public class ConnectionPoint extends JPanel
         setLayout(new GridBagLayout());
         
         filledCircle = new FilledCircle(this.type.getColor());
+        filledCircle.addMouseListener(this);
+        filledCircle.addMouseMotionListener(this);
         
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -113,5 +105,51 @@ public class ConnectionPoint extends JPanel
         }
         
         this.anchor = anchor;
+    }
+    
+    public Point getFilledCircleBlockRelativeLocation()
+    {
+        Point circleFilledRelativeLocation = filledCircle.getLocation();
+        Point ConnectionPointLocation = getLocation();
+        
+        int blockRelativeLocationX = circleFilledRelativeLocation.x + ConnectionPointLocation.x + filledCircle.getWidth()/2;;
+        int blockRelativeLocationY = circleFilledRelativeLocation.y + ConnectionPointLocation.y + filledCircle.getHeight()/2;
+        
+        // if (getAnchor() == java.awt.GridBagConstraints.NORTHEAST) blockRelativeLocationX += filledCircle.getWidth();
+        
+        return new Point(blockRelativeLocationX, blockRelativeLocationY); 
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+        this.parentBlock.onConnectionPointPressed(this);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+        this.parentBlock.onConnectionPointReleased();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+        this.parentBlock.onConnectionPointEntered(this);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent me) {
+        this.parentBlock.onConnectionPointDragged(me.getPoint());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent me) {
     }
 }

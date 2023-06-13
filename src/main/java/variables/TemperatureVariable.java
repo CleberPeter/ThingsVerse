@@ -5,6 +5,7 @@
 package variables;
 
 import blocks.Block;
+import contexts.Context;
 import java.awt.Dimension;
 
 /**
@@ -15,9 +16,9 @@ public class TemperatureVariable extends Block
 {
     private static final Dimension DEFAULT_DIMESION = new Dimension(300, 100);
         
-    public TemperatureVariable()
+    public TemperatureVariable(Context parentContext)
     {   
-        super("Temperatura");
+        super("Temperatura", parentContext);
 
         initComponents();
         setUpLayout();

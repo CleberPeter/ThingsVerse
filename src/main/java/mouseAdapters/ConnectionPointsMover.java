@@ -238,7 +238,7 @@ public class ConnectionPointsMover extends MouseAdapter
 		}
 
 		//  Making sure autoscrolls is false will allow for smoother dragging of
-		//  individual components
+		//  individual Block
 
 		if (destination instanceof JComponent)
 		{
@@ -344,7 +344,7 @@ public class ConnectionPointsMover extends MouseAdapter
                             destiny.y += movedConnectionPoint.getHeight();
                         }
                         
-                        double distance = Helper.distanceBetweenPoints(connectionPointLocation, destiny);
+                        double distance = Helper.getdistanceBetweenPoints(connectionPointLocation, destiny);
                         if (distance < shorterDistance)
                         {
                             shorterDistance = distance;
@@ -369,7 +369,7 @@ public class ConnectionPointsMover extends MouseAdapter
 			((JComponent)destination).setAutoscrolls( autoscrolls );
 		}
 
-		//  Layout the components on the parent container
+		//  Layout the Block on the parent container
 
 		if (autoLayout)
 		{

@@ -12,11 +12,16 @@ import java.awt.Point;
  */
 public class Helper 
 {
-    public static double distanceBetweenPoints(Point p1, Point p2)
+    public static double getdistanceBetweenPoints(Point p1, Point p2)
     {
         double dx_2 = Math.pow(p1.x - p2.x, 2);
         double dy_2 = Math.pow(p1.y - p2.y, 2);
         
         return Math.sqrt(dx_2 + dy_2);
+    }
+    
+    public static Point getMeanOfPoints(Point p1, Point p2)
+    {
+        return new Point((p1.x + p2.x)/2, (p1.y + p2.y)/2);
     }
 }
