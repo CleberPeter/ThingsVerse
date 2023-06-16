@@ -1,1 +1,1 @@
-# IoT-Verse Simulator: An Multi-Agent Systems based Simulator for IoT
+# ThingsVerse: An Multi-Agent Systems based Simulator for Things of IoT
