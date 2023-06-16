@@ -2,8 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package blocks;
+package things;
 
+import things.connectionPoints.UnusedConnectionPoint;
+import things.connectionPoints.ActuatorConnectionPoint;
+import things.connectionPoints.EventConnectionPoint;
+import things.connectionPoints.ConnectionPoint;
+import things.connectionPoints.ActionConnectionPoint;
+import things.connectionPoints.PropertyConnectionPoint;
 import contexts.Context;
 import customWidgets.PanelRound;
 import java.awt.Color;
@@ -28,7 +34,7 @@ import mouseAdapters.ConnectionPointsMover;
  *
  * @author cleber
  */
-public abstract class Block extends JLayeredPane implements ComponentListener
+public abstract class Thing extends JLayeredPane implements ComponentListener
 {
     private static final Color BACKGROUND_COLOR = new Color(60,60,60, 128);
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
@@ -43,7 +49,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
     private ComponentMover componentMover;
     private ConnectionPointsMover connectionPointsMover;
     
-    public Block(String name, Context parentContext)
+    public Thing(String name, Context parentContext)
     {   
         this.parentContext = parentContext;
         
@@ -114,38 +120,22 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         addComponentListener(this);
     }
     
-    protected void setInput(String name) 
+    protected void setConnectionPoint(ConnectionPoint connectionPoint) 
     {   
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
+        gridBagConstraints.anchor = connectionPoint.getAnchor();
         
-        ConnectionPoint inputConnectionPoint = new ConnectionPoint(this, name, ConnectionPointType.INPUT, gridBagConstraints.anchor);
-        connectionPointsList.add(inputConnectionPoint);
-        add(inputConnectionPoint, gridBagConstraints, 1);
+        int topInset = (getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50;
+        gridBagConstraints.insets = new Insets(topInset, 0, 0, 0);
         
-        connectionPointsMover.registerComponent(inputConnectionPoint);
-    }
-
-    protected void setOutput(String name) 
-    {   
-        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.insets = new Insets((getConnectionPointsCount(gridBagConstraints.anchor) + 1)*50, 0, 0, 0);
+        connectionPointsList.add(connectionPoint);
+        add(connectionPoint, gridBagConstraints, 1);
         
-        ConnectionPoint outputConnectionPoint = new ConnectionPoint(this, name, ConnectionPointType.OUTPUT, gridBagConstraints.anchor);
-        connectionPointsList.add(outputConnectionPoint);
-        add(outputConnectionPoint, gridBagConstraints, 1);
-        
-        connectionPointsMover.registerComponent(outputConnectionPoint);
+        connectionPointsMover.registerComponent(connectionPoint);
     }
     
     private int getConnectionPointsCount(int anchor)
@@ -167,7 +157,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
         {
             ConnectionPoint connectionPoint = iterator.next();
             
-            if (connectionPoint.getType() == ConnectionPointType.UNUSED)
+            if (connectionPoint instanceof UnusedConnectionPoint)
             {
                 GridBagLayout layout = (GridBagLayout) getLayout();                
                 GridBagConstraints gridBagConstraints = layout.getConstraints(connectionPoint);
@@ -222,7 +212,9 @@ public abstract class Block extends JLayeredPane implements ComponentListener
                 gridBagConstraints.insets = new Insets(filledConnectionPoints*50, 0, 0, 0);
                 gridBagConstraints.anchor = anchor;
 
-                ConnectionPoint unusedConnectionPoint = new ConnectionPoint(this, "unused", ConnectionPointType.UNUSED, gridBagConstraints.anchor);
+                ConnectionPoint unusedConnectionPoint = new UnusedConnectionPoint(this, anchor);
+                unusedConnectionPoint.setAnchor(gridBagConstraints.anchor);
+                
                 connectionPointsList.add(unusedConnectionPoint);
                 add(unusedConnectionPoint, gridBagConstraints, 1);
             }
@@ -250,7 +242,7 @@ public abstract class Block extends JLayeredPane implements ComponentListener
     public Point getConnectionPointContextRelativeLocation(ConnectionPoint connectionPoint)
     {
         Point blockLocation = getLocation();
-        Point blockRelativeLocationClicked = connectionPoint.getFilledCircleBlockRelativeLocation();
+        Point blockRelativeLocationClicked = connectionPoint.getConnectionPanelThingRelativeLocation();
         
         return new Point(blockRelativeLocationClicked.x + blockLocation.x, blockRelativeLocationClicked.y + blockLocation.y);
     }

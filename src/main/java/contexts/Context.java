@@ -4,11 +4,10 @@
  */
 package contexts;
 
-import blocks.BlockConnectionCurve;
-import blocks.BlockConnectionPoint;
-import blocks.Block;
-import blocks.ConnectionPoint;
-import blocks.ConnectionPointType;
+import things.ThingConnectionCurve;
+import things.ThingConnectionPoint;
+import things.Thing;
+import things.connectionPoints.ConnectionPoint;
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 import customWidgets.PanelRound;
@@ -50,16 +49,16 @@ public class Context extends PanelRound implements ComponentListener {
     private String title;
     
     private Boolean isRouting;
-    private BlockConnectionCurve routingCurve;
+    private ThingConnectionCurve routingCurve;
     private Point routingCurveEndPointPreview;
     
-    private List<BlockConnectionCurve> connectionCurveList;
-    private List<Block> blockList;
+    private List<ThingConnectionCurve> connectionCurveList;
+    private List<Thing> blockList;
     
     public Context() 
     {    
         this.isRouting = false;
-        this.routingCurve = new BlockConnectionCurve(null);
+        this.routingCurve = new ThingConnectionCurve(null);
         this.connectionCurveList = new ArrayList<>();
         this.blockList = new ArrayList<>();
         
@@ -146,20 +145,20 @@ public class Context extends PanelRound implements ComponentListener {
         return this.title;
     }
     
-    public void onBlockConnectionPointPressed(Block block, ConnectionPoint connectionPoint)
+    public void onBlockConnectionPointPressed(Thing block, ConnectionPoint connectionPoint)
     {
-        BlockConnectionPoint blockConnectionPoint = new BlockConnectionPoint(block, connectionPoint);
+        ThingConnectionPoint blockConnectionPoint = new ThingConnectionPoint(block, connectionPoint);
         
-        if (!this.isRouting && connectionPoint.getType() == ConnectionPointType.OUTPUT)
+        if (!this.isRouting)
         {
             this.isRouting = true;
-            routingCurve = new BlockConnectionCurve(blockConnectionPoint);
+            routingCurve = new ThingConnectionCurve(blockConnectionPoint);
         }
     }
     
-    public void onBlockConnectionPointEntered(Block block, ConnectionPoint connectionPoint)
+    public void onBlockConnectionPointEntered(Thing block, ConnectionPoint connectionPoint)
     {
-        BlockConnectionPoint blockConnectionPoint = new BlockConnectionPoint(block, connectionPoint);
+        ThingConnectionPoint blockConnectionPoint = new ThingConnectionPoint(block, connectionPoint);
         
         if (this.isRouting)
         {
@@ -174,8 +173,8 @@ public class Context extends PanelRound implements ComponentListener {
     {
         this.isRouting = false;
         
-        BlockConnectionPoint endPoint = routingCurve.getEndPoint();
-        if (endPoint != null && endPoint.getConnectionPoint().getType() == ConnectionPointType.INPUT)
+        ThingConnectionPoint endPoint = routingCurve.getEndPoint();
+        if (endPoint != null)
         {
             connectionCurveList.add(routingCurve);
         }   
@@ -183,7 +182,7 @@ public class Context extends PanelRound implements ComponentListener {
         repaint(); // always repaint to clean preview curve
     }
     
-    public void addBlock(Block block, GridBagConstraints gridBagConstraints)
+    public void addBlock(Thing block, GridBagConstraints gridBagConstraints)
     {
         add(block, gridBagConstraints);
         block.addComponentListener(this);
@@ -192,20 +191,20 @@ public class Context extends PanelRound implements ComponentListener {
         
 //        if (connectionCurveList.isEmpty())
 //        {
-//            Block b1 = getBlock("Ar Condicionado -> Temperatura");
+//            Thing b1 = getThing("Ar Condicionado -> Temperatura");
 //            if (b1 != null)
 //            {
 //                ConnectionPoint cp1 = b1.getConnectionPoint("dT/dt");
 //                if (cp1 != null)
 //                {
-//                    Block b2 = getBlock("Temperatura");
+//                    Thing b2 = getThing("Temperatura");
 //                    if (b2 != null)
 //                    {
 //                        ConnectionPoint cp2 = b2.getConnectionPoint("dT/dt");
 //                        if (cp2 != null)
 //                        {
-//                            routingCurve = new BlockConnectionCurve(new BlockConnectionPoint(b1, cp1));
-//                            routingCurve.setEndPoint(new BlockConnectionPoint(b2, cp2));
+//                            routingCurve = new ThingConnectionCurve(new ThingConnectionPoint(b1, cp1));
+//                            routingCurve.setEndPoint(new ThingConnectionPoint(b2, cp2));
 //
 //                            connectionCurveList.add(routingCurve);
 //                            repaint();
@@ -223,7 +222,7 @@ public class Context extends PanelRound implements ComponentListener {
     
     public void onBlockConnectionPointDragged(Point relativeMouseLocation)
     {        
-        BlockConnectionPoint routingCurveStartPoint = routingCurve.getStartPoint();
+        ThingConnectionPoint routingCurveStartPoint = routingCurve.getStartPoint();
         
         if (routingCurveStartPoint != null)
         {
@@ -236,9 +235,9 @@ public class Context extends PanelRound implements ComponentListener {
         }
     }
     
-    public Block getBlock(String name)
+    public Thing getBlock(String name)
     {
-        for (Block block : blockList)
+        for (Thing block : blockList)
         {
             if (block.getName().equals(name)) return block;
         }
@@ -288,10 +287,11 @@ public class Context extends PanelRound implements ComponentListener {
         float strokeWidth = 3;
         Stroke stroke = new BasicStroke(strokeWidth);
         g2d.setStroke(stroke);
-        g2d.setColor(Color.white);
         
-        for (BlockConnectionCurve connectionCurve : this.connectionCurveList)
+        for (ThingConnectionCurve connectionCurve : this.connectionCurveList)
         {
+            g2d.setColor(connectionCurve.getStartPoint().getConnectionPoint().getColor());
+            
             Point startPoint = connectionCurve.getStartPoint().getContextRelativeLocation();
             Point endPoint = connectionCurve.getEndPoint().getContextRelativeLocation();
 
@@ -305,6 +305,8 @@ public class Context extends PanelRound implements ComponentListener {
         {
             Point startPoint = routingCurve.getStartPoint().getContextRelativeLocation();
             Point endPoint = routingCurveEndPointPreview;
+            
+            g2d.setColor(routingCurve.getStartPoint().getConnectionPoint().getColor());
 
             int cp1_dx = routingCurve.getStartPoint().getConnectionPoint().getAnchor() ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
             int cp2_dx = startPoint.x < endPoint.x ? -200 : 200;
@@ -319,7 +321,7 @@ public class Context extends PanelRound implements ComponentListener {
         Point controlPoint2 = new Point(endPoint.x + cp2_dx, endPoint.y);
 
         g2d.draw(new CubicCurve2D.Float(startPoint.x, startPoint.y, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y));
-        drawArrowHead(g2d, endPoint, controlPoint2);
+        //drawArrowHead(g2d, endPoint, controlPoint2);
     }
     
     private void drawArrowHead(Graphics2D g2d, Point endPoint, Point intermediatePoint) 

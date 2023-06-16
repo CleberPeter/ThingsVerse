@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package blocks;
+package things;
 
-import blocks.Block;
-import blocks.ConnectionPoint;
+import things.Thing;
+import things.connectionPoints.ConnectionPoint;
 import helper.Helper;
 import java.awt.Point;
 
@@ -14,18 +14,18 @@ import java.awt.Point;
  * @author cleber
  */
 
-public class BlockConnectionCurve 
+public class ThingConnectionCurve 
 {    
-    private BlockConnectionPoint startPoint;
-    private BlockConnectionPoint endPoint;
+    private ThingConnectionPoint startPoint;
+    private ThingConnectionPoint endPoint;
     
-    public BlockConnectionCurve(BlockConnectionPoint startPoint)
+    public ThingConnectionCurve(ThingConnectionPoint startPoint)
     {
         this.startPoint = startPoint;
         endPoint = null;
     }
     
-    public void setEndPoint(BlockConnectionPoint endPoint)
+    public void setEndPoint(ThingConnectionPoint endPoint)
     {
         this.endPoint = endPoint;
     }
@@ -33,14 +33,14 @@ public class BlockConnectionCurve
     /**
      * @return the startPoint
      */
-    public BlockConnectionPoint getStartPoint() {
+    public ThingConnectionPoint getStartPoint() {
         return startPoint;
     }
 
     /**
      * @return the endPoint
      */
-    public BlockConnectionPoint getEndPoint() {
+    public ThingConnectionPoint getEndPoint() {
         return endPoint;
     }
 }

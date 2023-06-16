@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("IoT-Verse started");
+        System.out.println("ThingsVerse running ...");
         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

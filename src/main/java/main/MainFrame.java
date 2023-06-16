@@ -17,7 +17,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import sensors.Sensor;
 import variables.VolumeVariable;
 
 /**
@@ -45,7 +44,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         menu_bar_file_panel.setVisible(false);
    
         contextPanel = new Context();
-        contextPanel.setTitle("Sala");
+        contextPanel.setTitle("Living Room");
         contextPanel.setPreferredSize(new Dimension(2048, 768));
         contextPanel.setMinimumSize(new Dimension(2048, 768));
         contextPanel.setColor(Color.white);
@@ -224,7 +223,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         header_title.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         header_title.setForeground(new java.awt.Color(255, 255, 255));
         header_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        header_title.setText("IoTVerse Simulator");
+        header_title.setText("ThingsVerse");
         header_title.setToolTipText("");
         header_title.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         header_panel.add(header_title, java.awt.BorderLayout.CENTER);

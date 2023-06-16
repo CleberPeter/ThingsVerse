@@ -1,7 +1,7 @@
 package mouseAdapters;
 
-import blocks.Block;
-import blocks.ConnectionPoint;
+import things.Thing;
+import things.connectionPoints.ConnectionPoint;
 import helper.Helper;
 import java.awt.*;
 import java.awt.event.*;
@@ -44,13 +44,13 @@ public class ConnectionPointsMover extends MouseAdapter
 	private boolean autoscrolls;
 	private boolean potentialDrag;
         
-        private Block parentBlock;
+        private Thing parentBlock;
 
 	/**
 	 *  Constructor for moving individual components. The components must be
 	 *  regisetered using the registerComponent() method.
 	 */
-	public ConnectionPointsMover(Block parentBlock)
+	public ConnectionPointsMover(Thing parentBlock)
 	{
             this.parentBlock = parentBlock;
 	}
@@ -238,7 +238,7 @@ public class ConnectionPointsMover extends MouseAdapter
 		}
 
 		//  Making sure autoscrolls is false will allow for smoother dragging of
-		//  individual Block
+		//  individual Thing
 
 		if (destination instanceof JComponent)
 		{
@@ -369,7 +369,7 @@ public class ConnectionPointsMover extends MouseAdapter
 			((JComponent)destination).setAutoscrolls( autoscrolls );
 		}
 
-		//  Layout the Block on the parent container
+		//  Layout the Thing on the parent container
 
 		if (autoLayout)
 		{

@@ -2,37 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package blocks;
+package things;
 
-import blocks.Block;
-import blocks.ConnectionPoint;
+import things.Thing;
+import things.connectionPoints.ConnectionPoint;
 import java.awt.Point;
 
 /**
  *
  * @author cleber
  */
-public class BlockConnectionPoint
+public class ThingConnectionPoint
 {
-    private Block block;
+    private Thing thing;
     private ConnectionPoint connectionPoint;
 
-    public BlockConnectionPoint(Block block, ConnectionPoint connectionPoint)
+    public ThingConnectionPoint(Thing thing, ConnectionPoint connectionPoint)
     {
-        this.block = block;
+        this.thing = thing;
         this.connectionPoint = connectionPoint;
     }
     
     public Point getContextRelativeLocation()
     {
-        return this.getBlock().getConnectionPointContextRelativeLocation(getConnectionPoint());
+        return this.getThing().getConnectionPointContextRelativeLocation(getConnectionPoint());
     }
 
     /**
-     * @return the block
+     * @return the thing
      */
-    public Block getBlock() {
-        return block;
+    public Thing getThing() {
+        return thing;
     }
 
     /**
