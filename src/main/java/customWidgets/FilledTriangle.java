@@ -30,6 +30,13 @@ public class FilledTriangle extends JPanel
         setAngle(angle);
     }
     
+    public void setColor(Color color)
+    {
+        setBackground(color);
+        
+        repaint();
+    }
+    
     public void setAngle(double angle)
     {
         this.angle = angle;

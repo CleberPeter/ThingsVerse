@@ -19,13 +19,25 @@ public class PropertyConnectionPoint extends ConnectionPoint
     private boolean observable;
     
     public PropertyConnectionPoint(Thing parentThing, String name, int anchor, boolean observable) {
-        super(parentThing, name, DEFAULT_COLOR, anchor, new FilledCircle(DEFAULT_COLOR));
+        super(parentThing, name, anchor, new FilledCircle(DEFAULT_COLOR));
         
         this.observable = observable;
     }
 
     @Override
     public void onAnchorUpdated() {
+    }
+    
+    public Color getColor()
+    {
+        return DEFAULT_COLOR;
+    }
+    
+    public void setColor(Color color)
+    {
+        FilledCircle filledCircle = (FilledCircle) this.getConnectionPanel();
+        
+        filledCircle.setColor(color);
     }
     
 }

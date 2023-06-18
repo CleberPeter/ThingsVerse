@@ -5,9 +5,12 @@
 package main;
 
 import adapters.AirToTemperatureAdapter;
-import devices.AirConditioningDevice;
+import agents.Agent;
+import agents.Sensor;
+import things.AirConditioning;
 import mouseAdapters.ComponentResizer;
 import contexts.Context;
+import things.DoorController;
 import variables.TemperatureVariable;
 import mouseAdapters.FrameDragListener;
 import java.awt.Color;
@@ -17,6 +20,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import objects.DoorObject;
+import things.EmptyThing;
 import variables.VolumeVariable;
 
 /**
@@ -58,23 +63,23 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
         layeredPanel.add(contextPanel, gridBagConstraints, 1);
+//        
+//        Sensor agent = new Sensor();
+//        
+//        agent.setName("A1");
+//        agent.setRadius(35);
+//        agent.setColor(new Color(81,116, 144));
+//        agent.addComponentListener(contextPanel);
         
-//        Sensor sensor = new Sensor();
-//        
-//        sensor.setName("S1");
-//        sensor.setRadius(25);
-//        sensor.setColor(new Color(255,102, 102));
-//        sensor.addComponentListener(contextPanel);
-//        
 //        gridBagConstraints.insets = new java.awt.Insets(400, 10, 0, 0);
-//        contextPanel.add(sensor, gridBagConstraints);
+//        contextPanel.add(agent, gridBagConstraints);
         
         VolumeVariable volume = new VolumeVariable(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(50, 400, 0, 0);
         contextPanel.addBlock(volume, gridBagConstraints);
         
-        AirConditioningDevice airConditioning = new AirConditioningDevice(contextPanel);
+        AirConditioning airConditioning = new AirConditioning(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(200, 100, 0, 0);
         contextPanel.addBlock(airConditioning, gridBagConstraints);
@@ -86,8 +91,23 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         
         TemperatureVariable temperature = new TemperatureVariable(contextPanel);
         
-        gridBagConstraints.insets = new java.awt.Insets(400, 400, 0, 0);
-        contextPanel.addBlock(temperature, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(500, 400, 0, 0);
+        contextPanel.addBlock(temperature, gridBagConstraints);    
+        
+        DoorController doorController = new DoorController(contextPanel);
+        
+        gridBagConstraints.insets = new java.awt.Insets(50, 1000, 0, 0);
+        contextPanel.addBlock(doorController, gridBagConstraints);
+        
+        Agent agent = new Agent(contextPanel, "Bob");
+        
+        gridBagConstraints.insets = new java.awt.Insets(400, 1000, 0, 0);
+        contextPanel.addBlock(agent, gridBagConstraints);
+        
+        DoorObject doorObject = new DoorObject(contextPanel);
+        
+        gridBagConstraints.insets = new java.awt.Insets(400, 1000, 0, 0);
+        contextPanel.addBlock(doorObject, gridBagConstraints);
     }
 
     /**

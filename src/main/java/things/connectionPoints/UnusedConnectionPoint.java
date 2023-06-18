@@ -18,11 +18,19 @@ public class UnusedConnectionPoint extends ConnectionPoint
     private static final Color DEFAULT_COLOR = new Color(192, 192, 192); 
 
     public UnusedConnectionPoint(Thing parentThing, int anchor) {
-        super(parentThing, null, DEFAULT_COLOR, anchor, new FilledCircle(DEFAULT_COLOR));
+        super(parentThing, null, anchor, new FilledCircle(DEFAULT_COLOR));
     }
 
     @Override
     public void onAnchorUpdated() {
+    }
+    
+    public Color getColor()
+    {
+        return DEFAULT_COLOR;
+    }
+    
+    public void setColor(Color color) {
     }
     
 }

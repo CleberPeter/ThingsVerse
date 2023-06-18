@@ -29,6 +29,7 @@ import javax.swing.JLayeredPane;
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 import mouseAdapters.ConnectionPointsMover;
+import things.connectionPoints.SensingConnectionPoint;
 
 /**
  *
@@ -193,6 +194,45 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         validate();
         
         parentContext.onBlockConnectionPointMoved();
+    }
+    
+    public void UpdateConnectionPoint(ConnectionPoint connectionPointToUpdate, ConnectionPoint connectionPointToCopy)
+    {
+        ConnectionPoint newConnectionPoint = null;
+
+        if (connectionPointToCopy instanceof EventConnectionPoint)
+        {
+            newConnectionPoint = new ActionConnectionPoint(connectionPointToUpdate.getParentThing(), connectionPointToCopy.getName(), connectionPointToUpdate.getAnchor());
+        }
+        else if (connectionPointToCopy instanceof ActionConnectionPoint)
+        {
+            newConnectionPoint = new EventConnectionPoint(connectionPointToUpdate.getParentThing(), connectionPointToCopy.getName(), connectionPointToUpdate.getAnchor());
+        }
+        else if (connectionPointToCopy instanceof PropertyConnectionPoint)
+        {
+            newConnectionPoint = new PropertyConnectionPoint(connectionPointToUpdate.getParentThing(), connectionPointToCopy.getName(), connectionPointToUpdate.getAnchor(), true);
+        }
+        else if (connectionPointToCopy instanceof SensingConnectionPoint)
+        {
+            newConnectionPoint = new ActuatorConnectionPoint(connectionPointToUpdate.getParentThing(), connectionPointToCopy.getName(), connectionPointToUpdate.getAnchor());
+        }
+        else if (connectionPointToCopy instanceof ActuatorConnectionPoint)
+        {
+            newConnectionPoint = new SensingConnectionPoint(connectionPointToUpdate.getParentThing(), connectionPointToCopy.getName(), connectionPointToUpdate.getAnchor());
+        }
+        newConnectionPoint.setColor(connectionPointToCopy.getColor());
+
+        GridBagLayout layout = (GridBagLayout) getLayout();
+        GridBagConstraints connectionPointToUpdateConstraints = layout.getConstraints(connectionPointToUpdate);
+
+        remove(connectionPointToUpdate);
+
+        add(newConnectionPoint, connectionPointToUpdateConstraints, 1);
+
+        validate();
+
+        parentContext.onBlockConnectionPointMoved();
+     
     }
     
     private void fillWithUnusedConnectionPoints(int connectionPointsLen, int anchor)

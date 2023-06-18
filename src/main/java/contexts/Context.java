@@ -32,6 +32,7 @@ import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import things.connectionPoints.UnusedConnectionPoint;
 
 /**
  *
@@ -176,6 +177,14 @@ public class Context extends PanelRound implements ComponentListener {
         ThingConnectionPoint endPoint = routingCurve.getEndPoint();
         if (endPoint != null)
         {
+            ConnectionPoint endConnectionPoint = endPoint.getConnectionPoint();
+            if (endConnectionPoint instanceof UnusedConnectionPoint)
+            {
+                Thing thing = endPoint.getThing();
+                thing.UpdateConnectionPoint(endConnectionPoint, routingCurve.getStartPoint().getConnectionPoint());
+            }
+            
+            
             connectionCurveList.add(routingCurve);
         }   
         

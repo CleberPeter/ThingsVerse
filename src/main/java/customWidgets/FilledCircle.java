@@ -38,6 +38,13 @@ public class FilledCircle extends JPanel
         repaint();
     }
     
+    public void setColor(Color color)
+    {
+        setBackground(color);
+        
+        repaint();
+    }
+    
     @Override
     public void paintComponent(Graphics graphics) 
     {    

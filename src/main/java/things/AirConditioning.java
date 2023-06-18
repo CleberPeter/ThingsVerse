@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package devices;
+package things;
 
 import things.Thing;
 import contexts.Context;
@@ -18,13 +18,13 @@ import things.connectionPoints.SensingConnectionPoint;
  *
  * @author cleber
  */
-public class AirConditioningDevice extends Thing
+public class AirConditioning extends Thing
 {
-    private static final Dimension DEFAULT_DIMESION = new Dimension(400, 250);
+    private static final Dimension DEFAULT_DIMESION = new Dimension(450, 250);
         
-    public AirConditioningDevice(Context parentContext)
+    public AirConditioning(Context parentContext)
     {   
-        super("Ar Condicionado", parentContext);
+        super("Air Conditioner", parentContext);
 
         setUpLayout();
         initComponents();
@@ -34,7 +34,7 @@ public class AirConditioningDevice extends Thing
     {
         setConnectionPoint(new PropertyConnectionPoint(this, "powerConsumption", GridBagConstraints.NORTHWEST, true));
         setConnectionPoint(new PropertyConnectionPoint(this, "temperature", GridBagConstraints.NORTHWEST, true));
-        setConnectionPoint(new ActionConnectionPoint(this, "do-OnOff", GridBagConstraints.NORTHWEST));
+        setConnectionPoint(new ActionConnectionPoint(this, "do-On/Off", GridBagConstraints.NORTHWEST));
         setConnectionPoint(new EventConnectionPoint(this, "on-temperatureReached", GridBagConstraints.NORTHWEST));
         
         setConnectionPoint(new SensingConnectionPoint(this, "temperature", GridBagConstraints.NORTHEAST));

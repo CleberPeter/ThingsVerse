@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package adapters;
+package objects;
 
+import variables.*;
 import things.Thing;
 import contexts.Context;
 import java.awt.Dimension;
@@ -16,26 +17,21 @@ import things.connectionPoints.SensingConnectionPoint;
  *
  * @author cleber
  */
-public class AirToTemperatureAdapter extends Thing
+public class DoorObject extends Thing
 {
-    private static final Dimension DEFAULT_DIMESION = new Dimension(300, 200);
+    private static final Dimension DEFAULT_DIMESION = new Dimension(100, 200);
         
-    public AirToTemperatureAdapter(Context parentContext)
+    public DoorObject(Context parentContext)
     {   
-        super("Air -> Temperature", parentContext);
+        super("Door", parentContext);
 
         initComponents();
         setUpLayout();
     }
     
     public void initComponents()
-    {        
-        setConnectionPoint(new ActuatorConnectionPoint(this, "dT/dt", GridBagConstraints.NORTHEAST));
-        
-        setConnectionPoint(new SensingConnectionPoint(this, "volume", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new SensingConnectionPoint(this, "air", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new SensingConnectionPoint(this, "temperature", GridBagConstraints.NORTHWEST));
-
+    {
+        setConnectionPoint(new SensingConnectionPoint(this, "dY/dt", GridBagConstraints.NORTHWEST));
     }
     
     private void setUpLayout()

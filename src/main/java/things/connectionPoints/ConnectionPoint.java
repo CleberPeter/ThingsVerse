@@ -4,7 +4,6 @@
  */
 package things.connectionPoints;
 
-import customWidgets.FilledCircle;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -29,15 +28,15 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
     private JPanel connectionPanel;
     private JLabel name_label;
     private Thing parentThing;
-    private Color color;
     
     public abstract void onAnchorUpdated();
+    public abstract Color getColor();
+    public abstract void setColor(Color color);
     
-    public ConnectionPoint(Thing parentThing, String name, Color color, int anchor, JPanel connectionPanel)
+    public ConnectionPoint(Thing parentThing, String name, int anchor, JPanel connectionPanel)
     {
         this.parentThing = parentThing;
         this.name = name;
-        this.color = color;
         
         setLayout(new GridBagLayout());
         
@@ -65,6 +64,11 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
     public int getAnchor()
     {
         return this.anchor;
+    }
+    
+    public Thing getParentThing()
+    {
+        return this.parentThing;
     }
     
     public JPanel getConnectionPanel()
@@ -97,11 +101,6 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         
         this.anchor = anchor;
         onAnchorUpdated();
-    }
-    
-    public Color getColor()
-    {
-        return this.color;
     }
     
     public Point getConnectionPanelThingRelativeLocation()

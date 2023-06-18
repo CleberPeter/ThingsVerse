@@ -18,7 +18,7 @@ public class SensingConnectionPoint extends ConnectionPoint
     private static final Color DEFAULT_COLOR = new Color(240, 178, 61);
     
     public SensingConnectionPoint(Thing parentThing, String name, int anchor) {
-        super(parentThing, name, DEFAULT_COLOR, anchor, new FilledTriangle(DEFAULT_COLOR, 20, anchor == GridBagConstraints.NORTHEAST ? Math.PI : 0));
+        super(parentThing, name, anchor, new FilledTriangle(DEFAULT_COLOR, 20, anchor == GridBagConstraints.NORTHEAST ? Math.PI : 0));
     }
 
     @Override
@@ -28,4 +28,15 @@ public class SensingConnectionPoint extends ConnectionPoint
         filledTriangle.setAngle(this.getAnchor() == GridBagConstraints.NORTHEAST ? Math.PI : 0);
     }
     
+    public Color getColor()
+    {
+        return DEFAULT_COLOR;
+    }
+    
+    public void setColor(Color color)
+    {
+        FilledTriangle filledTriangle = (FilledTriangle) this.getConnectionPanel();
+        
+        filledTriangle.setColor(color);
+    }
 }
