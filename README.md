@@ -30,7 +30,9 @@ Environment signals are not foreseen in the WoT standard, however they are used 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![sensing_connection_panel](https://github.com/CleberPeter/ThingsVerse/assets/30049450/cfc3750c-4ab3-4f24-9182-b88e85b3dba9) **Sensing:** Sensing signals enable things to gather information about the environment they are embedded in. This can include measuring parameters such as temperature, humidity, luminosity, and other relevant data for the IoT context.
 
-The Figure 1 exemplifies the definition of the signals with an Smart Air Condittioner. 
+## Things
+
+The things modeled in ThingsVerse are nothing more than a block with a set of signals with a linked behavior. The Figure 1 exemplifies the definition of Smart Air Condittioner. 
 
 | ![Screenshot from 2023-06-16 21-49-45](https://github.com/CleberPeter/ThingsVerse/assets/30049450/4f8346f3-854b-4c30-9b3a-d0708518a41c) |
 |:--:|
@@ -40,41 +42,63 @@ The Smart Air Condittioner modeled has two properties: *powerConsuption* so that
 
 To monitor and control the environment the thing has two Environment Signals, *air* and *temperature*. The *air* signal, as can be seen in the figure, is an actuator and therefore, based on the other signals, it defines the intensity and temperature of the air exhaled by the air conditioner. The *temperature* sensing signal, in turn, aims to measure the current temperature of the environment.
 
-## Components
+## Agents
+
+Agents are mobile elements with stochastic behavior that interact with things and the environment. The agents do not have any previously defined signal, after all their interactions are dynamically established according to their position and programmed behavior. The Figure 2 shows the model of an person called Bob which can move and interact with things and the simulated environment.
+
+| ![Screenshot from 2023-06-17 22-20-40](https://github.com/CleberPeter/ThingsVerse/assets/30049450/dc90ae40-9c94-4488-89c8-aa55b376561f) |
+|:--:|
+| *Figure 2 - Person Agent* |
+
+It should be noted that despite not having previously defined signals, agents can interact with any signal present in the simulation, as long as this is foreseen in their behavior.
+
+## Enviroment Components
 
 In ThingsVerse, some things are modeled with the specific objective of representing the simulation environment and its specificities, that is, they are things that only have signals from the environment, sensing and actuators. In this context, for these things the following nomenclature is derived.
 
 ### Variables
 
-Variables, as the name implies, represent some physical quantity over which there is interest on the part of the thing to monitor and/or control it. The Figure 2 shows the temperature variable modeling.
+Variables, as the name implies, represent some physical quantity over which there is interest on the part of the thing to monitor and/or control it. The Figure 3 shows the temperature variable modeling.
 
 | ![Screenshot from 2023-06-17 00-11-04](https://github.com/CleberPeter/ThingsVerse/assets/30049450/993fd523-1588-479e-879f-35d47252eadb) |
 |:--:|
-| *Figure 2 - Temperature Variable* |
+| *Figure 3 - Temperature Variable* |
 
 This thing has only one Sensing Signal *dT/dt* to monitor a update rate of temperature and one Actuator Signal *temperature* to provide information of temperature from the environment. 
 
 ### Adapters
 
-Sometimes information and magnitudes need to be converted and adapted to enable monitoring and control. In this sense, we include adapters whose purpose is to merge multiple signals to convert them into the desired information. The Figure 3 shows the air to temperature adapter model.
+Sometimes information and magnitudes need to be converted and adapted to enable monitoring and control. In this sense, we include adapters whose purpose is to merge multiple signals to convert them into the desired information. The Figure 4 shows the air to temperature adapter model.
 
 | ![Screenshot from 2023-06-17 00-19-00](https://github.com/CleberPeter/ThingsVerse/assets/30049450/863eb892-f0a1-442a-8494-a70e3a656db2) |
 |:--:|
-| *Figure 3 - Air to Temperature Adapter* |
+| *Figure 4 - Air to Temperature Adapter* |
 
 This adapter has 3 sensing signals that are merged to produce an actuator signal. In short, information about the air supplied by the air conditioner and the current room temperature and volume is used to determine the resulting temperature variation in the room.
 
-### Agents
+### Objects
 
-### Context
+The objects model physical elements in the virtual environment and are intended to enable the simulation of the behavior of the intelligent environment in the presence of them. Figure 5 shows the model of a door whose only function is to perform a translation in the y direction, based on its Sensing signal.
 
-The context reflects an environment in which multiple things are inserted and which has its own variables, which will sometimes be monitored and controlled by the things and agents that make up the environment.
-
-Figure 4 shows the context of a room with an intelligent climate control system.
-
-![Screenshot from 2023-06-16 21-49-45](https://github.com/CleberPeter/ThingsVerse/assets/30049450/485c6fb5-a2c4-4e82-8721-bba7212b0191)
+| ![Screenshot from 2023-06-18 00-08-00](https://github.com/CleberPeter/ThingsVerse/assets/30049450/93f56637-183c-462a-96ba-36e2054ec1a1) |
 |:--:|
-| *Figure 4 - Intelligent Climate Control System Context* |
+| *Figure 5 - Door Object* |
+
+The movement of the door results in the obstruction or clearing of the movement of the agents and therefore allows simulating situations of access control and containment of these.
+
+## Context
+
+Context is the environment in which a given set of elements is contained. The context has its own things, variables and objects. Figure 6 shows the context of a room with an intelligent climate control system.
+
+![Screenshot from 2023-06-18 00-01-54](https://github.com/CleberPeter/ThingsVerse/assets/30049450/a6c5e689-dcc7-40f7-8796-218252343bfe)
+|:--:|
+| *Figure 6 - Intelligent Climate Control System Context* |
+
+In this context, it is possible to verify that the agent first requests entry into the context by executing a DoorControler action that produces an action on the Door object, the translation of this object in the y direction and then clearing the agent's entrance.
+
+However, opening the door also results in instantaneous room volume variation that directly impacts the room temperature. A variation in the temperature of the room is detected with the monitoring carried out by the air conditioning thing that regulates the amount and temperature of the air to re-establish the target temperature.
+
+Upon entering the room, the agent can also measure the temperature and, based on its behavior, change the air conditioning temperature property to another value.
 
 ## Behavior
 
