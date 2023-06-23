@@ -172,11 +172,10 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         double rightAngle = Math.PI/2;
         double rightAngleStep = Math.PI/(connectionPointsCountNorthEast + 1);
 
-        // sort from lowest to highest topInset
+        // sort from lowest to highest topInset to ensure that the vertical order is respected
         connectionPointsList.sort(new Comparator<ConnectionPoint>() {
             @Override
             public int compare(ConnectionPoint lhs, ConnectionPoint rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
                 return lhs.getConstraints().insets.top > rhs.getConstraints().insets.top ? 1 : -1;
             }
         });
@@ -476,6 +475,11 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     public void onConnectionPointReleased()
     {
         this.parentContext.onBlockConnectionPointReleased();
+    }
+    
+    public void onConnectionPointExited()
+    {
+        this.parentContext.onBlockConnectionPointExited();
     }
     
     public void onConnectionPointDragged(Point relativeMouseLocation)

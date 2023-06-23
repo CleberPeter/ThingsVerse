@@ -171,13 +171,19 @@ public class Context extends PanelRound implements ComponentListener {
         }
     }
     
+    public void onBlockConnectionPointExited()
+    {
+        if (this.isRouting) routingCurve.setEndPoint(null);
+    }
+    
     public void onBlockConnectionPointReleased()
     {
         this.isRouting = false;
         
-        ThingConnectionPoint endPoint = routingCurve.getEndPoint();
-        if (endPoint != null)
+        if (routingCurve.isFilled())
         {
+            ThingConnectionPoint endPoint = routingCurve.getEndPoint();
+        
             ConnectionPoint endConnectionPoint = endPoint.getConnectionPoint();
             if (endConnectionPoint instanceof UnusedConnectionPoint)
             {
@@ -305,32 +311,56 @@ public class Context extends PanelRound implements ComponentListener {
         
         for (ThingConnectionCurve connectionCurve : this.connectionCurveList)
         {
-            g2d.setColor(connectionCurve.getStartPoint().getConnectionPoint().getColor());
-                        
-            Point startPoint = connectionCurve.getStartPoint().getContextRelativeLocation();
-            Point endPoint = connectionCurve.getEndPoint().getContextRelativeLocation();
-
-            int cp1_dx = connectionCurve.getStartPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
-            int cp2_dx = connectionCurve.getEndPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
-
-            drawCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);
+            drawConnectionCurve(g2d, connectionCurve);
         }
         
         if (this.isRouting)
         {
-            Point startPoint = routingCurve.getStartPoint().getContextRelativeLocation();
-            Point endPoint = routingCurveEndPointPreview;
-            
-            g2d.setColor(routingCurve.getStartPoint().getConnectionPoint().getColor());
-
-            int cp1_dx = routingCurve.getStartPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
-            int cp2_dx = startPoint.x < endPoint.x ? -200 : 200;
-            
-            drawCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);
+            if (routingCurve.isFilled())
+            {
+                drawConnectionCurve(g2d, routingCurve);
+            }
+            else
+            {
+                drawConnectionCurve(g2d, routingCurve.getStartPoint(), routingCurveEndPointPreview);
+            }
         }
     }
+    private void drawConnectionCurve(Graphics2D g2d, ThingConnectionPoint startThingConnectionPoint, Point endPoint) 
+    {
+        g2d.setColor(startThingConnectionPoint.getConnectionPoint().getColor());
+                        
+        Point startPoint = startThingConnectionPoint.getContextRelativeLocation();
+
+        int dx = Math.abs(endPoint.x - startPoint.x);
+        dx = Math.max(75, dx);
+
+        int cp1_dx = startThingConnectionPoint.getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -dx : dx;
+        int cp2_dx = startPoint.x < endPoint.x ? -dx : dx;
+        
+        drawConnectionCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);
+    }
     
-    private void drawCurve(Graphics2D g2d, Point startPoint, Point endPoint, int cp1_dx, int cp2_dx) 
+    private void drawConnectionCurve(Graphics2D g2d, ThingConnectionCurve connectionCurve) 
+    {
+        ThingConnectionPoint startThingConnectionPoint = connectionCurve.getStartPoint();
+        ThingConnectionPoint endThingConnectionPoint = connectionCurve.getEndPoint();
+        
+        g2d.setColor(startThingConnectionPoint.getConnectionPoint().getColor());
+                        
+        Point startPoint = startThingConnectionPoint.getContextRelativeLocation();
+        Point endPoint = endThingConnectionPoint.getContextRelativeLocation();
+
+        int dx = Math.abs(endPoint.x - startPoint.x);
+        dx = Math.max(75, dx);
+
+        int cp1_dx = startThingConnectionPoint.getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -dx : dx;
+        int cp2_dx = endThingConnectionPoint.getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -dx : dx;
+
+        drawConnectionCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);
+    }
+    
+    private void drawConnectionCurve(Graphics2D g2d, Point startPoint, Point endPoint, int cp1_dx, int cp2_dx) 
     {
         Point controlPoint1 = new Point(startPoint.x + cp1_dx, startPoint.y);
         Point controlPoint2 = new Point(endPoint.x + cp2_dx, endPoint.y);

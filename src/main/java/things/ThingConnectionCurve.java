@@ -43,4 +43,9 @@ public class ThingConnectionCurve
     public ThingConnectionPoint getEndPoint() {
         return endPoint;
     }
+    
+    public Boolean isFilled()
+    {
+        return startPoint != null && endPoint != null;
+    }
 }

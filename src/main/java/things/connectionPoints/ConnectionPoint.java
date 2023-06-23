@@ -148,6 +148,7 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
 
     @Override
     public void mouseExited(MouseEvent me) {
+        this.parentThing.onConnectionPointExited();
     }
 
     @Override
