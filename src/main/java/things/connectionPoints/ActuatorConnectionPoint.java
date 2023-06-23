@@ -17,15 +17,15 @@ public class ActuatorConnectionPoint extends ConnectionPoint
 {    
     private static final Color DEFAULT_COLOR = new Color(240, 178, 61);
     
-    public ActuatorConnectionPoint(Thing parentThing, String name, int anchor) {
-        super(parentThing, name, anchor, new FilledTriangle(DEFAULT_COLOR, 20, anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI));
+    public ActuatorConnectionPoint(Thing parentThing, String name, GridBagConstraints constraints) {
+        super(parentThing, name, constraints, new FilledTriangle(DEFAULT_COLOR, 20, constraints.anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI));
     }
 
     @Override
-    public void onAnchorUpdated() {
+    public void onConstraintsUpdated() {
         FilledTriangle filledTriangle = (FilledTriangle) this.getConnectionPanel();
         
-        filledTriangle.setAngle(this.getAnchor() == GridBagConstraints.NORTHEAST ? 0 : Math.PI);
+        filledTriangle.setAngle(this.getConstraints().anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI);
     }   
     
     public Color getColor()

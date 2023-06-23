@@ -1,0 +1,4 @@
+# To Do List
+
+* implement actions menu on the left side, with actions to select, connect and resize things;
+* implement save and load contexts and things from file as per standard Web Of Things (WoT);

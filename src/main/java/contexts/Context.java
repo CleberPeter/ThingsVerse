@@ -13,6 +13,7 @@ import mouseAdapters.ComponentResizer;
 import customWidgets.PanelRound;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -54,14 +55,14 @@ public class Context extends PanelRound implements ComponentListener {
     private Point routingCurveEndPointPreview;
     
     private List<ThingConnectionCurve> connectionCurveList;
-    private List<Thing> blockList;
+    private List<Thing> thingList;
     
     public Context() 
     {    
         this.isRouting = false;
         this.routingCurve = new ThingConnectionCurve(null);
         this.connectionCurveList = new ArrayList<>();
-        this.blockList = new ArrayList<>();
+        this.thingList = new ArrayList<>();
         
         initComponents();
         initListeners();
@@ -181,9 +182,9 @@ public class Context extends PanelRound implements ComponentListener {
             if (endConnectionPoint instanceof UnusedConnectionPoint)
             {
                 Thing thing = endPoint.getThing();
-                thing.UpdateConnectionPoint(endConnectionPoint, routingCurve.getStartPoint().getConnectionPoint());
+                ConnectionPoint newEndConnectionPoint = thing.UpdateConnectionPoint(endConnectionPoint, routingCurve.getStartPoint().getConnectionPoint());
+                routingCurve.setEndPoint(new ThingConnectionPoint(thing, newEndConnectionPoint));
             }
-            
             
             connectionCurveList.add(routingCurve);
         }   
@@ -191,12 +192,12 @@ public class Context extends PanelRound implements ComponentListener {
         repaint(); // always repaint to clean preview curve
     }
     
-    public void addBlock(Thing block, GridBagConstraints gridBagConstraints)
+    public void addThing(Thing thing, GridBagConstraints gridBagConstraints)
     {
-        add(block, gridBagConstraints);
-        block.addComponentListener(this);
+        add(thing, gridBagConstraints);
+        thing.addComponentListener(this);
         
-        this.blockList.add(block);
+        this.thingList.add(thing);
         
 //        if (connectionCurveList.isEmpty())
 //        {
@@ -246,7 +247,7 @@ public class Context extends PanelRound implements ComponentListener {
     
     public Thing getBlock(String name)
     {
-        for (Thing block : blockList)
+        for (Thing block : thingList)
         {
             if (block.getName().equals(name)) return block;
         }
@@ -256,7 +257,12 @@ public class Context extends PanelRound implements ComponentListener {
     
     @Override
     public void componentResized(ComponentEvent ce) 
-    {
+    {       
+//        System.out.println("PreferredSize: " + ce.getComponent().getPreferredSize());
+//        System.out.println("width: " + ce.getComponent().getWidth());
+//        System.out.println("HEIGHT: " + ce.getComponent().getHeight());
+//        System.out.println("#######################");
+//        // ce.getComponent().setPreferredSize(new Dimension(ce.getComponent().getWidth(),ce.getComponent().getHeight()));
     }
 
     @Override
@@ -300,12 +306,12 @@ public class Context extends PanelRound implements ComponentListener {
         for (ThingConnectionCurve connectionCurve : this.connectionCurveList)
         {
             g2d.setColor(connectionCurve.getStartPoint().getConnectionPoint().getColor());
-            
+                        
             Point startPoint = connectionCurve.getStartPoint().getContextRelativeLocation();
             Point endPoint = connectionCurve.getEndPoint().getContextRelativeLocation();
 
-            int cp1_dx = connectionCurve.getStartPoint().getConnectionPoint().getAnchor() ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
-            int cp2_dx = connectionCurve.getEndPoint().getConnectionPoint().getAnchor() ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
+            int cp1_dx = connectionCurve.getStartPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
+            int cp2_dx = connectionCurve.getEndPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
 
             drawCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);
         }
@@ -317,7 +323,7 @@ public class Context extends PanelRound implements ComponentListener {
             
             g2d.setColor(routingCurve.getStartPoint().getConnectionPoint().getColor());
 
-            int cp1_dx = routingCurve.getStartPoint().getConnectionPoint().getAnchor() ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
+            int cp1_dx = routingCurve.getStartPoint().getConnectionPoint().getConstraints().anchor ==  java.awt.GridBagConstraints.NORTHWEST ? -200 : 200;
             int cp2_dx = startPoint.x < endPoint.x ? -200 : 200;
             
             drawCurve(g2d, startPoint, endPoint, cp1_dx, cp2_dx);

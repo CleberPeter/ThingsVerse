@@ -6,6 +6,7 @@ package things.connectionPoints;
 
 import customWidgets.FilledCircle;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
 import things.Thing;
 
 /**
@@ -18,14 +19,14 @@ public class PropertyConnectionPoint extends ConnectionPoint
 
     private boolean observable;
     
-    public PropertyConnectionPoint(Thing parentThing, String name, int anchor, boolean observable) {
-        super(parentThing, name, anchor, new FilledCircle(DEFAULT_COLOR));
+    public PropertyConnectionPoint(Thing parentThing, String name, GridBagConstraints constraints, boolean observable) {
+        super(parentThing, name, constraints, new FilledCircle(DEFAULT_COLOR));
         
         this.observable = observable;
     }
 
     @Override
-    public void onAnchorUpdated() {
+    public void onConstraintsUpdated() {
     }
     
     public Color getColor()
@@ -39,5 +40,4 @@ public class PropertyConnectionPoint extends ConnectionPoint
         
         filledCircle.setColor(color);
     }
-    
 }

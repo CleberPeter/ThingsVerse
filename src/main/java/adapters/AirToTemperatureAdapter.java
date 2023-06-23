@@ -30,12 +30,23 @@ public class AirToTemperatureAdapter extends Thing
     
     public void initComponents()
     {        
-        setConnectionPoint(new ActuatorConnectionPoint(this, "dT/dt", GridBagConstraints.NORTHEAST));
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets.top = 50;
         
-        setConnectionPoint(new SensingConnectionPoint(this, "volume", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new SensingConnectionPoint(this, "air", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new SensingConnectionPoint(this, "temperature", GridBagConstraints.NORTHWEST));
-
+        setConnectionPoint(new SensingConnectionPoint(this, "volume", gridBagConstraints));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new SensingConnectionPoint(this, "air", gridBagConstraints)); 
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new SensingConnectionPoint(this, "temperature", gridBagConstraints));
+        
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets.top = 50;
+        setConnectionPoint(new ActuatorConnectionPoint(this, "dT/dt", gridBagConstraints));
     }
     
     private void setUpLayout()

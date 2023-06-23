@@ -17,16 +17,16 @@ public class EventConnectionPoint extends ConnectionPoint
 {    
     private static final Color DEFAULT_COLOR = new Color(239, 83, 79); 
 
-    public EventConnectionPoint(Thing parentThing, String name, int anchor) {
-        super(parentThing, name, anchor, new FilledTriangle(DEFAULT_COLOR, 20, anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI));
+    public EventConnectionPoint(Thing parentThing, String name, GridBagConstraints constraints) {
+        super(parentThing, name, constraints, new FilledTriangle(DEFAULT_COLOR, 20, constraints.anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI));
     
     }
 
     @Override
-    public void onAnchorUpdated() {
+    public void onConstraintsUpdated() {
         FilledTriangle filledTriangle = (FilledTriangle) this.getConnectionPanel();
         
-        filledTriangle.setAngle(this.getAnchor() == GridBagConstraints.NORTHEAST ? 0 : Math.PI);
+        filledTriangle.setAngle(this.getConstraints().anchor == GridBagConstraints.NORTHEAST ? 0 : Math.PI);
     }
     
     public Color getColor()

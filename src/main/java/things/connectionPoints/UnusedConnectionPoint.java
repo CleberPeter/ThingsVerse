@@ -7,6 +7,7 @@ package things.connectionPoints;
 import customWidgets.FilledCircle;
 import things.connectionPoints.ConnectionPoint;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
 import things.Thing;
 
 /**
@@ -17,12 +18,12 @@ public class UnusedConnectionPoint extends ConnectionPoint
 {    
     private static final Color DEFAULT_COLOR = new Color(192, 192, 192); 
 
-    public UnusedConnectionPoint(Thing parentThing, int anchor) {
-        super(parentThing, null, anchor, new FilledCircle(DEFAULT_COLOR));
+    public UnusedConnectionPoint(Thing parentThing, GridBagConstraints constraints) {
+        super(parentThing, null, constraints, new FilledCircle(DEFAULT_COLOR));
     }
 
     @Override
-    public void onAnchorUpdated() {
+    public void onConstraintsUpdated() {
     }
     
     public Color getColor()
@@ -32,5 +33,4 @@ public class UnusedConnectionPoint extends ConnectionPoint
     
     public void setColor(Color color) {
     }
-    
 }

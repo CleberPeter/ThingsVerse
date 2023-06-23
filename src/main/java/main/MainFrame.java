@@ -14,7 +14,9 @@ import things.DoorController;
 import variables.TemperatureVariable;
 import mouseAdapters.FrameDragListener;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -77,37 +79,39 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         VolumeVariable volume = new VolumeVariable(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(50, 400, 0, 0);
-        contextPanel.addBlock(volume, gridBagConstraints);
+        contextPanel.addThing(volume, gridBagConstraints);
         
         AirConditioning airConditioning = new AirConditioning(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(200, 100, 0, 0);
-        contextPanel.addBlock(airConditioning, gridBagConstraints);
+        contextPanel.addThing(airConditioning, gridBagConstraints);
         
         AirToTemperatureAdapter air_to_temp = new AirToTemperatureAdapter(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(200, 600, 0, 0);
-        contextPanel.addBlock(air_to_temp, gridBagConstraints);
+        contextPanel.addThing(air_to_temp, gridBagConstraints);
         
         TemperatureVariable temperature = new TemperatureVariable(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(500, 400, 0, 0);
-        contextPanel.addBlock(temperature, gridBagConstraints);    
+        contextPanel.addThing(temperature, gridBagConstraints);    
         
         DoorController doorController = new DoorController(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(50, 1000, 0, 0);
-        contextPanel.addBlock(doorController, gridBagConstraints);
+        contextPanel.addThing(doorController, gridBagConstraints);
         
         Agent agent = new Agent(contextPanel, "Bob");
         
-        gridBagConstraints.insets = new java.awt.Insets(400, 1000, 0, 0);
-        contextPanel.addBlock(agent, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(400, 1500, 0, 0);
+        contextPanel.addThing(agent, gridBagConstraints);
         
         DoorObject doorObject = new DoorObject(contextPanel);
         
         gridBagConstraints.insets = new java.awt.Insets(400, 1000, 0, 0);
-        contextPanel.addBlock(doorObject, gridBagConstraints);
+        contextPanel.addThing(doorObject, gridBagConstraints);
+        
+        contextPanel.addComponentListener(this);
     }
 
     /**
@@ -702,7 +706,19 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent ce) {
-//        System.out.println("main.MainFrame.componentResized()");
+        Component component = ce.getComponent();
+        
+        int width = component.getWidth();
+        int height = component.getHeight();
+        
+        System.out.println("PreferredSize: " + component.getPreferredSize());
+        System.out.println("width: " + width);
+        System.out.println("HEIGHT: " + height);
+        System.out.println("#######################");
+        
+        // Update the preferred size
+        // component.setPreferredSize(new Dimension(width, height));
+        
     }
 
     @Override

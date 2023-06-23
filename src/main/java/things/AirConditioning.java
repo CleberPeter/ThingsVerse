@@ -32,13 +32,27 @@ public class AirConditioning extends Thing
     
     public void initComponents()
     {
-        setConnectionPoint(new PropertyConnectionPoint(this, "powerConsumption", GridBagConstraints.NORTHWEST, true));
-        setConnectionPoint(new PropertyConnectionPoint(this, "temperature", GridBagConstraints.NORTHWEST, true));
-        setConnectionPoint(new ActionConnectionPoint(this, "do-On/Off", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new EventConnectionPoint(this, "on-temperatureReached", GridBagConstraints.NORTHWEST));
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets.top = 50;
         
-        setConnectionPoint(new SensingConnectionPoint(this, "temperature", GridBagConstraints.NORTHEAST));
-        setConnectionPoint(new ActuatorConnectionPoint(this, "air", GridBagConstraints.NORTHEAST));
+        setConnectionPoint(new PropertyConnectionPoint(this, "powerConsumption", gridBagConstraints, true));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new PropertyConnectionPoint(this, "temperature", gridBagConstraints, true));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new ActionConnectionPoint(this, "do-On/Off", gridBagConstraints));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new EventConnectionPoint(this, "on-temperatureReached", gridBagConstraints));
+        
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets.top = 50;
+        setConnectionPoint(new SensingConnectionPoint(this, "temperature", gridBagConstraints));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new ActuatorConnectionPoint(this, "air", gridBagConstraints));
     }
     
     private void setUpLayout()

@@ -30,9 +30,18 @@ public class VolumeVariable extends Thing {
     
     public void initComponents()
     {
-        setConnectionPoint(new SensingConnectionPoint(this, "dV/dt", GridBagConstraints.NORTHWEST));
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets.top = 50;
         
-        setConnectionPoint(new ActuatorConnectionPoint(this, "volume", GridBagConstraints.NORTHEAST));
+        setConnectionPoint(new SensingConnectionPoint(this, "dV/dt", gridBagConstraints));
+        
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        setConnectionPoint(new ActuatorConnectionPoint(this, "volume", gridBagConstraints));
     }
     
     private void setUpLayout()

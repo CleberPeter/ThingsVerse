@@ -24,16 +24,16 @@ import things.Thing;
 public abstract class ConnectionPoint extends JPanel implements MouseListener, MouseMotionListener
 {
     private String name;
-    private int anchor;
     private JPanel connectionPanel;
     private JLabel name_label;
     private Thing parentThing;
+    private GridBagConstraints constraints;
     
-    public abstract void onAnchorUpdated();
+    public abstract void onConstraintsUpdated();
     public abstract Color getColor();
     public abstract void setColor(Color color);
     
-    public ConnectionPoint(Thing parentThing, String name, int anchor, JPanel connectionPanel)
+    public ConnectionPoint(Thing parentThing, String name, GridBagConstraints constraints, JPanel connectionPanel)
     {
         this.parentThing = parentThing;
         this.name = name;
@@ -57,13 +57,8 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
             setName(this.name);
         }
         
-        setAnchor(anchor);
+        setConstraints(constraints);
         setOpaque(false);    
-    }
-    
-    public int getAnchor()
-    {
-        return this.anchor;
     }
     
     public Thing getParentThing()
@@ -71,14 +66,29 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         return this.parentThing;
     }
     
+    public GridBagConstraints getConstraints()
+    {
+        return this.constraints;
+    }
+    
+    public void hiddenName()
+    {
+        if (name_label != null) name_label.setText("");
+    }
+    
+    public void showName()
+    {
+        if (this.name != null) name_label.setText(this.name);
+    }
+    
     public JPanel getConnectionPanel()
     {
         return connectionPanel;
     }
     
-    public void setAnchor(int anchor)
+    public void setConstraints(GridBagConstraints constraints)
     {
-        if (anchor != getAnchor() && name != null)
+        if ((this.constraints == null || constraints.anchor != this.constraints.anchor) && name != null)
         {
             GridBagLayout gridBagLayout = (GridBagLayout) getLayout();
         
@@ -87,20 +97,20 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
             gridBagConstraints.gridy = 0;
             gridBagConstraints.weightx = 0.5;
             gridBagConstraints.weighty = 0.5;
-            gridBagConstraints.anchor = anchor;
+            gridBagConstraints.anchor = constraints.anchor;
             
             gridBagLayout.setConstraints(this.connectionPanel, gridBagConstraints);
             
-            if (anchor == java.awt.GridBagConstraints.NORTHEAST) gridBagConstraints.insets = new Insets(3, 0, 0, 30);
-            else if (anchor == java.awt.GridBagConstraints.NORTHWEST) gridBagConstraints.insets = new Insets(3, 30, 0, 0);
+            if (constraints.anchor == java.awt.GridBagConstraints.NORTHEAST) gridBagConstraints.insets = new Insets(3, 0, 0, 30);
+            else if (constraints.anchor == java.awt.GridBagConstraints.NORTHWEST) gridBagConstraints.insets = new Insets(3, 30, 0, 0);
             
             gridBagLayout.setConstraints(name_label, gridBagConstraints);
             
             revalidate();
         }
         
-        this.anchor = anchor;
-        onAnchorUpdated();
+        this.constraints = (GridBagConstraints) constraints.clone();
+        onConstraintsUpdated();
     }
     
     public Point getConnectionPanelThingRelativeLocation()

@@ -28,10 +28,21 @@ public class DoorController extends Thing
     
     public void initComponents()
     {
-        setConnectionPoint(new ActuatorConnectionPoint(this, "dV/dt", GridBagConstraints.NORTHWEST));
-        setConnectionPoint(new ActuatorConnectionPoint(this, "dY/dt", GridBagConstraints.NORTHWEST));
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets.top = 50;
+        
+        setConnectionPoint(new ActuatorConnectionPoint(this, "dV/dt", gridBagConstraints));
+        gridBagConstraints.insets.top += 50;
+        setConnectionPoint(new ActuatorConnectionPoint(this, "dY/dt", gridBagConstraints));
 
-        setConnectionPoint(new ActionConnectionPoint(this, "do-Open/Close", GridBagConstraints.NORTHEAST));
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets.top = 50;
+        setConnectionPoint(new ActionConnectionPoint(this, "do-Open/Close", gridBagConstraints));
     }
     
     private void setUpLayout()

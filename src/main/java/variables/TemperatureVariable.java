@@ -30,9 +30,18 @@ public class TemperatureVariable extends Thing
     
     public void initComponents()
     {
-        setConnectionPoint(new SensingConnectionPoint(this, "dT/dt", GridBagConstraints.NORTHWEST));
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets.top = 50;
         
-        setConnectionPoint(new ActuatorConnectionPoint(this, "temperature", GridBagConstraints.NORTHEAST));
+        setConnectionPoint(new SensingConnectionPoint(this, "dT/dt", gridBagConstraints));
+        
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        setConnectionPoint(new ActuatorConnectionPoint(this, "temperature", gridBagConstraints));
     }
     
     private void setUpLayout()

@@ -335,7 +335,7 @@ public class ConnectionPointsMover extends MouseAdapter
                         Point connectionPointLocation = connectionPoint.getLocation();
                         Point destiny = destination.getLocation();
                         
-                        if (connectionPoint.getAnchor() == java.awt.GridBagConstraints.NORTHEAST) // compare lower right corner
+                        if (connectionPoint.getConstraints().anchor == java.awt.GridBagConstraints.NORTHEAST) // compare lower right corner
                         {
                             connectionPointLocation.x += connectionPoint.getWidth();
                             connectionPointLocation.y += connectionPoint.getHeight();
