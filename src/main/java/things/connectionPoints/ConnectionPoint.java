@@ -118,11 +118,11 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         Point connectionPanelRelativeLocation = this.connectionPanel.getLocation();
         Point ConnectionPointLocation = getLocation();
         
-        int thingRelativeLocationX = connectionPanelRelativeLocation.x + ConnectionPointLocation.x + this.connectionPanel.getWidth()/2;;
+        int thingRelativeLocationX = connectionPanelRelativeLocation.x + ConnectionPointLocation.x + this.connectionPanel.getWidth()/2;
         int thingRelativeLocationY = connectionPanelRelativeLocation.y + ConnectionPointLocation.y + this.connectionPanel.getHeight()/2;
         
         // if (getAnchor() == java.awt.GridBagConstraints.NORTHEAST) blockRelativeLocationX += filledCircle.getWidth();
-        
+
         return new Point(thingRelativeLocationX, thingRelativeLocationY); 
     }
 

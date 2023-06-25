@@ -26,9 +26,10 @@ public class GridBackground extends JPanel {
         repaint();
     }
     
-    public void paint(Graphics graphics) 
+    @Override
+    public void paintComponent(Graphics graphics) 
     {
-        super.paint(graphics);  
+        super.paintComponent(graphics);  
         
         Graphics2D graphics_2d = (Graphics2D) graphics;
         graphics_2d.setColor(new Color(66, 66, 66));

@@ -4,6 +4,7 @@
  */
 package things;
 
+import contexts.Context;
 import things.Thing;
 import things.connectionPoints.ConnectionPoint;
 import java.awt.Point;
@@ -12,20 +13,22 @@ import java.awt.Point;
  *
  * @author cleber
  */
-public class ThingConnectionPoint
+public class ContextThingConnectionPoint
 {
+    private Context context;
     private Thing thing;
     private ConnectionPoint connectionPoint;
 
-    public ThingConnectionPoint(Thing thing, ConnectionPoint connectionPoint)
+    public ContextThingConnectionPoint(Context context, Thing thing, ConnectionPoint connectionPoint)
     {
+        this.context = context;
         this.thing = thing;
         this.connectionPoint = connectionPoint;
     }
     
-    public Point getContextRelativeLocation()
+    public Point getLocation()
     {
-        return this.getThing().getConnectionPointContextRelativeLocation(getConnectionPoint());
+        return this.getContext().getMainFrameRelativeLocation(this.getThing(), this.getConnectionPoint());
     }
 
     /**
@@ -33,6 +36,10 @@ public class ThingConnectionPoint
      */
     public Thing getThing() {
         return thing;
+    }
+    
+    public Context getContext() {
+        return context;
     }
 
     /**

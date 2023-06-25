@@ -42,7 +42,7 @@ import things.connectionPoints.SensingConnectionPoint;
  */
 public abstract class Thing extends JLayeredPane implements ComponentListener
 {
-    private static final Color BACKGROUND_COLOR = new Color(60,60,60, 128);
+    private static final Color BACKGROUND_COLOR = new Color(30,30,30, 220);
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
     private PanelRound header_panel;
@@ -111,7 +111,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     {
         setLayout(new GridBagLayout());
         
-        header_panel.setLayout(new java.awt.GridBagLayout());
+        header_panel.setLayout(new GridBagLayout());
         header_panel.setPreferredSize(new Dimension(0, 30));
         header_panel.setMinimumSize(new Dimension(0, 30));
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
@@ -258,7 +258,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
             expandMore(layout, gridBagConstraintsHeaderPanel, connectionPointsCount);
         }
         
-        parentContext.onBlockConnectionPointMoved();
+        parentContext.onThingConnectionPointMoved();
     }     
     
     protected void setConnectionPoint(ConnectionPoint connectionPoint) 
@@ -325,7 +325,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         
         validate();
         
-        parentContext.onBlockConnectionPointMoved();
+        parentContext.onThingConnectionPointMoved();
     }
     
     public ConnectionPoint UpdateConnectionPoint(ConnectionPoint connectionPointToUpdate, ConnectionPoint connectionPointToCopy)
@@ -366,7 +366,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
 
         validate();
 
-        parentContext.onBlockConnectionPointMoved();
+        parentContext.onThingConnectionPointMoved();
      
         return newConnectionPoint;
     }
@@ -446,10 +446,10 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     
     public Point getConnectionPointContextRelativeLocation(ConnectionPoint connectionPoint)
     {
-        Point blockLocation = getLocation();
-        Point blockRelativeLocationClicked = connectionPoint.getConnectionPanelThingRelativeLocation();
+        Point thingLocation = getLocation();
+        Point thingRelativeLocationClicked = connectionPoint.getConnectionPanelThingRelativeLocation();
         
-        return new Point(blockRelativeLocationClicked.x + blockLocation.x, blockRelativeLocationClicked.y + blockLocation.y);
+        return new Point(thingRelativeLocationClicked.x + thingLocation.x, thingRelativeLocationClicked.y + thingLocation.y + header_panel.getHeight());
     }
     
     public ConnectionPoint getConnectionPoint(String name)
@@ -464,27 +464,27 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     
     public void onConnectionPointPressed(ConnectionPoint connectionPoint)
     {
-        this.parentContext.onBlockConnectionPointPressed(this, connectionPoint);
+        this.parentContext.onThingConnectionPointPressed(this, connectionPoint);
     }
     
     public void onConnectionPointEntered(ConnectionPoint connectionPoint)
     {
-        this.parentContext.onBlockConnectionPointEntered(this, connectionPoint);
+        this.parentContext.onThingConnectionPointEntered(this, connectionPoint);
     }
     
     public void onConnectionPointReleased()
     {
-        this.parentContext.onBlockConnectionPointReleased();
+        this.parentContext.onThingConnectionPointReleased();
     }
     
     public void onConnectionPointExited()
     {
-        this.parentContext.onBlockConnectionPointExited();
+        this.parentContext.onThingConnectionPointExited();
     }
     
     public void onConnectionPointDragged(Point relativeMouseLocation)
     {
-        this.parentContext.onBlockConnectionPointDragged(relativeMouseLocation);
+        this.parentContext.onThingConnectionPointDragged(relativeMouseLocation);
     }
     
     @Override

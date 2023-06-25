@@ -16,16 +16,16 @@ import java.awt.Point;
 
 public class ThingConnectionCurve 
 {    
-    private ThingConnectionPoint startPoint;
-    private ThingConnectionPoint endPoint;
+    private ContextThingConnectionPoint startPoint;
+    private ContextThingConnectionPoint endPoint;
     
-    public ThingConnectionCurve(ThingConnectionPoint startPoint)
+    public ThingConnectionCurve(ContextThingConnectionPoint startPoint)
     {
         this.startPoint = startPoint;
         endPoint = null;
     }
     
-    public void setEndPoint(ThingConnectionPoint endPoint)
+    public void setEndPoint(ContextThingConnectionPoint endPoint)
     {
         this.endPoint = endPoint;
     }
@@ -33,14 +33,14 @@ public class ThingConnectionCurve
     /**
      * @return the startPoint
      */
-    public ThingConnectionPoint getStartPoint() {
+    public ContextThingConnectionPoint getStartPoint() {
         return startPoint;
     }
 
     /**
      * @return the endPoint
      */
-    public ThingConnectionPoint getEndPoint() {
+    public ContextThingConnectionPoint getEndPoint() {
         return endPoint;
     }
     
