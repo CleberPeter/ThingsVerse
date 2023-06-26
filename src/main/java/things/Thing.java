@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -143,7 +144,13 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     {
         componentMover = new ComponentMover();
         componentMover.setDragInsets(new Insets(10, 10, 10, 10));
-        componentMover.registerComponent(this);
+        
+        Function onMovedEnd = (Object t) -> {
+            this.parentContext.onChildMoved(this);
+            return null;
+        };
+        
+        componentMover.registerComponent(onMovedEnd, this);
         
         connectionPointsMover = new ConnectionPointsMover(this);
         
@@ -155,17 +162,17 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     
     private void expandLess(GridBagLayout layout, GridBagConstraints gridBagConstraintsHeaderPanel, int connectionPointsCountNorthWest, int connectionPointsCountNorthEast, int connectionPointsCount)
     {   
-        int expandedHeight = connectionPointsCount*25 + 30;
+        int expandedLessHeight = connectionPointsCount*25 + 30;
         gridBagConstraintsHeaderPanel.anchor = java.awt.GridBagConstraints.CENTER;
         layout.setConstraints(header_panel, gridBagConstraintsHeaderPanel);
         header_panel.setBackground(TRANSPARENT_COLOR);
 
-        setPreferredSize(new Dimension(getWidth(), expandedHeight));
-        setMinimumSize(new Dimension(getWidth(), expandedHeight));
+        setPreferredSize(new Dimension(getWidth(), expandedLessHeight));
+        setMinimumSize(new Dimension(getWidth(), expandedLessHeight));
 
         main_panel.setVisible(false);
-
-        int radiusArc = (expandedHeight - 20)/2;
+        
+        int radiusArc = (expandedLessHeight - 20)/2;
         double leftAngle = Math.PI/2;
         double leftAngleStep = Math.PI/(connectionPointsCountNorthWest + 1);
 
@@ -322,9 +329,8 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         
         layout.setConstraints(cp2, cp1Constraints);
         cp2.setConstraints(cp1Constraints);
-        
-        validate();
-        
+                
+        revalidate();
         parentContext.onThingConnectionPointMoved();
     }
     
@@ -508,6 +514,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     @Override
     public void paintComponent(Graphics graphics) {
         
+        super.paintComponent(graphics);
         Graphics2D graphics_2d = (Graphics2D) graphics.create();
                 
         if (!this.expanded)
@@ -524,8 +531,5 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
 
             graphics_2d.fillRect(radiusArc + 10, 10, width - 20 - radiusArc*2, height-20);
         }
-        
-        graphics_2d.dispose();
-        super.paintComponent(graphics_2d);
     }
 }

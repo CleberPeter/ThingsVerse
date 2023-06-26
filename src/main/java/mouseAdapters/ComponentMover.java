@@ -2,6 +2,7 @@ package mouseAdapters;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.function.Function;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
@@ -39,7 +40,8 @@ public class ComponentMover extends MouseAdapter
 	private Cursor originalCursor;
 	private boolean autoscrolls;
 	private boolean potentialDrag;
-
+        
+        private Function callbackOnMoveEnd;
 
 	/**
 	 *  Constructor for moving individual components. The components must be
@@ -172,8 +174,8 @@ public class ComponentMover extends MouseAdapter
 	 */
 	public void deregisterComponent(Component... components)
 	{
-		for (Component component : components)
-			component.removeMouseListener( this );
+            for (Component component : components)
+                    component.removeMouseListener( this );
 	}
 
 	/**
@@ -183,8 +185,16 @@ public class ComponentMover extends MouseAdapter
 	 */
 	public void registerComponent(Component... components)
 	{
-		for (Component component : components)
-			component.addMouseListener( this );
+            for (Component component : components)
+                    component.addMouseListener( this );
+	}
+        
+        public void registerComponent(Function callbackOnMoveEnd, Component... components)
+	{
+            this.callbackOnMoveEnd = callbackOnMoveEnd;
+            
+            for (Component component : components)
+                    component.addMouseListener( this );
 	}
 
 	/**
@@ -345,31 +355,33 @@ public class ComponentMover extends MouseAdapter
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		if (!potentialDrag) return;
+            if (!potentialDrag) return;
+            
+            if (this.callbackOnMoveEnd != null) this.callbackOnMoveEnd.apply(null);
 
-		source.removeMouseMotionListener( this );
-		potentialDrag = false;
+            source.removeMouseMotionListener( this );
+            potentialDrag = false;
 
-		if (changeCursor)
-			source.setCursor( originalCursor );
+            if (changeCursor)
+                    source.setCursor( originalCursor );
 
-		if (destination instanceof JComponent)
-		{
-			((JComponent)destination).setAutoscrolls( autoscrolls );
-		}
+            if (destination instanceof JComponent)
+            {
+                    ((JComponent)destination).setAutoscrolls( autoscrolls );
+            }
 
-		//  Layout the components on the parent container
+            //  Layout the components on the parent container
 
-		if (autoLayout)
-		{
-			if (destination instanceof JComponent)
-			{
-				((JComponent)destination).revalidate();
-			}
-			else
-			{
-				destination.validate();
-			}
-		}
+            if (autoLayout)
+            {
+                    if (destination instanceof JComponent)
+                    {
+                            ((JComponent)destination).revalidate();
+                    }
+                    else
+                    {
+                            destination.validate();
+                    }
+            }
 	}
 }

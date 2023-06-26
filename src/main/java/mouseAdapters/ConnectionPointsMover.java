@@ -44,15 +44,15 @@ public class ConnectionPointsMover extends MouseAdapter
 	private boolean autoscrolls;
 	private boolean potentialDrag;
         
-        private Thing parentBlock;
+        private Thing parentThing;
 
 	/**
 	 *  Constructor for moving individual components. The components must be
 	 *  regisetered using the registerComponent() method.
 	 */
-	public ConnectionPointsMover(Thing parentBlock)
+	public ConnectionPointsMover(Thing parentThing)
 	{
-            this.parentBlock = parentBlock;
+            this.parentThing = parentThing;
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class ConnectionPointsMover extends MouseAdapter
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-                List<ConnectionPoint> connectionPointsList = this.parentBlock.getConnectionPointsList();
+                List<ConnectionPoint> connectionPointsList = this.parentThing.getConnectionPointsList();
                 
                 ConnectionPoint movedConnectionPoint = (ConnectionPoint) e.getComponent();
                 
@@ -353,7 +353,7 @@ public class ConnectionPointsMover extends MouseAdapter
                     }
                 }
                 
-                if (nearestConnectionPoint != null && shorterDistance < 50) this.parentBlock.swapConnectionPoints(movedConnectionPoint, nearestConnectionPoint);
+                if (nearestConnectionPoint != null && shorterDistance < 50) this.parentThing.swapConnectionPoints(movedConnectionPoint, nearestConnectionPoint);
                 else movedConnectionPoint.setLocation(location);
             
 		if (!potentialDrag) return;

@@ -9,7 +9,7 @@ import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 import customWidgets.PanelRound;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -20,10 +20,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import main.MainFrame;
 import things.connectionPoints.ConnectionPoint;
 
 /**
@@ -82,7 +81,13 @@ public class Context extends JLayeredPane implements ComponentListener {
     private void initListeners()
     {
         ComponentMover componentMover = new ComponentMover();
-        componentMover.registerComponent(this);
+        
+        Function onMovedEnd = (Object t) -> {
+            if (this.parentContext != null) this.parentContext.onChildMoved(this);
+            return null;
+        };
+        
+        componentMover.registerComponent(onMovedEnd, this);
         componentMover.setDragInsets(new Insets(10, 10, 10, 10));
         
         ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
@@ -95,30 +100,30 @@ public class Context extends JLayeredPane implements ComponentListener {
     {
         setLayout(new GridBagLayout());
         
-        header_panel.setLayout(new java.awt.GridBagLayout());
+        header_panel.setLayout(new GridBagLayout());
         
         Dimension header_dimension = new Dimension(0, 30); // width = 0 will be repleaced by fill horizontal on gridBagConstraints
         header_panel.setPreferredSize(header_dimension);
         header_panel.setMinimumSize(header_dimension);
-        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
         
         header_panel.add(titleLabel, gridBagConstraints);
         
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         add(header_panel, gridBagConstraints);
         
         
-        main_panel.setLayout(new java.awt.GridBagLayout());
+        main_panel.setLayout(new GridBagLayout());
         
-        gridBagConstraints.insets = new java.awt.Insets(30, 0, 0, 0);
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new Insets(30, 0, 0, 0);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         add(main_panel, gridBagConstraints);
     }
     
@@ -164,7 +169,6 @@ public class Context extends JLayeredPane implements ComponentListener {
         
         this.thingList.add(thing);
     }
-    
     
     public Thing getBlock(String name)
     {
@@ -225,9 +229,23 @@ public class Context extends JLayeredPane implements ComponentListener {
         this.rootContext.onThingConnectionPointDragged(relativeMouseLocation);
     }
     
+    public void onChildMoved(Component child)
+    {        
+        GridBagLayout layout = (GridBagLayout) main_panel.getLayout();
+        GridBagConstraints thingConstraints = layout.getConstraints(child); 
+                
+        thingConstraints.insets.top = child.getY();
+        thingConstraints.insets.left = child.getX();
+        
+        layout.setConstraints(child, thingConstraints);
+        
+        revalidate();
+        rootContext.onThingConnectionPointMoved();
+    }
+    
     @Override
     public void componentResized(ComponentEvent ce) 
-    {       
+    {
 //        System.out.println("PreferredSize: " + ce.getComponent().getPreferredSize());
 //        System.out.println("width: " + ce.getComponent().getWidth());
 //        System.out.println("HEIGHT: " + ce.getComponent().getHeight());
@@ -237,20 +255,8 @@ public class Context extends JLayeredPane implements ComponentListener {
 
     @Override
     public void componentMoved(ComponentEvent ce) 
-    {           
-        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        
-        gridBagConstraints.insets = new Insets(ce.getComponent().getY(), ce.getComponent().getX(), 0, 0);
-        
-        GridBagLayout layout = (GridBagLayout) getLayout();
-        layout.setConstraints(ce.getComponent(), gridBagConstraints);
-        
-        rootContext.onThingConnectionPointMoved();
+    {   
+        rootContext.onThingConnectionPointMoved(); 
     }
 
     @Override

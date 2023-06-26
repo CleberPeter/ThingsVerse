@@ -82,7 +82,7 @@ public class RootContext extends JLayeredPane implements ComponentListener
         
         DoorController doorController = new DoorController(houseContext);
         
-        gridBagConstraints.insets = new java.awt.Insets(0, 1200, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(30, 1200, 0, 0);
         houseContext.addThing(doorController, gridBagConstraints);
         
         Agent agent = new Agent(houseContext, "Bob");
@@ -272,11 +272,7 @@ public class RootContext extends JLayeredPane implements ComponentListener
     }
     
     private void drawConnectionCurve(Graphics2D g2d, Point startPoint, Point endPoint, int cp1_dx, int cp2_dx) 
-    {
-        // compensate window header
-//        startPoint.y += 60;
-//        endPoint.y += 60;
-        
+    {        
         Point controlPoint1 = new Point(startPoint.x + cp1_dx, startPoint.y);
         Point controlPoint2 = new Point(endPoint.x + cp2_dx, endPoint.y);
 

@@ -92,7 +92,7 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         {
             GridBagLayout gridBagLayout = (GridBagLayout) getLayout();
         
-            GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.weightx = 0.5;
@@ -104,7 +104,7 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
             if (constraints.anchor == java.awt.GridBagConstraints.NORTHEAST) gridBagConstraints.insets = new Insets(3, 0, 0, 30);
             else if (constraints.anchor == java.awt.GridBagConstraints.NORTHWEST) gridBagConstraints.insets = new Insets(3, 30, 0, 0);
             
-            gridBagLayout.setConstraints(name_label, gridBagConstraints);
+            gridBagLayout.setConstraints(this.name_label, gridBagConstraints);
             
             revalidate();
         }
