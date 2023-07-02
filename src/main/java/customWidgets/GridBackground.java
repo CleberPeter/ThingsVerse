@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 
@@ -16,6 +17,11 @@ import javax.swing.JPanel;
  * @author cleber
  */
 public class GridBackground extends JPanel {
+    
+    public GridBackground()
+    {
+        setLayout(new GridBagLayout());
+    }
     
     public int getcellSize() {
         return cellSize;

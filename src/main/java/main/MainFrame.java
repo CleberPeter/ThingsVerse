@@ -4,41 +4,17 @@
  */
 package main;
 
-import adapters.AirToTemperatureAdapter;
-import agents.Agent;
-import agents.Sensor;
-import things.AirConditioning;
 import mouseAdapters.ComponentResizer;
-import contexts.Context;
-import contexts.RootContext;
-import java.awt.BasicStroke;
-import things.DoorController;
-import variables.TemperatureVariable;
 import mouseAdapters.FrameDragListener;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.geom.CubicCurve2D;
-import java.util.ArrayList;
 import javax.swing.JLayeredPane;
-import objects.DoorObject;
-import things.Thing;
-import things.ThingConnectionCurve;
-import things.ContextThingConnectionPoint;
-import things.connectionPoints.ConnectionPoint;
-import things.connectionPoints.UnusedConnectionPoint;
-import variables.VolumeVariable;
+import javax.swing.JScrollPane;
 
 /**
  *

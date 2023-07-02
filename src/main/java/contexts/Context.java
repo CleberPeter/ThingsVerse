@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.function.Function;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollPane;
 import things.connectionPoints.ConnectionPoint;
 
 /**

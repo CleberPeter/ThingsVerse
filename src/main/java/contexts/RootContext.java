@@ -24,6 +24,9 @@ import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import objects.DoorObject;
 import things.AirConditioning;
 import things.ContextThingConnectionPoint;
@@ -39,12 +42,13 @@ import variables.VolumeVariable;
  *
  * @author cleber
  */
-public class RootContext extends JLayeredPane implements ComponentListener
+public class RootContext extends JLayeredPane implements ComponentListener, ChangeListener
 {
     private ThingConnectionCurve routingCurve;
     private Point routingCurveEndPointPreview;
     private List<ThingConnectionCurve> connectionCurveList;
     private Boolean isRouting;
+    private JScrollPane scrollPane;
     
     private GridBackground gridBackground;
     
@@ -61,28 +65,34 @@ public class RootContext extends JLayeredPane implements ComponentListener
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
         gridBackground = new GridBackground();
         gridBackground.setcellSize(50);
         gridBackground.setBackground(new java.awt.Color(0, 0, 0));
-        
+        gridBackground.setPreferredSize(new Dimension(5000, 5000));
+        gridBackground.setMinimumSize(new Dimension(5000, 5000));
         add(gridBackground, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
-        gridBagConstraints.fill = java.awt.GridBagConstraints.NONE;
+        
+        scrollPane = new JScrollPane(gridBackground);
+        scrollPane.getViewport().addChangeListener(this);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        add(scrollPane, gridBagConstraints);
         
         // HOUSE CONTEXT
+        gridBagConstraints.fill = java.awt.GridBagConstraints.NONE;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         Context houseContext = new Context(this, null);
         houseContext.setTitle("House");
-        houseContext.setPreferredSize(new Dimension(1700, 850));
-        houseContext.setMinimumSize(new Dimension(1700, 850));
+        houseContext.setPreferredSize(new Dimension(3000, 1000));
+        houseContext.setMinimumSize(new Dimension(3000, 1000));
         houseContext.setColor(Color.white);
         
         DoorController doorController = new DoorController(houseContext);
         
-        gridBagConstraints.insets = new java.awt.Insets(30, 1200, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(30, 2500, 0, 0);
         houseContext.addThing(doorController, gridBagConstraints);
         
         Agent agent = new Agent(houseContext, "Bob");
@@ -130,7 +140,7 @@ public class RootContext extends JLayeredPane implements ComponentListener
         houseContext.addComponentListener(this);
         
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
-        add(houseContext, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
+        gridBackground.add(houseContext, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
     }
     
     public void onThingConnectionPointPressed(Context context, Thing thing, ConnectionPoint connectionPoint)
@@ -273,6 +283,18 @@ public class RootContext extends JLayeredPane implements ComponentListener
     
     private void drawConnectionCurve(Graphics2D g2d, Point startPoint, Point endPoint, int cp1_dx, int cp2_dx) 
     {        
+        Point scrollPosition = scrollPane.getViewport().getViewPosition();
+        
+        // compensate scrollPane header
+        startPoint.y += 3;
+        endPoint.y += 3;
+        
+        startPoint.x -= scrollPosition.x;
+        startPoint.y -= scrollPosition.y;
+        
+        endPoint.x -= scrollPosition.x;
+        endPoint.y -= scrollPosition.y;
+        
         Point controlPoint1 = new Point(startPoint.x + cp1_dx, startPoint.y);
         Point controlPoint2 = new Point(endPoint.x + cp2_dx, endPoint.y);
 
@@ -329,5 +351,10 @@ public class RootContext extends JLayeredPane implements ComponentListener
 
     @Override
     public void componentHidden(ComponentEvent ce) {
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent ce) {
+        repaint();
     }
 }
