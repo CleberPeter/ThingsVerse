@@ -14,7 +14,6 @@ import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JLayeredPane;
-import javax.swing.JScrollPane;
 
 /**
  *
@@ -23,11 +22,14 @@ import javax.swing.JScrollPane;
 public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     
     private Boolean maximized;
+    private ToolsEnabled toolsEnabled;
     
     public MainFrame() {
         initComponents();
         
         setName("MainFrame");
+        
+        toolsEnabled = new ToolsEnabled();
         
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         maximized = true;
@@ -39,14 +41,8 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
         componentResizer.setSnapSize(new Dimension(15, 15));
         
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        
         menu_bar_file_panel.setVisible(false);
-        rootContext.add(menu_bar_file_panel, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
+        select_btnActionPerformed(null);
     }
     
     /**
@@ -59,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         header_panel = new javax.swing.JPanel();
         header_actions_panel = new javax.swing.JPanel();
         close_btn = new javax.swing.JButton();
@@ -80,15 +77,36 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         quit_btn = new javax.swing.JButton();
         footer_panel = new javax.swing.JPanel();
         footer_title = new javax.swing.JLabel();
+        tools_panel = new javax.swing.JPanel();
+        select_btn = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
+        wiring_btn = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
+        move_btn = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JSeparator();
+        scale_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(42, 42, 42));
         setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 1));
+        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
+        layout.columnWidths = new int[] {0};
+        layout.rowHeights = new int[] {0};
+        layout.columnWeights = new double[] {0.5};
+        layout.rowWeights = new double[] {0.5};
+        getContentPane().setLayout(layout);
+
+        java.awt.GridBagLayout jLayeredPane1Layout = new java.awt.GridBagLayout();
+        jLayeredPane1Layout.columnWidths = new int[] {0};
+        jLayeredPane1Layout.rowHeights = new int[] {0};
+        jLayeredPane1Layout.columnWeights = new double[] {0.5};
+        jLayeredPane1Layout.rowWeights = new double[] {0.5};
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
 
         header_panel.setBackground(new java.awt.Color(42, 42, 42));
         header_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 42, 42), 5));
-        header_panel.setPreferredSize(new java.awt.Dimension(800, 90));
+        header_panel.setMinimumSize(new java.awt.Dimension(235, 90));
+        header_panel.setPreferredSize(new java.awt.Dimension(800, 50));
         header_panel.setLayout(new java.awt.BorderLayout(10, 0));
 
         header_actions_panel.setBackground(new java.awt.Color(42, 42, 42));
@@ -221,8 +239,23 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
 
         header_panel.add(menu_bar_panel, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(header_panel, java.awt.BorderLayout.PAGE_START);
-        getContentPane().add(rootContext, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        jLayeredPane1.add(header_panel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(90, 0, 40, 0);
+        jLayeredPane1.add(rootContext, gridBagConstraints);
 
         menu_bar_file_panel.setBackground(new java.awt.Color(40, 40, 40));
         menu_bar_file_panel.setPreferredSize(new java.awt.Dimension(200, 120));
@@ -386,11 +419,20 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         menu_bar_file_panel.add(quit_btn, gridBagConstraints);
 
-        getContentPane().add(menu_bar_file_panel, java.awt.BorderLayout.LINE_END);
+        jLayeredPane1.setLayer(menu_bar_file_panel, javax.swing.JLayeredPane.PALETTE_LAYER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(90, 17, 0, 0);
+        jLayeredPane1.add(menu_bar_file_panel, gridBagConstraints);
 
         footer_panel.setBackground(new java.awt.Color(255, 255, 255));
         footer_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
-        footer_panel.setPreferredSize(new java.awt.Dimension(800, 40));
+        footer_panel.setMinimumSize(new java.awt.Dimension(131, 40));
+        footer_panel.setPreferredSize(new java.awt.Dimension(800, 50));
         footer_panel.setLayout(new java.awt.BorderLayout(0, 10));
 
         footer_title.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N
@@ -401,7 +443,97 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         footer_title.setRequestFocusEnabled(false);
         footer_panel.add(footer_title, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(footer_panel, java.awt.BorderLayout.PAGE_END);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        jLayeredPane1.add(footer_panel, gridBagConstraints);
+
+        tools_panel.setLayout(new javax.swing.BoxLayout(tools_panel, javax.swing.BoxLayout.Y_AXIS));
+
+        select_btn.setBackground(new java.awt.Color(42, 42, 42));
+        select_btn.setForeground(new java.awt.Color(255, 255, 255));
+        select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png"))); // NOI18N
+        select_btn.setBorder(null);
+        select_btn.setBorderPainted(false);
+        select_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                select_btnActionPerformed(evt);
+            }
+        });
+        tools_panel.add(select_btn);
+
+        jSeparator3.setBackground(new java.awt.Color(99, 99, 99));
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator3.setMinimumSize(new java.awt.Dimension(0, 1));
+        jSeparator3.setOpaque(true);
+        jSeparator3.setPreferredSize(new java.awt.Dimension(0, 1));
+        tools_panel.add(jSeparator3);
+
+        wiring_btn.setBackground(new java.awt.Color(42, 42, 42));
+        wiring_btn.setForeground(new java.awt.Color(255, 255, 255));
+        wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn.png"))); // NOI18N
+        wiring_btn.setBorder(null);
+        wiring_btn.setBorderPainted(false);
+        wiring_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wiring_btnActionPerformed(evt);
+            }
+        });
+        tools_panel.add(wiring_btn);
+
+        jSeparator4.setBackground(new java.awt.Color(99, 99, 99));
+        jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator4.setMinimumSize(new java.awt.Dimension(0, 1));
+        jSeparator4.setOpaque(true);
+        jSeparator4.setPreferredSize(new java.awt.Dimension(0, 1));
+        tools_panel.add(jSeparator4);
+
+        move_btn.setBackground(new java.awt.Color(42, 42, 42));
+        move_btn.setForeground(new java.awt.Color(255, 255, 255));
+        move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn.png"))); // NOI18N
+        move_btn.setBorder(null);
+        move_btn.setBorderPainted(false);
+        move_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                move_btnActionPerformed(evt);
+            }
+        });
+        tools_panel.add(move_btn);
+
+        jSeparator5.setBackground(new java.awt.Color(99, 99, 99));
+        jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator5.setMinimumSize(new java.awt.Dimension(0, 1));
+        jSeparator5.setOpaque(true);
+        jSeparator5.setPreferredSize(new java.awt.Dimension(0, 1));
+        tools_panel.add(jSeparator5);
+
+        scale_btn.setBackground(new java.awt.Color(42, 42, 42));
+        scale_btn.setForeground(new java.awt.Color(255, 255, 255));
+        scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn.png"))); // NOI18N
+        scale_btn.setBorder(null);
+        scale_btn.setBorderPainted(false);
+        scale_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scale_btnActionPerformed(evt);
+            }
+        });
+        tools_panel.add(scale_btn);
+
+        jLayeredPane1.setLayer(tools_panel, javax.swing.JLayeredPane.POPUP_LAYER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jLayeredPane1.add(tools_panel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(jLayeredPane1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -540,6 +672,58 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         menu_bar_file_panel.setVisible(false);
     }//GEN-LAST:event_main_panelMouseClicked
 
+    private void select_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_btnActionPerformed
+        if (!toolsEnabled.isSelect())
+        {
+            select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn_pressed.png")));
+            toolsEnabled.setSelect(true);
+        }
+        else
+        {
+            select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png")));
+            toolsEnabled.setSelect(false);
+        }
+    }//GEN-LAST:event_select_btnActionPerformed
+
+    private void wiring_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wiring_btnActionPerformed
+        if (!toolsEnabled.isWire())
+        {
+            wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn_pressed.png")));
+            toolsEnabled.setWire(true);
+        }
+        else
+        {
+            wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn.png")));
+            toolsEnabled.setWire(false);
+        }
+    }//GEN-LAST:event_wiring_btnActionPerformed
+
+    private void move_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_move_btnActionPerformed
+        if (!toolsEnabled.isMove())
+        {
+            move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn_pressed.png")));
+            toolsEnabled.setMove(true);
+        }
+        else
+        {
+            move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn.png")));
+            toolsEnabled.setMove(false);
+        }
+    }//GEN-LAST:event_move_btnActionPerformed
+
+    private void scale_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scale_btnActionPerformed
+        if (!toolsEnabled.isScale())
+        {
+            scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn_pressed.png")));
+            toolsEnabled.setScale(true);
+        }
+        else
+        {
+            scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn.png")));
+            toolsEnabled.setScale(false);
+        }
+    }//GEN-LAST:event_scale_btnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -585,19 +769,28 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JPanel header_padding_panel;
     private javax.swing.JPanel header_panel;
     private javax.swing.JLabel header_title;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JButton maximize_btn;
     private javax.swing.JButton menu_bar_edit_btn;
     private javax.swing.JButton menu_bar_file_btn;
     private javax.swing.JPanel menu_bar_file_panel;
     private javax.swing.JPanel menu_bar_panel;
     private javax.swing.JButton minimize_btn;
+    private javax.swing.JButton move_btn;
     private javax.swing.JButton new_btn;
     private javax.swing.JButton open_btn;
     private javax.swing.JButton quit_btn;
     private contexts.RootContext rootContext;
     private javax.swing.JButton save_btn;
+    private javax.swing.JButton scale_btn;
+    private javax.swing.JButton select_btn;
+    private javax.swing.JPanel tools_panel;
+    private javax.swing.JButton wiring_btn;
     // End of variables declaration//GEN-END:variables
 
     @Override
