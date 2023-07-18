@@ -8,6 +8,7 @@ import things.Thing;
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 import customWidgets.PanelRound;
+import customWidgets.RoundedLineBorder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,6 +25,7 @@ import java.util.function.Function;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 import things.connectionPoints.ConnectionPoint;
 
 /**
@@ -41,6 +43,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private JLabel titleLabel;
     private String title;
+    private Boolean selected;
     
     private List<Thing> thingList;
     private List<Context> contextList;
@@ -95,6 +98,23 @@ public class Context extends JLayeredPane implements ComponentListener {
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         addComponentListener(this);
+    }
+    
+    public void setSelected(boolean selected)
+    {
+        this.selected = selected;
+        
+        Border border;
+        
+        if (this.selected) border = new RoundedLineBorder(new Color(233, 174, 63), 3, 20, true);
+        else border = null;
+        
+        this.setBorder(border);
+        
+        for (Thing thing : thingList)
+        {
+            thing.setSelected(this.selected);
+        }
     }
     
     private void setUpLayout()

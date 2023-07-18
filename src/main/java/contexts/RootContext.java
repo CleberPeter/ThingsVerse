@@ -7,6 +7,7 @@ package contexts;
 import adapters.AirToTemperatureAdapter;
 import agents.Agent;
 import customWidgets.GridBackground;
+import customWidgets.RoundedLineBorder;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import objects.DoorObject;
@@ -133,6 +135,7 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         gridBagConstraints.insets = new java.awt.Insets(500, 400, 0, 0);
         livingRoomContext.addThing(temperature, gridBagConstraints);
         
+        livingRoomContext.setSelected(true);
         
         gridBagConstraints.insets = new java.awt.Insets(50, 50, 0, 0);
         houseContext.addContext(livingRoomContext, gridBagConstraints);

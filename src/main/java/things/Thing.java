@@ -12,6 +12,7 @@ import things.connectionPoints.ActionConnectionPoint;
 import things.connectionPoints.PropertyConnectionPoint;
 import contexts.Context;
 import customWidgets.PanelRound;
+import customWidgets.RoundedLineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -53,6 +54,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     private JButton expandBtn;
     
     private Boolean expanded;
+    private Boolean selected;
     private String name;
 
     private List<ConnectionPoint> connectionPointsList;
@@ -243,6 +245,14 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
 
         expandBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/expand_less_thing.png"))); // NOI18N
         this.expanded = true;
+    }
+    
+    public void setSelected(boolean selected)
+    {
+        this.selected = selected;
+        
+        if (this.selected) this.setBorder(new RoundedLineBorder(new Color(233, 174, 63), 3, 20, true));
+        else this.setBorder(null);
     }
     
     private void expandBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
