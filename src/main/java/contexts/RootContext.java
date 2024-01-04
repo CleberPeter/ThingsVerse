@@ -135,7 +135,7 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         gridBagConstraints.insets = new java.awt.Insets(500, 400, 0, 0);
         livingRoomContext.addThing(temperature, gridBagConstraints);
         
-        livingRoomContext.setSelected(true);
+        // livingRoomContext.setSelected(true);
         
         gridBagConstraints.insets = new java.awt.Insets(50, 50, 0, 0);
         houseContext.addContext(livingRoomContext, gridBagConstraints);

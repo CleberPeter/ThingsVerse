@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.ActionListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -28,35 +29,37 @@ public class PanelRound extends JPanel {
         return roundTopLeft;
     }
 
-    public void setRoundTopLeft(int roundTopLeft) {
-        this.roundTopLeft = roundTopLeft;
-        repaint();
-    }
-
     public int getRoundTopRight() {
         return roundTopRight;
     }
 
-    public void setRoundTopRight(int roundTopRight) {
-        this.roundTopRight = roundTopRight;
+    public void setRoundTop(int roundTop) {
+        this.roundTopRight = roundTop;
+        this.roundTopLeft = roundTop;
         repaint();
     }
 
     public int getRoundBottomLeft() {
         return roundBottomLeft;
     }
-
-    public void setRoundBottomLeft(int roundBottomLeft) {
-        this.roundBottomLeft = roundBottomLeft;
-        repaint();
-    }
-
+    
     public int getRoundBottomRight() {
         return roundBottomRight;
     }
-
-    public void setRoundBottomRight(int roundBottomRight) {
-        this.roundBottomRight = roundBottomRight;
+    
+    public void setRoundBottomLeft(int round) {
+        this.roundBottomLeft = round;
+        repaint();
+    }
+    
+    public void setRoundBottomRight(int round) {
+        this.roundBottomRight = round;
+        repaint();
+    }
+    
+    public void setRoundBottom(int roundBottom) {
+        this.roundBottomLeft = roundBottom;
+        this.roundBottomRight = roundBottom;
         repaint();
     }
 
@@ -132,4 +135,5 @@ public class PanelRound extends JPanel {
         area.add(new Area(new Rectangle2D.Double(0, 0, width, height - roundY / 2)));
         return area;
     }
+
 }

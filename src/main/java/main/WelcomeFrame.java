@@ -348,10 +348,8 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         main_rigth_panel_gallery_card.setBackground(new java.awt.Color(52, 52, 52));
         main_rigth_panel_gallery_card.setPreferredSize(new java.awt.Dimension(460, 100));
-        main_rigth_panel_gallery_card.setRoundBottomLeft(20);
-        main_rigth_panel_gallery_card.setRoundBottomRight(20);
-        main_rigth_panel_gallery_card.setRoundTopLeft(20);
-        main_rigth_panel_gallery_card.setRoundTopRight(20);
+        main_rigth_panel_gallery_card.setRoundBottom(20);
+        main_rigth_panel_gallery_card.setRoundTop(20);
         main_rigth_panel_gallery_card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 main_rigth_panel_gallery_cardMouseEntered(evt);
@@ -393,8 +391,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         gallery_card_footer.setBackground(new java.awt.Color(255, 255, 255));
         gallery_card_footer.setPreferredSize(new java.awt.Dimension(400, 5));
-        gallery_card_footer.setRoundBottomLeft(20);
-        gallery_card_footer.setRoundBottomRight(20);
+        gallery_card_footer.setRoundBottom(20);
         gallery_card_footer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
 
         gallery_card_left_footer.setBackground(new java.awt.Color(255, 214, 10));
@@ -444,10 +441,8 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         main_right_learn_card.setBackground(new java.awt.Color(52, 52, 52));
         main_right_learn_card.setPreferredSize(new java.awt.Dimension(460, 40));
-        main_right_learn_card.setRoundBottomLeft(20);
-        main_right_learn_card.setRoundBottomRight(20);
-        main_right_learn_card.setRoundTopLeft(20);
-        main_right_learn_card.setRoundTopRight(20);
+        main_right_learn_card.setRoundBottom(20);
+        main_right_learn_card.setRoundTop(20);
         main_right_learn_card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 main_right_learn_cardMouseEntered(evt);
@@ -478,10 +473,8 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         main_right_contact_card.setBackground(new java.awt.Color(52, 52, 52));
         main_right_contact_card.setPreferredSize(new java.awt.Dimension(460, 40));
-        main_right_contact_card.setRoundBottomLeft(20);
-        main_right_contact_card.setRoundBottomRight(20);
-        main_right_contact_card.setRoundTopLeft(20);
-        main_right_contact_card.setRoundTopRight(20);
+        main_right_contact_card.setRoundBottom(20);
+        main_right_contact_card.setRoundTop(20);
         main_right_contact_card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 main_right_contact_cardMouseEntered(evt);

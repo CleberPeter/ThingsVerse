@@ -17,8 +17,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -26,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import things.connectionPoints.ConnectionPoint;
 
 /**
@@ -36,6 +40,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private static final String DEFAULT_TITLE = "Contexto A";
     private static final Color DEFAULT_COLOR = Color.WHITE;
+    private static final Color SELECTED_COLOR = new Color(240, 178, 61);
 
     private PanelRound header_panel;
     private PanelRound main_panel;
@@ -43,7 +48,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private JLabel titleLabel;
     private String title;
-    private Boolean selected;
+    private Boolean selected = false;
     
     private List<Thing> thingList;
     private List<Context> contextList;
@@ -68,13 +73,11 @@ public class Context extends JLayeredPane implements ComponentListener {
         //setRoundDefault(20);
         
         header_panel = new PanelRound();
-        header_panel.setRoundTopLeft(20);
-        header_panel.setRoundTopRight(20);
+        header_panel.setRoundTop(20);
         header_panel.setBackground(DEFAULT_COLOR);
         
         main_panel = new PanelRound();
-        main_panel.setRoundBottomLeft(20);
-        main_panel.setRoundBottomRight(20);
+        main_panel.setRoundBottom(20);
         main_panel.setBackground(new Color(DEFAULT_COLOR.getRed(), DEFAULT_COLOR.getGreen(), DEFAULT_COLOR.getBlue(), 100));
         
         titleLabel = new JLabel();
@@ -104,10 +107,9 @@ public class Context extends JLayeredPane implements ComponentListener {
     {
         this.selected = selected;
         
-        Border border;
-        
-        if (this.selected) border = new RoundedLineBorder(new Color(233, 174, 63), 3, 20, true);
-        else border = null;
+        Border border = null;
+                
+        if (this.selected) border = new RoundedLineBorder(SELECTED_COLOR, 3, 20);
         
         this.setBorder(border);
         
@@ -287,4 +289,14 @@ public class Context extends JLayeredPane implements ComponentListener {
     @Override
     public void componentHidden(ComponentEvent ce) {
     }
+    
+    @Override
+    protected void processMouseEvent(MouseEvent e) {
+        super.processMouseEvent(e);
+
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
+            setSelected(!selected);
+        }
+    }
+
 }

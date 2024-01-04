@@ -22,7 +22,7 @@ public class AirToTemperatureAdapter extends Thing
         
     public AirToTemperatureAdapter(Context parentContext)
     {   
-        super("Air -> Temperature", parentContext);
+        super("Air → Temperature", parentContext);
 
         initComponents();
         setUpLayout();
