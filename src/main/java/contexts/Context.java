@@ -52,7 +52,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private List<Thing> thingList;
     private List<Context> contextList;
-    private RootContext rootContext;
+    public RootContext rootContext;
     private Context parentContext;
     
     public Context(RootContext rootContext, Context parentContext)
@@ -116,6 +116,11 @@ public class Context extends JLayeredPane implements ComponentListener {
         for (Thing thing : thingList)
         {
             thing.setSelected(this.selected);
+        }
+        
+        for (Context context : contextList)
+        {
+            context.setSelected(this.selected);
         }
     }
     
@@ -294,8 +299,12 @@ public class Context extends JLayeredPane implements ComponentListener {
     protected void processMouseEvent(MouseEvent e) {
         super.processMouseEvent(e);
 
-        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
-            setSelected(!selected);
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) 
+        {    
+            if (this.rootContext.tools_enabled.isSelect())
+            {
+                setSelected(!selected);
+            }
         }
     }
 

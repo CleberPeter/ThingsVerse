@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import main.ToolsEnabled;
 import objects.DoorObject;
 import things.AirConditioning;
 import things.ContextThingConnectionPoint;
@@ -49,16 +50,20 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
     private ThingConnectionCurve routingCurve;
     private Point routingCurveEndPointPreview;
     private List<ThingConnectionCurve> connectionCurveList;
+    private List<Context> contextList;
     private Boolean isRouting;
     private JScrollPane scrollPane;
+    public ToolsEnabled tools_enabled;
     
     private GridBackground gridBackground;
     
-    public RootContext()
+    public RootContext(ToolsEnabled tools_enabled)
     {
+        this.tools_enabled = tools_enabled;
         this.connectionCurveList = new ArrayList<>();
         this.routingCurve = new ThingConnectionCurve(null);
         this.isRouting = false;
+        this.contextList = new ArrayList<>();
         
         setLayout(new GridBagLayout());
         setBackground(new java.awt.Color(42, 42, 42));
@@ -106,7 +111,7 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         
         gridBagConstraints.insets = new java.awt.Insets(400, 1200, 0, 0);
         houseContext.addThing(doorObject, gridBagConstraints);
-        
+        contextList.add(houseContext);
 
         // LIVING ROOM CONTEXT
         Context livingRoomContext = new Context(this, houseContext);
@@ -144,6 +149,14 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
         gridBackground.add(houseContext, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
+    }
+    
+    public void deselectAll()
+    {
+        for (Context context : this.contextList)
+        {
+            context.setSelected(false);
+        }
     }
     
     public void onThingConnectionPointPressed(Context context, Thing thing, ConnectionPoint connectionPoint)

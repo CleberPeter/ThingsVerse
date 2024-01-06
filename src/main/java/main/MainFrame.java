@@ -22,14 +22,12 @@ import javax.swing.JLayeredPane;
 public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     
     private Boolean maximized;
-    private ToolsEnabled toolsEnabled;
+    private ToolsEnabled toolsEnabled = new ToolsEnabled();
     
     public MainFrame() {
         initComponents();
         
         setName("MainFrame");
-        
-        toolsEnabled = new ToolsEnabled();
         
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         maximized = true;
@@ -66,7 +64,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         menu_bar_panel = new javax.swing.JPanel();
         menu_bar_file_btn = new javax.swing.JButton();
         menu_bar_edit_btn = new javax.swing.JButton();
-        rootContext = new contexts.RootContext();
+        rootContext = new contexts.RootContext(toolsEnabled);
         menu_bar_file_panel = new javax.swing.JPanel();
         new_btn = new javax.swing.JButton();
         open_btn = new javax.swing.JButton();
@@ -682,6 +680,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png")));
             toolsEnabled.setSelect(false);
+            rootContext.deselectAll();
         }
     }//GEN-LAST:event_select_btnActionPerformed
 

@@ -570,8 +570,12 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     protected void processMouseEvent(MouseEvent e) {
         super.processMouseEvent(e);
 
-        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
-            setSelected(!selected);
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) 
+        {    
+            if (this.parentContext.rootContext.tools_enabled.isSelect())
+            {
+                setSelected(!selected);
+            }
         }
     }
 }
