@@ -53,13 +53,13 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
     private List<Context> contextList;
     private Boolean isRouting;
     private JScrollPane scrollPane;
-    public ToolsEnabled tools_enabled;
+    public ToolsEnabled toolsEnabled;
     
     private GridBackground gridBackground;
     
     public RootContext(ToolsEnabled tools_enabled)
     {
-        this.tools_enabled = tools_enabled;
+        this.toolsEnabled = tools_enabled;
         this.connectionCurveList = new ArrayList<>();
         this.routingCurve = new ThingConnectionCurve(null);
         this.isRouting = false;
@@ -161,12 +161,15 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
     
     public void onThingConnectionPointPressed(Context context, Thing thing, ConnectionPoint connectionPoint)
     {
-        ContextThingConnectionPoint contextThingConnectionPoint = new ContextThingConnectionPoint(context, thing, connectionPoint);
-        
-        if (!this.isRouting)
+        if (toolsEnabled.wireIsEnabled())
         {
-            this.isRouting = true;
-            routingCurve = new ThingConnectionCurve(contextThingConnectionPoint);
+            ContextThingConnectionPoint contextThingConnectionPoint = new ContextThingConnectionPoint(context, thing, connectionPoint);
+        
+            if (!this.isRouting)
+            {
+                this.isRouting = true;
+                routingCurve = new ThingConnectionCurve(contextThingConnectionPoint);
+            }
         }
     }
     

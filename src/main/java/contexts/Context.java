@@ -301,7 +301,7 @@ public class Context extends JLayeredPane implements ComponentListener {
 
         if (e.getID() == MouseEvent.MOUSE_CLICKED) 
         {    
-            if (this.rootContext.tools_enabled.isSelect())
+            if (this.rootContext.toolsEnabled.selectIsEnabled())
             {
                 setSelected(!selected);
             }

@@ -671,7 +671,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     }//GEN-LAST:event_main_panelMouseClicked
 
     private void select_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_btnActionPerformed
-        if (!toolsEnabled.isSelect())
+        if (!toolsEnabled.selectIsEnabled())
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn_pressed.png")));
             toolsEnabled.setSelect(true);
@@ -685,7 +685,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     }//GEN-LAST:event_select_btnActionPerformed
 
     private void wiring_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wiring_btnActionPerformed
-        if (!toolsEnabled.isWire())
+        if (!toolsEnabled.wireIsEnabled())
         {
             wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn_pressed.png")));
             toolsEnabled.setWire(true);
@@ -698,7 +698,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     }//GEN-LAST:event_wiring_btnActionPerformed
 
     private void move_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_move_btnActionPerformed
-        if (!toolsEnabled.isMove())
+        if (!toolsEnabled.moveIsEnabled())
         {
             move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn_pressed.png")));
             toolsEnabled.setMove(true);
@@ -711,7 +711,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
     }//GEN-LAST:event_move_btnActionPerformed
 
     private void scale_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scale_btnActionPerformed
-        if (!toolsEnabled.isScale())
+        if (!toolsEnabled.scaleIsEnabled())
         {
             scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn_pressed.png")));
             toolsEnabled.setScale(true);

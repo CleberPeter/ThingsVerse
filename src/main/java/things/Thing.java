@@ -572,7 +572,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
 
         if (e.getID() == MouseEvent.MOUSE_CLICKED) 
         {    
-            if (this.parentContext.rootContext.tools_enabled.isSelect())
+            if (this.parentContext.rootContext.toolsEnabled.selectIsEnabled())
             {
                 setSelected(!selected);
             }

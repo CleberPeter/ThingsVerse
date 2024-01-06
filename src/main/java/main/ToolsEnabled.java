@@ -17,7 +17,7 @@ public class ToolsEnabled {
     /**
      * @return the select
      */
-    public boolean isSelect() {
+    public boolean selectIsEnabled() {
         return select;
     }
 
@@ -31,7 +31,7 @@ public class ToolsEnabled {
     /**
      * @return the wire
      */
-    public boolean isWire() {
+    public boolean wireIsEnabled() {
         return wire;
     }
 
@@ -45,7 +45,7 @@ public class ToolsEnabled {
     /**
      * @return the move
      */
-    public boolean isMove() {
+    public boolean moveIsEnabled() {
         return move;
     }
 
@@ -59,7 +59,7 @@ public class ToolsEnabled {
     /**
      * @return the scale
      */
-    public boolean isScale() {
+    public boolean scaleIsEnabled() {
         return scale;
     }
 
