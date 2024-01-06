@@ -680,6 +680,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png")));
             toolsEnabled.setSelect(false);
+            
             rootContext.deselectAll();
         }
     }//GEN-LAST:event_select_btnActionPerformed
@@ -708,6 +709,8 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
             move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn.png")));
             toolsEnabled.setMove(false);
         }
+        
+        rootContext.setMove(toolsEnabled.moveIsEnabled());
     }//GEN-LAST:event_move_btnActionPerformed
 
     private void scale_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scale_btnActionPerformed

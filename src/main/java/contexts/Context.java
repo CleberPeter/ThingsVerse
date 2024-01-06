@@ -54,13 +54,15 @@ public class Context extends JLayeredPane implements ComponentListener {
     private List<Context> contextList;
     public RootContext rootContext;
     private Context parentContext;
-    
+    private ComponentMover componentMover;
+
     public Context(RootContext rootContext, Context parentContext)
     {    
         this.thingList = new ArrayList<>();
         this.contextList = new ArrayList<>();
         this.rootContext = rootContext;
         this.parentContext = parentContext;
+        this.componentMover = new ComponentMover();
         
         initComponents();
         initListeners();
@@ -87,20 +89,35 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private void initListeners()
     {
-        ComponentMover componentMover = new ComponentMover();
-        
-        Function onMovedEnd = (Object t) -> {
-            if (this.parentContext != null) this.parentContext.onChildMoved(this);
-            return null;
-        };
-        
-        componentMover.registerComponent(onMovedEnd, this);
-        componentMover.setDragInsets(new Insets(10, 10, 10, 10));
-        
         ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         addComponentListener(this);
+    }
+    
+    public void setMove(boolean enable)
+    {        
+        if (enable)
+        {
+            Function onMovedEnd = (Object t) -> {
+                if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                return null;
+            };
+
+            componentMover.registerComponent(onMovedEnd, this);
+            componentMover.setDragInsets(new Insets(10, 10, 10, 10));
+        }
+        else componentMover.deregisterComponent(this);
+        
+        for (Thing thing : thingList)
+        {
+            thing.setMove(enable);
+        }
+        
+        for (Context context : contextList)
+        {
+            context.setMove(enable);
+        }
     }
     
     public void setSelected(boolean selected)

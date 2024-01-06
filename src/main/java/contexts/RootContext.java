@@ -159,6 +159,14 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         }
     }
     
+    public void setMove(boolean enable)
+    {
+        for (Context context : this.contextList)
+        {
+            context.setMove(enable);
+        }
+    }
+    
     public void onThingConnectionPointPressed(Context context, Thing thing, ConnectionPoint connectionPoint)
     {
         if (toolsEnabled.wireIsEnabled())

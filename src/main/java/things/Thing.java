@@ -70,6 +70,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     {   
         this.parentContext = parentContext;
         this.expanded = true;
+        this.componentMover = new ComponentMover();
         
         initComponents(name);
         setUpLayout();
@@ -160,23 +161,29 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     }
     
     private void initListeners()
-    {
-        componentMover = new ComponentMover();
-        componentMover.setDragInsets(new Insets(10, 10, 10, 10));
-        
-        Function onMovedEnd = (Object t) -> {
-            this.parentContext.onChildMoved(this);
-            return null;
-        };
-        
-        componentMover.registerComponent(onMovedEnd, this);
-        
+    {        
         connectionPointsMover = new ConnectionPointsMover(this);
         
         ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         addComponentListener(this);
+    }
+    
+    public void setMove(boolean enable)
+    {        
+        if (enable)
+        {
+            Function onMovedEnd = (Object t) -> {
+                if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                return null;
+            };
+
+            componentMover.registerComponent(onMovedEnd, this);
+            componentMover.setDragInsets(new Insets(10, 10, 10, 10));
+        }
+        else componentMover.deregisterComponent(this);
+        
     }
     
     /*
