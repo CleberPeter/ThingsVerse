@@ -30,6 +30,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import mouseAdapters.ComponentSelect;
 import things.connectionPoints.ConnectionPoint;
 
 /**
@@ -54,6 +55,8 @@ public class Context extends JLayeredPane implements ComponentListener {
     private List<Context> contextList;
     public RootContext rootContext;
     private Context parentContext;
+
+    private ComponentSelect componentSelect;
     private ComponentMover componentMover;
     private ComponentResizer componentResizer;
 
@@ -63,8 +66,10 @@ public class Context extends JLayeredPane implements ComponentListener {
         this.contextList = new ArrayList<>();
         this.rootContext = rootContext;
         this.parentContext = parentContext;
+        
         this.componentMover = new ComponentMover();
         this.componentResizer = new ComponentResizer();
+        this.componentSelect = new ComponentSelect();
         
         initComponents();
         initListeners();
@@ -151,6 +156,31 @@ public class Context extends JLayeredPane implements ComponentListener {
         for (Context context : contextList)
         {
             context.enableResize(enable);
+        }
+    }
+    
+    public void enableSelect(boolean enable)
+    {       
+        if (enable)
+        {
+            Function onSelect = (Object t) -> {
+                setSelected(!selected);
+                
+                return null;
+            };
+            
+            componentSelect.registerComponent(onSelect, this);
+        }
+        else componentSelect.deregisterComponent(this);
+        
+        for (Thing thing : thingList)
+        {
+            thing.enableSelect(enable);
+        }
+        
+        for (Context context : contextList)
+        {
+            context.enableSelect(enable);
         }
     }
     
@@ -344,19 +374,6 @@ public class Context extends JLayeredPane implements ComponentListener {
 
     @Override
     public void componentHidden(ComponentEvent ce) {
-    }
-    
-    @Override
-    protected void processMouseEvent(MouseEvent e) {
-        super.processMouseEvent(e);
-
-        if (e.getID() == MouseEvent.MOUSE_CLICKED) 
-        {    
-            if (this.rootContext.toolsEnabled.selectIsEnabled())
-            {
-                setSelected(!selected);
-            }
-        }
     }
 
 }

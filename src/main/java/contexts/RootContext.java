@@ -164,14 +164,6 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         revalidate();
     }
     
-    public void deselectAll()
-    {
-        for (Context context : this.contextList)
-        {
-            context.setSelected(false);
-        }
-    }
-    
     public void enableMove(boolean enable)
     {
         for (Context context : this.contextList)
@@ -185,6 +177,15 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         for (Context context : this.contextList)
         {
             context.enableResize(enable);
+        }
+    }
+    
+    public void enableSelect(boolean enable)
+    {
+        for (Context context : this.contextList)
+        {
+            context.enableSelect(enable);
+            if (!enable) context.setSelected(false);
         }
     }
     

@@ -42,7 +42,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         componentResizer.registerComponent(null, this);
         
         menu_bar_file_panel.setVisible(false);
-        // select_btnActionPerformed(null);
+        //select_btnActionPerformed(null);
     }
     
     /**
@@ -682,9 +682,9 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png")));
             toolsEnabled.enableSelect(false);
-            
-            rootContext.deselectAll();
         }
+        
+        rootContext.enableSelect(toolsEnabled.selectIsEnabled());
     }//GEN-LAST:event_select_btnActionPerformed
 
     private void wiring_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wiring_btnActionPerformed

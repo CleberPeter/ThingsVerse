@@ -25,9 +25,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
@@ -35,9 +33,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
+import mouseAdapters.ComponentSelect;
 import mouseAdapters.ConnectionPointsMover;
 import things.connectionPoints.SensingConnectionPoint;
 
@@ -63,6 +61,8 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     private String name;
 
     private List<ConnectionPoint> connectionPointsList;
+    
+    private ComponentSelect componentSelect;
     private ComponentMover componentMover;
     private ComponentResizer componentResizer;
     private ConnectionPointsMover connectionPointsMover;
@@ -73,6 +73,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         this.expanded = true;
         this.componentMover = new ComponentMover();
         this.componentResizer = new ComponentResizer();
+        this.componentSelect = new ComponentSelect();
         
         initComponents(name);
         setUpLayout();
@@ -169,12 +170,28 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         addComponentListener(this);
     }
     
+    public void enableSelect(boolean enable)
+    {        
+        if (enable)
+        {
+            Function onSelected = (Object t) -> {
+                setSelected(!selected);
+                                
+                return null;
+            };
+
+            componentSelect.registerComponent(onSelected, this);
+        }
+        else componentSelect.deregisterComponent(this);   
+    }
+    
     public void enableMove(boolean enable)
     {        
         if (enable)
         {
             Function onMoved = (Object t) -> {
                 if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                
                 return null;
             };
 
@@ -588,19 +605,6 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
             graphics_2d.fillArc(width - 10 - radiusArc * 2, 10, radiusArc * 2, height-20, 90, -180); // right arc
 
             graphics_2d.fillRect(radiusArc + 10, 10, width - 20 - radiusArc*2, height-20);
-        }
-    }
-    
-    @Override
-    protected void processMouseEvent(MouseEvent e) {
-        super.processMouseEvent(e);
-
-        if (e.getID() == MouseEvent.MOUSE_CLICKED) 
-        {    
-            if (this.parentContext.rootContext.toolsEnabled.selectIsEnabled())
-            {
-                setSelected(!selected);
-            }
         }
     }
 }
