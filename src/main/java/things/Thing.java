@@ -586,6 +586,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     public void componentHidden(ComponentEvent ce) {
     }
     
+    /*
     @Override
     public void paintComponent(Graphics graphics) {
         
@@ -606,5 +607,5 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
 
             graphics_2d.fillRect(radiusArc + 10, 10, width - 20 - radiusArc*2, height-20);
         }
-    }
+    }*/
 }

@@ -21,6 +21,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,7 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         
         gridBackground = new GridBackground();
+        gridBackground.setName("gridBackground");
         gridBackground.setcellSize(50);
         gridBackground.setBackground(new java.awt.Color(0, 0, 0));
         gridBackground.setPreferredSize(new Dimension(5000, 5000));
@@ -265,7 +267,7 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
             repaint();
         }
     }
-     
+    
     @Override
     public void paint(Graphics g) 
     {

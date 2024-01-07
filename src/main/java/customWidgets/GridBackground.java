@@ -40,6 +40,8 @@ public class GridBackground extends JPanel {
         Graphics2D graphics_2d = (Graphics2D) graphics;
         graphics_2d.setColor(new Color(66, 66, 66));
         
+        graphics_2d.scale(0.5, 0.5);
+    
         Dimension dimension = getSize();
         int n_columns = dimension.width/cellSize;
         int n_rows = dimension.height/cellSize;
