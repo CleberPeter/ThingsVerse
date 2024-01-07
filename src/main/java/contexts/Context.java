@@ -55,6 +55,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     public RootContext rootContext;
     private Context parentContext;
     private ComponentMover componentMover;
+    private ComponentResizer componentResizer;
 
     public Context(RootContext rootContext, Context parentContext)
     {    
@@ -63,6 +64,7 @@ public class Context extends JLayeredPane implements ComponentListener {
         this.rootContext = rootContext;
         this.parentContext = parentContext;
         this.componentMover = new ComponentMover();
+        this.componentResizer = new ComponentResizer();
         
         initComponents();
         initListeners();
@@ -89,13 +91,10 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     private void initListeners()
     {
-        ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
-        componentResizer.setSnapSize(new Dimension(15, 15));
-        
         addComponentListener(this);
     }
     
-    public void setMove(boolean enable)
+    public void enableMove(boolean enable)
     {        
         if (enable)
         {
@@ -111,12 +110,34 @@ public class Context extends JLayeredPane implements ComponentListener {
         
         for (Thing thing : thingList)
         {
-            thing.setMove(enable);
+            thing.enableMove(enable);
         }
         
         for (Context context : contextList)
         {
-            context.setMove(enable);
+            context.enableMove(enable);
+        }
+    }
+    
+    public void enableResize(boolean enable)
+    {       
+        componentResizer.setSnapSize(new Dimension(15, 15));
+        
+        if (enable)
+        {
+            componentResizer.registerComponent(this);
+            componentResizer.setDragInsets(new Insets(10, 10, 10, 10));
+        }
+        else componentResizer.deregisterComponent(this);
+        
+        for (Thing thing : thingList)
+        {
+            thing.enableResize(enable);
+        }
+        
+        for (Context context : contextList)
+        {
+            context.enableResize(enable);
         }
     }
     

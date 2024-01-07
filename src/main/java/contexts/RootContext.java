@@ -159,11 +159,19 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         }
     }
     
-    public void setMove(boolean enable)
+    public void enableMove(boolean enable)
     {
         for (Context context : this.contextList)
         {
-            context.setMove(enable);
+            context.enableMove(enable);
+        }
+    }
+    
+    public void enableResize(boolean enable)
+    {
+        for (Context context : this.contextList)
+        {
+            context.enableResize(enable);
         }
     }
     

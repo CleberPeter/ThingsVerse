@@ -12,7 +12,7 @@ public class ToolsEnabled {
     private boolean select;
     private boolean wire;
     private boolean move;
-    private boolean scale;
+    private boolean resize;
 
     /**
      * @return the select
@@ -24,8 +24,8 @@ public class ToolsEnabled {
     /**
      * @param select the select to set
      */
-    public void setSelect(boolean select) {
-        this.select = select;
+    public void enableSelect(boolean enable) {
+        this.select = enable;
     }
 
     /**
@@ -38,8 +38,8 @@ public class ToolsEnabled {
     /**
      * @param wire the wire to set
      */
-    public void setWire(boolean wire) {
-        this.wire = wire;
+    public void enableWire(boolean enable) {
+        this.wire = enable;
     }
 
     /**
@@ -52,22 +52,22 @@ public class ToolsEnabled {
     /**
      * @param move the move to set
      */
-    public void setMove(boolean move) {
-        this.move = move;
+    public void enableMove(boolean enable) {
+        this.move = enable;
     }
 
     /**
-     * @return the scale
+     * @return the resize
      */
-    public boolean scaleIsEnabled() {
-        return scale;
+    public boolean resizeIsEnabled() {
+        return resize;
     }
 
     /**
-     * @param scale the scale to set
+     * @param scale the resize to set
      */
-    public void setScale(boolean scale) {
-        this.scale = scale;
+    public void enableResize(boolean enable) {
+        this.resize = enable;
     }
     
 }

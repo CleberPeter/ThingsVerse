@@ -40,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         componentResizer.setSnapSize(new Dimension(15, 15));
         
         menu_bar_file_panel.setVisible(false);
-        select_btnActionPerformed(null);
+        // select_btnActionPerformed(null);
     }
     
     /**
@@ -674,12 +674,12 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         if (!toolsEnabled.selectIsEnabled())
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn_pressed.png")));
-            toolsEnabled.setSelect(true);
+            toolsEnabled.enableSelect(true);
         }
         else
         {
             select_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/select_tool_btn.png")));
-            toolsEnabled.setSelect(false);
+            toolsEnabled.enableSelect(false);
             
             rootContext.deselectAll();
         }
@@ -689,12 +689,12 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         if (!toolsEnabled.wireIsEnabled())
         {
             wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn_pressed.png")));
-            toolsEnabled.setWire(true);
+            toolsEnabled.enableWire(true);
         }
         else
         {
             wiring_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/wire_tool_btn.png")));
-            toolsEnabled.setWire(false);
+            toolsEnabled.enableWire(false);
         }
     }//GEN-LAST:event_wiring_btnActionPerformed
 
@@ -702,28 +702,30 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         if (!toolsEnabled.moveIsEnabled())
         {
             move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn_pressed.png")));
-            toolsEnabled.setMove(true);
+            toolsEnabled.enableMove(true);
         }
         else
         {
             move_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/move_tool_btn.png")));
-            toolsEnabled.setMove(false);
+            toolsEnabled.enableMove(false);
         }
         
-        rootContext.setMove(toolsEnabled.moveIsEnabled());
+        rootContext.enableMove(toolsEnabled.moveIsEnabled());
     }//GEN-LAST:event_move_btnActionPerformed
 
     private void scale_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scale_btnActionPerformed
-        if (!toolsEnabled.scaleIsEnabled())
+        if (!toolsEnabled.resizeIsEnabled())
         {
             scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn_pressed.png")));
-            toolsEnabled.setScale(true);
+            toolsEnabled.enableResize(true);
         }
         else
         {
             scale_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/scale_tool_btn.png")));
-            toolsEnabled.setScale(false);
+            toolsEnabled.enableResize(false);
         }
+        
+        rootContext.enableResize(toolsEnabled.resizeIsEnabled());
     }//GEN-LAST:event_scale_btnActionPerformed
 
     /**
