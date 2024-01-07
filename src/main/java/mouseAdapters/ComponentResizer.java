@@ -11,6 +11,7 @@ package mouseAdapters;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.function.Function;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
@@ -53,6 +54,8 @@ public class ComponentResizer extends MouseAdapter
 
 	private Dimension minimumSize = MINIMUM_SIZE;
 	private Dimension maximumSize = MAXIMUM_SIZE;
+        
+        private Function callbackOnResizeEnd;
 
 	/**
 	 *  Convenience contructor. All borders are resizable in increments of
@@ -60,7 +63,9 @@ public class ComponentResizer extends MouseAdapter
 	 */
 	public ComponentResizer()
 	{
-		this(new Insets(5, 5, 5, 5), new Dimension(1, 1));
+            // this(new Insets(5, 5, 5, 5), new Dimension(1, 1));
+            setDragInsets( new Insets(5, 5, 5, 5) );
+            setSnapSize( new Dimension(1, 1) );
 	}
 
 	/**
@@ -70,10 +75,12 @@ public class ComponentResizer extends MouseAdapter
 	 *
 	 *  @param components components to be automatically registered
 	 */
-	public ComponentResizer(Component... components)
+	/*
+        public ComponentResizer(Component... components)
 	{
 		this(new Insets(5, 5, 5, 5), new Dimension(1, 1), components);
 	}
+        */
 
 	/**
 	 *  Convenience contructor. Eligible borders are resisable in increments of
@@ -84,10 +91,12 @@ public class ComponentResizer extends MouseAdapter
 	 *                    resized.
 	 *  @param components components to be automatically registered
 	 */
-	public ComponentResizer(Insets dragInsets, Component... components)
+	/*
+        public ComponentResizer(Insets dragInsets, Component... components)
 	{
 		this(dragInsets, new Dimension(1, 1), components);
 	}
+        */
 
 	/**
 	 *  Create a ComponentResizer.
@@ -98,12 +107,13 @@ public class ComponentResizer extends MouseAdapter
 	 *                  when being dragged. Snapping occurs at the halfway mark.
 	 *  @param components components to be automatically registered
 	 */
-	public ComponentResizer(Insets dragInsets, Dimension snapSize, Component... components)
+	
+        /*public ComponentResizer(Insets dragInsets, Dimension snapSize, Component... components)
 	{
 		setDragInsets( dragInsets );
 		setSnapSize( snapSize );
 		registerComponent( components );
-	}
+	}*/
 
 	/**
 	 *  Get the drag insets
@@ -194,13 +204,15 @@ public class ComponentResizer extends MouseAdapter
 	 *
 	 *  @param component  the component the listeners are added to
 	 */
-	public void registerComponent(Component... components)
+	public void registerComponent(Function callbackOnResizeEnd, Component... components)
 	{
-		for (Component component : components)
-		{
-			component.addMouseListener( this );
-			component.addMouseMotionListener( this );
-		}
+            this.callbackOnResizeEnd = callbackOnResizeEnd;
+
+            for (Component component : components)
+            {
+                    component.addMouseListener( this );
+                    component.addMouseMotionListener( this );
+            }
 	}
 
 	/**
@@ -333,15 +345,17 @@ public class ComponentResizer extends MouseAdapter
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		resizing = false;
+            resizing = false;
 
-		Component source = e.getComponent();
-		source.setCursor( sourceCursor );
+            if (this.callbackOnResizeEnd != null) this.callbackOnResizeEnd.apply(null);
 
-		if (source instanceof JComponent)
-		{
-			((JComponent)source).setAutoscrolls( autoscrolls );
-		}
+            Component source = e.getComponent();
+            source.setCursor( sourceCursor );
+
+            if (source instanceof JComponent)
+            {
+                ((JComponent)source).setAutoscrolls( autoscrolls );
+            }    
 	}
 
 	/**

@@ -98,14 +98,14 @@ public class Context extends JLayeredPane implements ComponentListener {
     {        
         if (enable)
         {
-            Function onMovedEnd = (Object t) -> {
+            Function onMoved = (Object t) -> {
                 if (this.parentContext != null) this.parentContext.onChildMoved(this);
                 else this.rootContext.onChildMoved(this);
                 
                 return null;
             };
 
-            componentMover.registerComponent(onMovedEnd, this);
+            componentMover.registerComponent(onMoved, this);
             componentMover.setDragInsets(new Insets(10, 10, 10, 10));
         }
         else componentMover.deregisterComponent(this);
@@ -127,7 +127,18 @@ public class Context extends JLayeredPane implements ComponentListener {
         
         if (enable)
         {
-            componentResizer.registerComponent(this);
+            Function onResized = (Object t) -> {
+                setPreferredSize(new Dimension(getWidth(), getHeight()));
+                revalidate();
+                
+                // insets can be changed after resize
+                if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                else this.rootContext.onChildMoved(this);
+                
+                return null;
+            };
+            
+            componentResizer.registerComponent(onResized, this);
             componentResizer.setDragInsets(new Insets(10, 10, 10, 10));
         }
         else componentResizer.deregisterComponent(this);

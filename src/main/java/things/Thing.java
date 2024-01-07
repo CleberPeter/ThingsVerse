@@ -173,21 +173,32 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     {        
         if (enable)
         {
-            Function onMovedEnd = (Object t) -> {
+            Function onMoved = (Object t) -> {
                 if (this.parentContext != null) this.parentContext.onChildMoved(this);
                 return null;
             };
 
-            componentMover.registerComponent(onMovedEnd, this);
+            componentMover.registerComponent(onMoved, this);
             componentMover.setDragInsets(new Insets(10, 10, 10, 10));
         }
         else componentMover.deregisterComponent(this);   
     }
+    
     public void enableResize(boolean enable)
     {        
         if (enable)
         {
-            componentResizer.registerComponent(this);
+            Function onResized = (Object t) -> {
+                setPreferredSize(new Dimension(getWidth(), getHeight()));
+                revalidate();
+                
+                // insets can be changed after resize
+                if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                
+                return null;
+            };
+            
+            componentResizer.registerComponent(onResized, this);
             componentResizer.setDragInsets(new Insets(10, 10, 10, 10));
         }
         else componentResizer.deregisterComponent(this);   
@@ -563,7 +574,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         
         super.paintComponent(graphics);
         Graphics2D graphics_2d = (Graphics2D) graphics.create();
-                
+        
         if (!this.expanded)
         {
             graphics_2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

@@ -36,8 +36,10 @@ public class MainFrame extends javax.swing.JFrame implements ComponentListener {
         header_title.addMouseListener(frameDragListener);
         header_title.addMouseMotionListener(frameDragListener);
         
-        ComponentResizer componentResizer = new ComponentResizer(new Insets(10, 10, 10, 10), this);
+        ComponentResizer componentResizer = new ComponentResizer();
+        componentResizer.setDragInsets(new Insets(10, 10, 10, 10));
         componentResizer.setSnapSize(new Dimension(15, 15));
+        componentResizer.registerComponent(null, this);
         
         menu_bar_file_panel.setVisible(false);
         // select_btnActionPerformed(null);
