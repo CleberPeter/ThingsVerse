@@ -100,6 +100,8 @@ public class Context extends JLayeredPane implements ComponentListener {
         {
             Function onMovedEnd = (Object t) -> {
                 if (this.parentContext != null) this.parentContext.onChildMoved(this);
+                else this.rootContext.onChildMoved(this);
+                
                 return null;
             };
 

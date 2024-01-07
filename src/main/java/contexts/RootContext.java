@@ -151,6 +151,19 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         gridBackground.add(houseContext, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
     }
     
+    public void onChildMoved(Context child)
+    {        
+        GridBagLayout layout = (GridBagLayout) gridBackground.getLayout();
+        GridBagConstraints thingConstraints = layout.getConstraints(child); 
+                
+        thingConstraints.insets.top = child.getY();
+        thingConstraints.insets.left = child.getX();
+        
+        layout.setConstraints(child, thingConstraints);
+        
+        revalidate();
+    }
+    
     public void deselectAll()
     {
         for (Context context : this.contextList)
@@ -378,7 +391,8 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         gridBagConstraints.insets = new Insets(ce.getComponent().getY(), ce.getComponent().getX(), 0, 0);
         
         GridBagLayout layout = (GridBagLayout) getLayout();
-        layout.setConstraints(ce.getComponent(), gridBagConstraints);    }
+        layout.setConstraints(ce.getComponent(), gridBagConstraints);    
+    }
 
     @Override
     public void componentShown(ComponentEvent ce) {
