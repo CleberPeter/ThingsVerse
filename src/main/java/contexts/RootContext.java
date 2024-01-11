@@ -21,6 +21,8 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ import variables.VolumeVariable;
  *
  * @author cleber
  */
-public class RootContext extends JLayeredPane implements ComponentListener, ChangeListener
+public class RootContext extends JLayeredPane implements ComponentListener, MouseWheelListener, ChangeListener
 {
     private ThingConnectionCurve routingCurve;
     private Point routingCurveEndPointPreview;
@@ -56,10 +58,12 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
     private JScrollPane scrollPane;
     public ToolsEnabled toolsEnabled;
     
-    private GridBackground gridBackground;
+    public GridBackground gridBackground;
+    private double scaleFactor;
     
     public RootContext(ToolsEnabled tools_enabled)
     {
+        this.scaleFactor = 1;
         this.toolsEnabled = tools_enabled;
         this.connectionCurveList = new ArrayList<>();
         this.routingCurve = new ThingConnectionCurve(null);
@@ -86,9 +90,10 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         add(gridBackground, gridBagConstraints, JLayeredPane.DEFAULT_LAYER);
         
         scrollPane = new JScrollPane(gridBackground);
-        scrollPane.getViewport().addChangeListener(this);
+        scrollPane.addMouseWheelListener(this);
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         add(scrollPane, gridBagConstraints);
+        
         
         // HOUSE CONTEXT
         gridBagConstraints.fill = java.awt.GridBagConstraints.NONE;
@@ -96,10 +101,9 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         Context houseContext = new Context(this, null);
         houseContext.setTitle("House");
         houseContext.setPreferredSize(new Dimension(3000, 1000));
-        houseContext.setMinimumSize(new Dimension(3000, 1000));
         houseContext.setColor(Color.white);
         
-        DoorController doorController = new DoorController(houseContext);
+        /*DoorController doorController = new DoorController(houseContext);
         
         gridBagConstraints.insets = new java.awt.Insets(30, 2500, 0, 0);
         houseContext.addThing(doorController, gridBagConstraints);
@@ -112,14 +116,13 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
         DoorObject doorObject = new DoorObject(houseContext);
         
         gridBagConstraints.insets = new java.awt.Insets(400, 1200, 0, 0);
-        houseContext.addThing(doorObject, gridBagConstraints);
+        houseContext.addThing(doorObject, gridBagConstraints);*/
         contextList.add(houseContext);
 
         // LIVING ROOM CONTEXT
         Context livingRoomContext = new Context(this, houseContext);
         livingRoomContext.setTitle("Living Room");
         livingRoomContext.setPreferredSize(new Dimension(1000, 768));
-        livingRoomContext.setMinimumSize(new Dimension(1000, 768));
         livingRoomContext.setColor(Color.white);
         
         VolumeVariable volume = new VolumeVariable(livingRoomContext);
@@ -189,6 +192,17 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
             context.enableSelect(enable);
             if (!enable) context.setSelected(false);
         }
+    }
+    
+    public void setScale(double factor)
+    {
+        for (Context context : this.contextList)
+        {
+            context.setScale(factor);
+        }
+        
+        revalidate();
+        repaint();
     }
     
     public void onThingConnectionPointPressed(Context context, Thing thing, ConnectionPoint connectionPoint)
@@ -408,5 +422,21 @@ public class RootContext extends JLayeredPane implements ComponentListener, Chan
     @Override
     public void stateChanged(ChangeEvent ce) {
         repaint();
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) 
+    {
+        if (e.isControlDown())
+        {
+            if (e.getWheelRotation() < 0) scaleFactor += 0.1;
+            else scaleFactor -= 0.1;
+            
+            setScale(scaleFactor);
+        }
+        else
+        {
+            getParent().dispatchEvent(e);
+        }
     }
 }

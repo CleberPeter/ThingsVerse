@@ -9,6 +9,7 @@ import mouseAdapters.ComponentMover;
 import mouseAdapters.ComponentResizer;
 import customWidgets.PanelRound;
 import customWidgets.RoundedLineBorder;
+import element.Element;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -39,19 +40,15 @@ import things.connectionPoints.ConnectionPoint;
  *
  * @author cleber
  */
-public class Context extends JLayeredPane implements ComponentListener {
-    
+public class Context extends Element 
+{    
     private static final String DEFAULT_TITLE = "Contexto A";
     private static final Color DEFAULT_COLOR = Color.WHITE;
     private static final Color SELECTED_COLOR = new Color(240, 178, 61);
 
-    private PanelRound header_panel;
-    private PanelRound main_panel;
     private Color color;
     
     private JLabel titleLabel;
-    private String title;
-    private Boolean selected = false;
     
     private List<Thing> thingList;
     private List<Context> contextList;
@@ -61,7 +58,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     private ComponentSelect componentSelect;
     private ComponentMover componentMover;
     private ComponentResizer componentResizer;
-
+    
     public Context(RootContext rootContext, Context parentContext)
     {    
         this.thingList = new ArrayList<>();
@@ -135,7 +132,10 @@ public class Context extends JLayeredPane implements ComponentListener {
         if (enable)
         {
             Function onResized = (Object t) -> {
-                setPreferredSize(new Dimension(getWidth(), getHeight()));
+                Dimension newDimension = new Dimension(getWidth(), getHeight());
+                        
+                this.dimension = newDimension;
+                setPreferredSize(newDimension);
                 revalidate();
                 
                 // insets can be changed after resize
@@ -159,6 +159,35 @@ public class Context extends JLayeredPane implements ComponentListener {
         {
             context.enableResize(enable);
         }
+    }
+    
+    public GridBagConstraints getConstraints(Element element)
+    {
+        GridBagLayout layout = (GridBagLayout) main_panel.getLayout();
+        GridBagConstraints constraints = layout.getConstraints(element); 
+
+        return constraints;
+    }
+    
+    public void setScale(double factor)
+    {
+        Dimension d = this.dimension;
+        Dimension scaled_d = new Dimension((int)(d.width*factor), (int)(d.height*factor));
+        this.setPreferredSize(scaled_d);
+        this.setSize(scaled_d);
+        
+        if (this.parentContext != null) this.parentContext.onChildScaled(this, factor);
+                
+        for (Context context : contextList)
+        {
+            context.setScale(factor);
+        }
+        
+        for (Thing thing : thingList)
+        {
+            thing.setScale(factor);
+        }
+        
     }
     
     public void enableSelect(boolean enable)
@@ -230,7 +259,6 @@ public class Context extends JLayeredPane implements ComponentListener {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         add(header_panel, gridBagConstraints);
         
-        
         main_panel.setLayout(new GridBagLayout());
         
         gridBagConstraints.insets = new Insets(30, 0, 0, 0);
@@ -253,7 +281,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     public void setTitle(String title)
     {
-        this.title = title;
+        this.name = title;
         
         titleLabel.setText(title);
         
@@ -262,7 +290,7 @@ public class Context extends JLayeredPane implements ComponentListener {
     
     public String getTitle()
     {
-        return this.title;
+        return this.name;
     }
     
     public void addContext(Context context, GridBagConstraints gridBagConstraints)
@@ -340,16 +368,30 @@ public class Context extends JLayeredPane implements ComponentListener {
         this.rootContext.onThingConnectionPointDragged(relativeMouseLocation);
     }
     
-    public void onChildMoved(Component child)
+    public void onChildMoved(Element child)
     {        
         GridBagLayout layout = (GridBagLayout) main_panel.getLayout();
-        GridBagConstraints thingConstraints = layout.getConstraints(child); 
+        GridBagConstraints constraints = layout.getConstraints(child); 
                 
-        thingConstraints.insets.top = child.getY();
-        thingConstraints.insets.left = child.getX();
+        constraints.insets.top = child.getY();
+        constraints.insets.left = child.getX();
         
-        layout.setConstraints(child, thingConstraints);
+        layout.setConstraints(child, constraints);
         
+        revalidate();
+        rootContext.onThingConnectionPointMoved();
+    }
+    
+    public void onChildScaled(Element child, double factor)
+    {        
+        GridBagConstraints constraints = getConstraints(child); 
+                        
+        constraints.insets.top = (int)(factor*child.insets.top);
+        constraints.insets.left = (int)(factor*child.insets.left);  
+
+        GridBagLayout layout = (GridBagLayout) main_panel.getLayout();
+        layout.setConstraints(child, constraints);
+                
         revalidate();
         rootContext.onThingConnectionPointMoved();
     }
@@ -357,11 +399,17 @@ public class Context extends JLayeredPane implements ComponentListener {
     @Override
     public void componentResized(ComponentEvent ce) 
     {
-//        System.out.println("PreferredSize: " + ce.getComponent().getPreferredSize());
-//        System.out.println("width: " + ce.getComponent().getWidth());
-//        System.out.println("HEIGHT: " + ce.getComponent().getHeight());
-//        System.out.println("#######################");
-//        // ce.getComponent().setPreferredSize(new Dimension(ce.getComponent().getWidth(),ce.getComponent().getHeight()));
+        if (this.dimension == null) 
+        {
+            this.dimension = this.getPreferredSize();
+            if (this.parentContext != null)
+            {
+                GridBagConstraints constraints = this.parentContext.getConstraints(this); 
+                
+                this.insets = constraints.insets;
+            }
+        }
+        
     }
 
     @Override
@@ -372,6 +420,7 @@ public class Context extends JLayeredPane implements ComponentListener {
 
     @Override
     public void componentShown(ComponentEvent ce) {
+        
     }
 
     @Override

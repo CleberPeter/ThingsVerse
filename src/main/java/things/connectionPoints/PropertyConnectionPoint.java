@@ -20,7 +20,7 @@ public class PropertyConnectionPoint extends ConnectionPoint
     private boolean observable;
     
     public PropertyConnectionPoint(Thing parentThing, String name, GridBagConstraints constraints, boolean observable) {
-        super(parentThing, name, constraints, new FilledCircle(DEFAULT_COLOR));
+        super(parentThing, name, constraints, new FilledCircle(DEFAULT_COLOR, 20));
         
         this.observable = observable;
     }

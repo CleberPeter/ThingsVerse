@@ -47,6 +47,5 @@ public class VolumeVariable extends Thing {
     private void setUpLayout()
     {                
         setPreferredSize(DEFAULT_DIMESION);
-        setMinimumSize(DEFAULT_DIMESION);
     }
 }

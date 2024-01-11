@@ -16,26 +16,13 @@ import javax.swing.JPanel;
  * @author cleber
  */
 public class FilledCircle extends JPanel
-{    
-    private static final int DEFAULT_RADIUS = 10;
-    
-    private int radius;
-    
-    public FilledCircle(Color color)
+{        
+    public FilledCircle(Color color, int size)
     {
         setOpaque(false);
         setBackground(color);
-        setRadius(DEFAULT_RADIUS);
-    }
-    
-    public void setRadius(int radius)
-    {
-        this.radius = radius;
         
-        Dimension dimension = new Dimension(this.radius*2, this.radius*2);
-        setPreferredSize(dimension);
-        
-        repaint();
+        setSize(size, size);
     }
     
     public void setColor(Color color)
@@ -51,7 +38,11 @@ public class FilledCircle extends JPanel
         Graphics2D graphics_2d = (Graphics2D) graphics.create();
         graphics_2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        drawCircle(graphics_2d, this.radius, this.radius, this.radius);
+        Dimension d = getSize();
+        System.out.println("customWidgets.FilledCircle.paintComponent(): " + d);
+        int radius = d.width/2;
+        
+        drawCircle(graphics_2d, radius, radius, radius);
         
         graphics_2d.dispose();
         super.paintComponent(graphics_2d);

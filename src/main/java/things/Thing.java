@@ -13,6 +13,7 @@ import things.connectionPoints.PropertyConnectionPoint;
 import contexts.Context;
 import customWidgets.PanelRound;
 import customWidgets.RoundedLineBorder;
+import element.Element;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,22 +44,15 @@ import things.connectionPoints.SensingConnectionPoint;
  *
  * @author cleber
  */
-public abstract class Thing extends JLayeredPane implements ComponentListener
+public abstract class Thing extends Element
 {
     private static final Color BACKGROUND_COLOR = new Color(30,30,30, 220);
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
     private static final Color SELECTED_COLOR = new Color(240, 178, 61);
 
-    private PanelRound main_panel;
-    private PanelRound header_panel;
     private PanelRound panel;
     private JLabel titleLabel;
     private Context parentContext;
-    private JButton expandBtn;
-    
-    private Boolean expanded;
-    private Boolean selected = false;
-    private String name;
 
     private List<ConnectionPoint> connectionPointsList;
     
@@ -70,7 +64,6 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     public Thing(String name, Context parentContext)
     {   
         this.parentContext = parentContext;
-        this.expanded = true;
         this.componentMover = new ComponentMover();
         this.componentResizer = new ComponentResizer();
         this.componentSelect = new ComponentSelect();
@@ -87,27 +80,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         header_panel = new PanelRound();    
         header_panel.setRoundTop(20);
         header_panel.setBackground(Color.white);
-        
-        /*
-        expandBtn = new javax.swing.JButton();
-        expandBtn.setBackground(new java.awt.Color(0, 0, 0));
-        expandBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/expand_less_thing.png"))); // NOI18N
-        expandBtn.setToolTipText("");
-        expandBtn.setBorderPainted(false);
-        expandBtn.setContentAreaFilled(false);
-        expandBtn.setFocusPainted(false);
-        expandBtn.setFocusable(false);
-        expandBtn.setMaximumSize(new java.awt.Dimension(25, 25));
-        expandBtn.setMinimumSize(new java.awt.Dimension(25, 25));
-        expandBtn.setPreferredSize(new java.awt.Dimension(30, 25));
-        
-        expandBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expandBtnActionPerformed(evt);
-            }
-        });
-        */
-        
+                
         titleLabel = new JLabel();
         titleLabel.setText(name);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -138,11 +111,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        
-        /*gridBagConstraints.insets = new java.awt.Insets(2, 10, 0, 0);
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        header_panel.add(expandBtn, gridBagConstraints);*/
-        
+                
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.CENTER;
         header_panel.add(titleLabel, gridBagConstraints);
@@ -170,6 +139,21 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         addComponentListener(this);
     }
     
+    public void setScale(double factor)
+    {
+        Dimension d = this.dimension;
+        Dimension scaled_d = new Dimension((int)(d.width*factor), (int)(d.height*factor));
+        this.setPreferredSize(scaled_d);
+        this.setSize(scaled_d);
+        
+        this.parentContext.onChildScaled(this, factor);
+        
+        for (ConnectionPoint connectionPoint : connectionPointsList) 
+        {
+            connectionPoint.setScale(factor);
+        }
+    }
+    
     public void enableSelect(boolean enable)
     {        
         if (enable)
@@ -179,7 +163,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
                                 
                 return null;
             };
-
+            
             componentSelect.registerComponent(onSelected, this);
         }
         else componentSelect.deregisterComponent(this);   
@@ -206,7 +190,10 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         if (enable)
         {
             Function onResized = (Object t) -> {
-                setPreferredSize(new Dimension(getWidth(), getHeight()));
+                Dimension newDimension = new Dimension(getWidth(), getHeight());
+                        
+                this.dimension = newDimension;
+                setPreferredSize(this.dimension);
                 revalidate();
                 
                 // insets can be changed after resize
@@ -220,94 +207,7 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
         }
         else componentResizer.deregisterComponent(this);   
     }
-    
-    /*
-    private void expandLess(GridBagLayout layout, GridBagConstraints gridBagConstraintsHeaderPanel, int connectionPointsCountNorthWest, int connectionPointsCountNorthEast, int connectionPointsCount)
-    {   
-        int expandedLessHeight = connectionPointsCount*25 + 30;
-        gridBagConstraintsHeaderPanel.anchor = java.awt.GridBagConstraints.CENTER;
-        layout.setConstraints(header_panel, gridBagConstraintsHeaderPanel);
-        header_panel.setBackground(Color.blue);
-
-        setPreferredSize(new Dimension(getWidth(), expandedLessHeight));
-        setMinimumSize(new Dimension(getWidth(), expandedLessHeight));
-
-        main_panel.setVisible(false);
         
-        int radiusArc = (expandedLessHeight - 20)/2;
-        double leftAngle = Math.PI/2;
-        double leftAngleStep = Math.PI/(connectionPointsCountNorthWest + 1);
-
-        double rightAngle = Math.PI/2;
-        double rightAngleStep = Math.PI/(connectionPointsCountNorthEast + 1);
-
-        // sort from lowest to highest topInset to ensure that the vertical order is respected
-        connectionPointsList.sort(new Comparator<ConnectionPoint>() {
-            @Override
-            public int compare(ConnectionPoint lhs, ConnectionPoint rhs) {
-                return lhs.getConstraints().insets.top > rhs.getConstraints().insets.top ? 1 : -1;
-            }
-        });
-        
-        for (ConnectionPoint connectionPoint: connectionPointsList)
-        {
-            GridBagConstraints constraints = (GridBagConstraints) connectionPoint.getConstraints().clone(); // not dirty expanded constraints
-                
-            if (constraints.anchor == GridBagConstraints.NORTHWEST)
-            {    
-                leftAngle += leftAngleStep;
-                constraints.insets.top = (radiusArc - ((int) (radiusArc * Math.sin(Math.PI - leftAngle))));
-                constraints.insets.left = (radiusArc - ((int) (radiusArc * Math.cos(Math.PI - leftAngle))));
-
-                layout.setConstraints(connectionPoint, constraints);
-            }
-            else if (constraints.anchor == GridBagConstraints.NORTHEAST)
-            {
-                rightAngle -= rightAngleStep;
-
-                constraints.insets.top = (radiusArc - ((int) (radiusArc * Math.sin(Math.PI - rightAngle))));
-                constraints.insets.right = (radiusArc - ((int) (radiusArc * -Math.cos(Math.PI - rightAngle))));
-
-                layout.setConstraints(connectionPoint, constraints);
-            }
-
-            connectionPointsMover.deregisterComponent(connectionPoint);
-            connectionPoint.hiddenName();
-        }
-
-        expandBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/expand_more_thing.png"))); // NOI18N
-        this.expanded = false;
-    }
-    
-    private void expandMore(GridBagLayout layout, GridBagConstraints gridBagConstraintsHeaderPanel, int connectionPointsCount)
-    {
-        main_panel.setVisible(true);
-        componentMover.registerComponent(this);
-
-        gridBagConstraintsHeaderPanel.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        layout.setConstraints(header_panel, gridBagConstraintsHeaderPanel);
-        header_panel.setBackground(Color.white);
-
-        int highestTopInset = 0;
-        for (ConnectionPoint connectionPoint : connectionPointsList)
-        {
-            int connectionPointTopInset = connectionPoint.getConstraints().insets.top;
-            if (connectionPointTopInset > highestTopInset) highestTopInset = connectionPointTopInset;
-            
-            layout.setConstraints(connectionPoint, connectionPoint.getConstraints());
-
-            connectionPointsMover.registerComponent(connectionPoint);
-            connectionPoint.showName();
-        }
-        
-        setPreferredSize(new Dimension(getWidth(), highestTopInset + 50));
-        setMinimumSize(new Dimension(getWidth(), highestTopInset + 50));
-
-        expandBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/expand_less_thing.png"))); // NOI18N
-        this.expanded = true;
-    }
-    */
-    
     public void setSelected(boolean selected)
     {
         this.selected = selected;
@@ -319,29 +219,6 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
             
         this.panel.setBorder(border);
     }
-    
-    /*private void expandBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        
-        GridBagLayout layout = (GridBagLayout) getLayout();
-        GridBagConstraints gridBagConstraintsHeaderPanel = layout.getConstraints(header_panel);
-        
-        removeUnusedConnectionPoints();
-
-        int connectionPointsCountNorthWest = getConnectionPointsCount(GridBagConstraints.NORTHWEST);
-        int connectionPointsCountNorthEast = getConnectionPointsCount(GridBagConstraints.NORTHEAST);
-        int connectionPointsCount = Math.max(connectionPointsCountNorthWest, connectionPointsCountNorthEast);
-        
-        if (this.expanded)
-        {
-            expandLess(layout, gridBagConstraintsHeaderPanel, connectionPointsCountNorthWest, connectionPointsCountNorthEast, connectionPointsCount);
-        }
-        else
-        {
-            expandMore(layout, gridBagConstraintsHeaderPanel, connectionPointsCount);
-        }
-        
-        parentContext.onThingConnectionPointMoved();
-    }   */  
     
     protected void setConnectionPoint(ConnectionPoint connectionPoint) 
     {           
@@ -496,18 +373,16 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     
     private void populateConnectionPoints()
     {   
-        if (this.expanded)
-        {
-            int usable_height = this.getHeight() - 50;
-            int connectionPointsLen = usable_height/50;
+        int usable_height = this.getHeight() - 50;
+        int connectionPointsLen = usable_height/50;
 
-            removeInvisibleConnectionPoints(usable_height);
+        removeInvisibleConnectionPoints(usable_height);
 
-            fillWithUnusedConnectionPoints(connectionPointsLen, java.awt.GridBagConstraints.NORTHWEST);
-            fillWithUnusedConnectionPoints(connectionPointsLen,java.awt.GridBagConstraints.NORTHEAST);
+        fillWithUnusedConnectionPoints(connectionPointsLen, java.awt.GridBagConstraints.NORTHWEST);
+        fillWithUnusedConnectionPoints(connectionPointsLen,java.awt.GridBagConstraints.NORTHEAST);
 
-            validate();
-        }
+        validate();
+        
     }
     
     public List<ConnectionPoint> getConnectionPointsList()
@@ -572,6 +447,16 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     public void componentResized(ComponentEvent ce) 
     {
         populateConnectionPoints();
+        if (this.dimension == null) 
+        {
+            this.dimension = this.getPreferredSize();
+            if (this.parentContext != null)
+            {
+                GridBagConstraints constraints = this.parentContext.getConstraints(this); 
+                
+                this.insets = constraints.insets;
+            }
+        }
     }
     
     @Override
@@ -585,27 +470,4 @@ public abstract class Thing extends JLayeredPane implements ComponentListener
     @Override
     public void componentHidden(ComponentEvent ce) {
     }
-    
-    /*
-    @Override
-    public void paintComponent(Graphics graphics) {
-        
-        super.paintComponent(graphics);
-        Graphics2D graphics_2d = (Graphics2D) graphics.create();
-        
-        if (!this.expanded)
-        {
-            graphics_2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            graphics_2d.setColor(Color.white);
-            
-            int width = getWidth();
-            int height = getHeight();
-            int radiusArc = (height - 20)/2;
-                        
-            graphics_2d.fillArc(10, 10, radiusArc * 2, height-20, 90, 180); // left arc
-            graphics_2d.fillArc(width - 10 - radiusArc * 2, 10, radiusArc * 2, height-20, 90, -180); // right arc
-
-            graphics_2d.fillRect(radiusArc + 10, 10, width - 20 - radiusArc*2, height-20);
-        }
-    }*/
 }

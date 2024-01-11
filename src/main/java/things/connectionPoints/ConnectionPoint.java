@@ -5,6 +5,7 @@
 package things.connectionPoints;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +29,10 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
     private JLabel name_label;
     private Thing parentThing;
     private GridBagConstraints constraints;
+    private int fontSize = 14;
+    private int horizontalInset = 30;
+    private int verticalInset = 3;
+    private double scaleFactor = 1;
     
     public abstract void onConstraintsUpdated();
     public abstract Color getColor();
@@ -48,7 +53,7 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         if (name != null)
         {
             name_label = new JLabel();
-            name_label.setFont(new Font("Arial", Font.BOLD, 14));
+            name_label.setFont(new Font("Arial", Font.BOLD, fontSize));
             name_label.setForeground(Color.white);
             name_label.setText(this.name);
 
@@ -86,6 +91,30 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
         return connectionPanel;
     }
     
+    public void setScale(double factor)
+    {
+        scaleFactor = factor;
+        if (name != null)
+        {
+            name_label.setFont(new Font("Arial", Font.BOLD, (int)(fontSize*factor)));
+            
+            GridBagLayout gridBagLayout = (GridBagLayout) getLayout();
+            
+            GridBagConstraints gridBagConstraints = gridBagLayout.getConstraints(this.name_label);
+            
+            gridBagConstraints.insets.left = getScaledValue(horizontalInset);
+            gridBagConstraints.insets.right = getScaledValue(horizontalInset);
+            gridBagConstraints.insets.top = getScaledValue(verticalInset);
+            
+            gridBagLayout.setConstraints(this.name_label, gridBagConstraints);
+        }
+    }
+    
+    public int getScaledValue(double val)
+    {
+        return (int)(val*scaleFactor);
+    }
+    
     public void setConstraints(GridBagConstraints constraints)
     {
         if ((this.constraints == null || constraints.anchor != this.constraints.anchor) && name != null)
@@ -101,8 +130,10 @@ public abstract class ConnectionPoint extends JPanel implements MouseListener, M
             
             gridBagLayout.setConstraints(this.connectionPanel, gridBagConstraints);
             
-            if (constraints.anchor == java.awt.GridBagConstraints.NORTHEAST) gridBagConstraints.insets = new Insets(3, 0, 0, 30);
-            else if (constraints.anchor == java.awt.GridBagConstraints.NORTHWEST) gridBagConstraints.insets = new Insets(3, 30, 0, 0);
+            if (constraints.anchor == java.awt.GridBagConstraints.NORTHEAST) 
+                gridBagConstraints.insets = new Insets(getScaledValue(verticalInset), 0, 0, getScaledValue(horizontalInset));
+            else if (constraints.anchor == java.awt.GridBagConstraints.NORTHWEST) 
+                gridBagConstraints.insets = new Insets(getScaledValue(verticalInset), getScaledValue(horizontalInset), 0, 0);
             
             gridBagLayout.setConstraints(this.name_label, gridBagConstraints);
             

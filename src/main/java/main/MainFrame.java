@@ -15,13 +15,16 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import javax.swing.JLayeredPane;
 
 /**
  *
  * @author cleber
  */
-public class MainFrame extends javax.swing.JFrame implements ComponentListener {
+public class MainFrame extends javax.swing.JFrame implements ComponentListener
+{
     
     private Boolean maximized;
     private ToolsEnabled toolsEnabled = new ToolsEnabled();

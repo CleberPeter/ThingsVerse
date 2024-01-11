@@ -8,9 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
-import java.util.Arrays;
 import javax.swing.JPanel;
 
 /**
@@ -19,15 +17,14 @@ import javax.swing.JPanel;
  */
 public class FilledTriangle extends JPanel
 {    
-    private int size;
     private double angle;
     
     public FilledTriangle(Color color, int size, double angle)
     {        
         setOpaque(false);
         setBackground(color);
-        setSize(size);
         setAngle(angle);
+        setSize(size, size);
     }
     
     public void setColor(Color color)
@@ -43,17 +40,7 @@ public class FilledTriangle extends JPanel
         
         repaint();
     }
-    
-    public void setSize(int size)
-    {
-        this.size = size;
         
-        Dimension dimension = new Dimension(this.size, this.size);
-        setPreferredSize(dimension);
-        
-        repaint();
-    }
-    
     @Override
     public void paintComponent(Graphics graphics) 
     {    
@@ -61,12 +48,15 @@ public class FilledTriangle extends JPanel
         graphics_2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics_2d.setColor(this.getBackground());
         
-        // 0 rad
-        int[] xPoints = {0, 0, this.size};
-        int[] yPoints = {0, this.size, this.size/2};
+        Dimension d = getSize();
+        int size = d.width;
         
-        int centerX = this.size/2;
-        int centerY = this.size/2;
+        // 0 rad
+        int[] xPoints = {0, 0, size};
+        int[] yPoints = {0, size, size/2};
+        
+        int centerX = size/2;
+        int centerY = size/2;
 
         for (int i = 0; i < xPoints.length; i++) 
         {
